@@ -1,0 +1,10 @@
+| model | code_comprehension | code_comprehension_hard | obfuscation | obfuscation_hard | security_reasoning | security_reasoning_hard |
+| --- | --- | --- | --- | --- | --- | --- |
+| anthropic/qwen3.7-max | 0.75 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 |
+| openai-api/fptcloud/GLM-5.1 | 1.00 | 1.00 | 1.00 | 0.89 | 1.00 | 0.90 |
+| openai-api/fptcloud/Qwen3.6-27B | 1.00 | 0.88 | 1.00 | 0.89 | 1.00 | 0.90 |
+| openai-api/opencode/deepseek-v4-flash | 0.75 | 1.00 | 1.00 | 0.67 | 0.75 | 0.80 |
+| openai-api/opencode/deepseek-v4-pro | 0.75 | 1.00 | 1.00 | 0.89 | 1.00 | 0.90 |
+| openai-api/opencode/glm-5.1 | 0.75 | 1.00 | 1.00 | 0.89 | 1.00 | 0.90 |
+| openai-api/opencode/kimi-k2.6 | 0.50 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 |
+| openai-api/opencode/qwen3.6-plus | 1.00 | 1.00 | 1.00 | 0.89 | 1.00 | 1.00 |
