@@ -214,9 +214,13 @@ The clearest model-level conclusion is that the two Qwen deployments lead on the
 
 ---
 
-## 7. Conclusion and future work
+## 7. Recommendation
 
-At current difficulty the benchmark separates models on *behaviour under ambiguity* far better than on raw accuracy. The actionable result for downstream SCA tooling is the systematic, confidently-justified false-positive bias on defended code: most of the field would raise high-quality but wrong vulnerability alarms, with the Qwen pair the notable exception. Future work follows directly from the limitations: (a) raise the difficulty of both saturated tiers — deeper multi-stage decoders and anti-analysis guards for the agentic task, more safe-traps for security reasoning — so accuracy regains discriminating power; (b) replace the string scorers with a calibrated model-grader to remove the §5.3 false-negatives and adjudicate contestable references; (c) repeat each (model, task) pair to quantify variance; and (d) obtain reasoning-token counts (or a comparable proxy) from the closed gateways so cross-provider efficiency can be compared honestly.
+**Best open-weight model: `qwen3.7-max`.** It is the only deployment that leads on every dimension the benchmark measures rather than trading one off against another: joint-top hard-set accuracy (0.96, tied only with its sibling `qwen3.6-plus`), a position on the open-weight efficiency front (~7.0k output tokens per task — *lower* cost than the larger `deepseek-v4-pro` for *higher* accuracy), and, decisively, it is one of only two deployments in the field that resisted the `srh-004` safe-trap false positive (§5.2). We prefer it over the equally accurate `qwen3.6-plus` because it is faster single-shot (19.2 s vs 32.2 s per sample) at lower generation cost. For an SCA pipeline that must run on-premises or audit its own weights, this is the clear pick.
+
+**Best closed model: `gpt-5.5`, with one caveat that applies to the whole closed field.** Among the Zen deployments `gpt-5.5` has the highest hard-set accuracy (0.93) and the strongest hard-obfuscation result (1.00), making it the best closed choice for analytical quality. The caveat: every closed deployment — `gpt-5.x` and both Opus — exhibits the §5.2 false-positive bias, so none should be trusted to *certify code as safe* without a human check, and `gpt-5.x` additionally hallucinates on high-salience payloads (§5.1). If throughput rather than peak accuracy dominates — e.g. high-volume single-shot triage — prefer `gpt-5.4`, the fastest deployment in the field (2.7 s vs 7.6 s per sample, ~3x faster than `gpt-5.5`) and among the most tool-economical (1.6 calls per solve, behind only `gpt-5.3-codex` at 1.3), at a modest accuracy cost (0.86 hard).
+
+**In short:** `qwen3.7-max` open, `gpt-5.5` closed for accuracy (`gpt-5.4` closed for speed) — and route any *safe-verdict* decision through a human reviewer regardless of model, since the false-positive bias is near-universal outside the Qwen pair.
 
 ---
 
