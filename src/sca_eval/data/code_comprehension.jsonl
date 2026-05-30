@@ -1,0 +1,4 @@
+{"id": "cc-001", "input": "What does this function return for input 5?\n\ndef f(n):\n    return n * (n + 1) // 2", "target": "15", "metadata": {"lang": "python"}}
+{"id": "cc-002", "input": "What is the time complexity of this loop in Big-O?\n\nfor i in range(n):\n    for j in range(n):\n        total += i * j", "target": "O(n^2)", "metadata": {"lang": "python"}}
+{"id": "cc-003", "input": "After this code runs, what is the value of x?\n\nlet x = [1,2,3].map(v => v * 2).filter(v => v > 2).length;", "target": "2", "metadata": {"lang": "javascript"}}
+{"id": "cc-004", "input": "Does this function correctly reverse a string? Answer yes or no.\n\nfn rev(s: &str) -> String { s.chars().rev().collect() }", "target": "yes", "metadata": {"lang": "rust"}}
