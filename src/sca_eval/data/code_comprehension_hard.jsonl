@@ -1,0 +1,8 @@
+{"id": "cch-001", "input": "In JavaScript, what does `typeof null` evaluate to? Reply with ONLY the value.", "target": "object", "metadata": {"topic": "js-quirk"}}
+{"id": "cch-002", "input": "In JavaScript, what does `typeof NaN` evaluate to? Reply with ONLY the value.", "target": "number", "metadata": {"topic": "js-quirk"}}
+{"id": "cch-003", "input": "In Python, what is the exact printed value of `0.1 + 0.2`? Reply with ONLY the value.", "target": "0.30000000000000004", "metadata": {"topic": "float"}}
+{"id": "cch-004", "input": "In JavaScript, `[1,2,3].map(parseInt)` returns an array. What is its SECOND element? Reply with ONLY the value.", "target": "NaN", "metadata": {"topic": "map-parseint"}}
+{"id": "cch-005", "input": "In JavaScript, what string does `'b' + 'a' + (+'a') + 'a'` produce? Reply with ONLY the string.", "target": "baNaNa", "metadata": {"topic": "coercion"}}
+{"id": "cch-006", "input": "In JavaScript, what does `[] + {}` evaluate to? Reply with ONLY the result.", "target": "[object Object]", "metadata": {"topic": "coercion"}}
+{"id": "cch-007", "input": "In JavaScript, evaluate the literal `9999999999999999`. What value is actually stored/printed? Reply with ONLY the number.", "target": "10000000000000000", "metadata": {"topic": "float-int"}}
+{"id": "cch-008", "input": "In JavaScript, what does `typeof typeof 1` evaluate to? Reply with ONLY the value.", "target": "string", "metadata": {"topic": "js-quirk"}}

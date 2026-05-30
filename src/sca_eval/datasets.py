@@ -9,7 +9,14 @@ from inspect_ai.dataset import Sample
 
 _DATA_DIR = Path(__file__).parent / "data"
 
-DATASETS = ("code_comprehension", "security_reasoning", "obfuscation")
+DATASETS = (
+    "code_comprehension",
+    "security_reasoning",
+    "obfuscation",
+    "code_comprehension_hard",
+    "security_reasoning_hard",
+    "obfuscation_hard",
+)
 
 
 def _load_jsonl(path: Path) -> list[Sample]:

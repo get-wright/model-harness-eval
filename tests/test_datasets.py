@@ -12,8 +12,9 @@ def test_all_declared_datasets_load_and_are_nonempty():
 
 
 def test_security_targets_are_valid_labels():
-    for s in load_dataset("security_reasoning"):
-        assert s.target in ("vulnerable", "safe")
+    for name in ("security_reasoning", "security_reasoning_hard"):
+        for s in load_dataset(name):
+            assert s.target in ("vulnerable", "safe"), f"{name}/{s.id}"
 
 
 def test_unknown_dataset_raises():
