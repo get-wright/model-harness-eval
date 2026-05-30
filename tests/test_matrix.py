@@ -67,3 +67,16 @@ def test_details_table_reports_all_axes():
                    "duration_s", "cost_usd"):
         assert header in md
     assert "120" in md and "30" in md and "12.5" in md and "0.0033" in md
+
+
+def test_empty_matrix_renders_empty_string():
+    assert format_markdown({}) == ""
+
+
+def test_build_matrix_last_write_wins_on_duplicate_pair():
+    results = [
+        _ok("m1", "obfuscation", 0.30),
+        _ok("m1", "obfuscation", 0.90),  # same (model, task) -> overwrites
+    ]
+    matrix = build_matrix(results)
+    assert matrix["m1"]["obfuscation"] == 0.90

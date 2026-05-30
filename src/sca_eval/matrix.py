@@ -36,6 +36,8 @@ def build_matrix(results: list[ModelResult]) -> dict[str, dict[str, float | None
 
 def format_markdown(matrix: dict[str, dict[str, float | None]]) -> str:
     """Primary accuracy table. Failed cells render 'ERR'; missing cells '-'."""
+    if not matrix:
+        return ""
     tasks = sorted({task for row in matrix.values() for task in row})
     header = "| model | " + " | ".join(tasks) + " |"
     divider = "| --- | " + " | ".join("---" for _ in tasks) + " |"
