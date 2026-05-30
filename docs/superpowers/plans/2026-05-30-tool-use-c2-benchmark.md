@@ -688,9 +688,12 @@ services:
     init: true
 ```
 
-- [ ] **Step 2: Write the failing test**
+- [ ] **Step 2: Write/append the failing tests AND update the two tests that hard-code the old task set**
 
-Append to `tests/test_tasks.py`:
+Registering the C2 tasks breaks two existing assumptions, so fix them in the same step
+(tests that change together, change together):
+
+(a) Append new tests to `tests/test_tasks.py`:
 ```python
 import os
 
@@ -715,10 +718,71 @@ def test_c2_task_uses_docker_compose_tuple_and_tools():
     assert task.dataset, "C2 task must have samples"
 ```
 
-- [ ] **Step 3: Run test to verify it fails**
+(b) Update the existing exact-set assertion in `tests/test_tasks.py` (the C2 tasks are
+now part of the registry). Replace:
+```python
+def test_task_registry_exposes_easy_and_hard_variants():
+    assert set(TASKS) == {
+        "code_comprehension", "security_reasoning", "obfuscation",
+        "code_comprehension_hard", "security_reasoning_hard", "obfuscation_hard",
+    }
+```
+with:
+```python
+def test_task_registry_exposes_easy_and_hard_variants():
+    assert set(TASKS) == {
+        "code_comprehension", "security_reasoning", "obfuscation",
+        "code_comprehension_hard", "security_reasoning_hard", "obfuscation_hard",
+        "tool_use_c2", "tool_use_c2_hard",
+    }
+```
 
-Run: `uv run pytest tests/test_tasks.py -v`
-Expected: FAIL with `cannot import name 'C2_TASKS'`.
+(c) Keep the hermetic e2e suite Docker-free: the C2 tasks need a Docker sandbox, so they
+must not run under mockllm. Edit `tests/test_e2e_mockllm.py` to exclude `C2_TASKS`.
+Replace its body:
+```python
+from sca_eval.run import run_survey
+from sca_eval.tasks import TASKS
+
+
+def test_full_suite_runs_under_mockllm(tmp_path):
+    matrix = run_survey(
+        models=["mockllm/model"],
+        task_names=list(TASKS),
+        log_dir=str(tmp_path / "logs"),
+        out_path=str(tmp_path / "matrix.md"),
+    )
+    assert set(matrix["mockllm/model"]) == set(TASKS)
+    for score in matrix["mockllm/model"].values():
+        # mockllm succeeds, so every cell is a real float in range (not None/ERR).
+        assert score is not None and 0.0 <= score <= 1.0
+```
+with:
+```python
+from sca_eval.run import run_survey
+from sca_eval.tasks import C2_TASKS, TASKS
+
+# C2 tool-use tasks require a Docker sandbox; the hermetic suite runs the rest.
+HERMETIC_TASKS = [t for t in TASKS if t not in C2_TASKS]
+
+
+def test_full_suite_runs_under_mockllm(tmp_path):
+    matrix = run_survey(
+        models=["mockllm/model"],
+        task_names=HERMETIC_TASKS,
+        log_dir=str(tmp_path / "logs"),
+        out_path=str(tmp_path / "matrix.md"),
+    )
+    assert set(matrix["mockllm/model"]) == set(HERMETIC_TASKS)
+    for score in matrix["mockllm/model"].values():
+        # mockllm succeeds, so every cell is a real float in range (not None/ERR).
+        assert score is not None and 0.0 <= score <= 1.0
+```
+
+- [ ] **Step 3: Run tests to verify they fail**
+
+Run: `uv run pytest tests/test_tasks.py tests/test_e2e_mockllm.py -v`
+Expected: FAIL with `cannot import name 'C2_TASKS'` (the import is unresolved until Step 4).
 
 - [ ] **Step 4: Implement the C2 tasks in `src/sca_eval/tasks.py`**
 
@@ -790,10 +854,12 @@ TASKS: dict[str, Callable[[], Task]] = {
 }
 ```
 
-- [ ] **Step 5: Run test to verify it passes**
+- [ ] **Step 5: Run tests to verify they pass**
 
-Run: `uv run pytest tests/test_tasks.py -v`
-Expected: PASS (existing + 3 new). The C2 task constructs without Docker (sandbox only starts at eval time).
+Run: `uv run pytest tests/test_tasks.py tests/test_e2e_mockllm.py -v`
+Expected: PASS — updated exact-set assertion, 3 new C2 task tests, and the e2e suite now
+runs only `HERMETIC_TASKS` (no Docker). The C2 tasks construct without Docker (the sandbox
+only starts at eval time), so building them in `test_each_factory_builds_a_task...` is fine.
 
 - [ ] **Step 6: Commit**
 ```bash
@@ -815,11 +881,24 @@ git commit -m "feat: add tool_use_c2 tasks with no-egress docker sandbox and bas
 `tests/test_c2_sandbox.py`:
 ```python
 import shutil
+import subprocess
 
 import pytest
 
-DOCKER = shutil.which("docker")
-pytestmark = pytest.mark.skipif(DOCKER is None, reason="docker not available")
+
+def _docker_ready() -> bool:
+    """True only if the docker CLI exists AND the daemon answers (not just installed)."""
+    if shutil.which("docker") is None:
+        return False
+    try:
+        return subprocess.run(
+            ["docker", "info"], capture_output=True, timeout=10
+        ).returncode == 0
+    except Exception:
+        return False
+
+
+pytestmark = pytest.mark.skipif(not _docker_ready(), reason="docker daemon not available")
 
 
 def test_sandbox_has_no_default_route():
@@ -871,31 +950,80 @@ git commit -m "test: prove C2 sandbox enforces network_mode none (no default rou
 - Modify: `src/sca_eval/run.py`
 - Test: `tests/test_run_mockllm.py` (extend) — assert the writer is wired without needing Docker.
 
-- [ ] **Step 1: Write the failing test**
+- [ ] **Step 1: Write the failing integration tests**
 
+These patch `eval_set` (so no Docker/model is needed) and assert `run_survey` itself
+writes `tooluse.md` — both for a real C2 log and for a missing C2 pair (ERR synthesis).
 Append to `tests/test_run_mockllm.py`:
 ```python
-from sca_eval.matrix import ToolUseStats, format_tooluse_markdown
+from types import SimpleNamespace
+
+import sca_eval.run as run_mod
 
 
-def test_tooluse_table_written_for_c2_runs(tmp_path):
-    # format_tooluse_markdown is the unit run.py delegates to; assert the contract
-    stats = [ToolUseStats(
-        model="m/x", task="tool_use_c2", status="success", samples=1, correct=1,
-        tool_calls=2, failed_tool_calls=0, model_turns=2,
-        tool_loop_input_tokens=100, tool_loop_output_tokens=20, events_missing_usage=0,
-    )]
-    out = format_tooluse_markdown(stats)
-    (tmp_path / "tooluse.md").write_text(out)
-    assert (tmp_path / "tooluse.md").read_text().startswith("| model |")
+def _usage(i, o):
+    return SimpleNamespace(input_tokens=i, output_tokens=o)
+
+
+def _fake_c2_log():
+    sample = SimpleNamespace(
+        events=[
+            SimpleNamespace(event="model", output=SimpleNamespace(usage=_usage(120, 30))),
+            SimpleNamespace(event="tool", failed=None, error=None),
+            SimpleNamespace(event="model", output=SimpleNamespace(usage=_usage(40, 10))),
+        ],
+        scores={"s": SimpleNamespace(value="C")},
+    )
+    return SimpleNamespace(
+        status="success",
+        eval=SimpleNamespace(
+            model="mockllm/model", task="sca_eval/tool_use_c2",
+            dataset=SimpleNamespace(samples=1),
+        ),
+        results=SimpleNamespace(
+            scores=[SimpleNamespace(metrics={"accuracy": SimpleNamespace(value=1.0)})]
+        ),
+        stats=SimpleNamespace(
+            model_usage={"mockllm/model": _usage(160, 40)},
+            started_at="2026-05-30T00:00:00+00:00",
+            completed_at="2026-05-30T00:00:05+00:00",
+        ),
+        samples=[sample],
+    )
+
+
+def test_run_survey_writes_tooluse_for_c2(tmp_path, monkeypatch):
+    monkeypatch.setattr(run_mod, "eval_set", lambda *a, **k: (True, [_fake_c2_log()]))
+    out = tmp_path / "m.md"
+    run_mod.run_survey(
+        models=["mockllm/model"], task_names=["tool_use_c2"],
+        log_dir=str(tmp_path / "logs"), out_path=str(out),
+    )
+    text = (out.parent / "tooluse.md").read_text()
+    assert text.startswith("| model |")
+    assert "tool_use_c2" in text
+    assert "160" in text and "40" in text  # tool-loop tokens summed from ModelEvents
+
+
+def test_run_survey_synthesizes_tooluse_err_for_missing_c2(tmp_path, monkeypatch):
+    # eval_set returns no logs -> the expected C2 pair must still appear, as ERR.
+    monkeypatch.setattr(run_mod, "eval_set", lambda *a, **k: (False, []))
+    out = tmp_path / "m.md"
+    run_mod.run_survey(
+        models=["x/y"], task_names=["tool_use_c2"],
+        log_dir=str(tmp_path / "logs"), out_path=str(out),
+    )
+    text = (out.parent / "tooluse.md").read_text()
+    assert "tool_use_c2" in text and "ERR" in text
 ```
 
-> The end-to-end Docker run is covered by the manual run in Task 8; this test pins the rendering contract `run.py` relies on.
+> `run_survey` still constructs the real `tool_use_c2` task (loads the dataset — hermetic,
+> no Docker); only `eval_set` is stubbed, so this exercises the actual wiring.
 
-- [ ] **Step 2: Run test to verify it passes the renderer contract**
+- [ ] **Step 2: Run tests to verify they fail**
 
-Run: `uv run pytest tests/test_run_mockllm.py -v`
-Expected: PASS.
+Run: `uv run pytest tests/test_run_mockllm.py -k tooluse -v`
+Expected: FAIL — `tooluse.md` is not written yet (and the ERR-synthesis branch does not exist).
 
 - [ ] **Step 3: Wire `tooluse.md` into `run_survey`**
 
@@ -916,9 +1044,23 @@ from sca_eval.tasks import C2_TASKS, TASKS
 In `run_survey`, after the block that writes `details.md` (after the `(out.parent / "details.md").write_text(...)` line), add:
 ```python
     # Tool-use utilization table for any C2 (tool-use) task in this run.
-    tu_stats = [tool_use_stats(log) for log in logs]
-    tu_stats = [s for s in tu_stats if s.task in C2_TASKS]
-    if tu_stats:
+    c2_task_names = [t for t in task_names if t in C2_TASKS]
+    if c2_task_names:
+        tu_stats = [s for s in (tool_use_stats(log) for log in logs)
+                    if s.task in C2_TASKS]
+        # Symmetric to the ERR ModelResult synthesis above: any expected C2
+        # (model, task) that produced no log gets an ERR row so tooluse.md never
+        # silently drops a pair the accuracy matrix shows as ERR.
+        tu_found = {(s.model, s.task) for s in tu_stats}
+        for model, task_name in sorted(
+            {(m, t) for m in models for t in c2_task_names} - tu_found
+        ):
+            tu_stats.append(ToolUseStats(
+                model=model, task=task_name, status="error", samples=0, correct=0,
+                tool_calls=0, failed_tool_calls=0, model_turns=0,
+                tool_loop_input_tokens=None, tool_loop_output_tokens=None,
+                events_missing_usage=0,
+            ))
         (out.parent / "tooluse.md").write_text(format_tooluse_markdown(tu_stats))
 ```
 
@@ -1011,6 +1153,17 @@ git commit -m "docs: document the tool-use C2 benchmark, outputs, and sandbox sa
 - §7 safety (network:none) → Tasks 5, 6, 8.
 - §8 testing (loader, extraction both failure forms + missing usage, renderer, docker-gated no-egress) → Tasks 1, 3, 4, 6.
 - §9 files → all created/modified across tasks.
+
+**Regression guards (review round 3):**
+- Registering C2 tasks keeps the hermetic suite Docker-free: `test_e2e_mockllm` runs
+  `HERMETIC_TASKS` (= `TASKS` − `C2_TASKS`), and the exact-set assertion in `test_tasks`
+  is updated to include both C2 tasks (Task 5 Step 2).
+- `tooluse.md` is written by `run_survey` itself, verified via a patched-`eval_set`
+  integration test, not a renderer-only stub (Task 7 Steps 1–3).
+- Missing expected C2 pairs get a synthesized `ToolUseStats(status="error")` row, so
+  `tooluse.md` and the accuracy matrix agree on ERR (Task 7 Step 3).
+- The docker-gated test skips when the daemon is unreachable (`docker info`), not merely
+  when the binary is absent (Task 6 Step 1).
 
 **Placeholder scan:** none — every code/data step has complete content; corpus is generated by committed code.
 
