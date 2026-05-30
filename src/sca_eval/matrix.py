@@ -26,6 +26,28 @@ class ModelResult:
         return self.input_tokens + self.output_tokens
 
 
+@dataclass(frozen=True)
+class ToolUseStats:
+    """Per-(model, task) tool-utilization metrics derived from log events."""
+    model: str
+    task: str
+    status: str
+    samples: int
+    correct: int
+    tool_calls: int
+    failed_tool_calls: int
+    model_turns: int
+    tool_loop_input_tokens: int | None   # None when any ModelEvent lacked usage
+    tool_loop_output_tokens: int | None
+    events_missing_usage: int
+
+    @property
+    def tool_loop_total_tokens(self) -> int | None:
+        if self.tool_loop_input_tokens is None or self.tool_loop_output_tokens is None:
+            return None
+        return self.tool_loop_input_tokens + self.tool_loop_output_tokens
+
+
 def build_matrix(results: list[ModelResult]) -> dict[str, dict[str, float | None]]:
     """model -> {task -> accuracy}. Last write wins on duplicate (model, task)."""
     matrix: dict[str, dict[str, float | None]] = {}
@@ -68,4 +90,41 @@ def format_details_markdown(results: list[ModelResult]) -> str:
             f"{r.input_tokens} | {r.output_tokens} | {r.duration_s:g} | "
             f"{r.cost_usd:g} |"
         )
+    return "\n".join(lines) + "\n"
+
+
+_TOOLUSE_COLS = [
+    "model", "task", "status", "samples", "correct", "tool_calls", "failed",
+    "turns", "loop_in_tok", "loop_out_tok", "tok/call", "calls/correct", "tok/correct",
+]
+
+
+def _ratio(numerator: int | None, denominator: int) -> str:
+    """Safe divide -> '—' when undefined (zero denominator or missing numerator)."""
+    if numerator is None or denominator == 0:
+        return "—"
+    return f"{numerator / denominator:.1f}"
+
+
+def format_tooluse_markdown(stats: list["ToolUseStats"]) -> str:
+    """Tool-utilization table. Failed runs render ERR; undefined ratios render '—'."""
+    lines = ["| " + " | ".join(_TOOLUSE_COLS) + " |",
+             "| " + " | ".join("---" for _ in _TOOLUSE_COLS) + " |"]
+    for s in sorted(stats, key=lambda x: (x.model, x.task)):
+        if s.status != "success":
+            cells = [s.model, s.task, s.status, str(s.samples)] + ["ERR"] * 9
+            lines.append("| " + " | ".join(cells) + " |")
+            continue
+        total = s.tool_loop_total_tokens
+        loop_in = "—" if s.tool_loop_input_tokens is None else str(s.tool_loop_input_tokens)
+        loop_out = "—" if s.tool_loop_output_tokens is None else str(s.tool_loop_output_tokens)
+        cells = [
+            s.model, s.task, s.status, str(s.samples), str(s.correct),
+            str(s.tool_calls), str(s.failed_tool_calls), str(s.model_turns),
+            loop_in, loop_out,
+            _ratio(total, s.tool_calls),
+            _ratio(s.tool_calls, s.correct),
+            _ratio(total, s.correct),
+        ]
+        lines.append("| " + " | ".join(cells) + " |")
     return "\n".join(lines) + "\n"
