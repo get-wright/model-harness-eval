@@ -11,7 +11,7 @@ from datetime import datetime
 
 from inspect_ai.log import EvalLog
 
-from sca_eval.matrix import ModelResult
+from sca_eval.matrix import ModelResult, ToolUseStats
 
 
 def _task_name(log: EvalLog) -> str:
@@ -52,6 +52,64 @@ def _duration_s(log: EvalLog) -> float:
 
 def _sample_count(log: EvalLog) -> int:
     return int(getattr(log.eval.dataset, "samples", 0) or 0)
+
+
+_CORRECT_VALUE = "C"  # inspect-ai CORRECT score value for match()/includes()
+
+
+def _sample_correct(sample) -> int:
+    scores = getattr(sample, "scores", None) or {}
+    for sc in scores.values():
+        if getattr(sc, "value", None) == _CORRECT_VALUE:
+            return 1
+    return 0
+
+
+def tool_use_stats(log: EvalLog) -> ToolUseStats:
+    """Derive tool-utilization metrics from a log's sample events.
+
+    Branches on the event discriminator (ev.event), so it needs no ModelEvent/
+    ToolEvent import. failed_tool_calls counts failed-flag OR error (both optional).
+    tool_loop tokens are None (not 0) if any ModelEvent lacked usage — never silently
+    underreport; the authoritative aggregate stays in summarize_log()/model_usage.
+    """
+    task = _task_name(log)
+    if log.status != "success":
+        return ToolUseStats(
+            model=log.eval.model, task=task, status=log.status,
+            samples=_sample_count(log), correct=0, tool_calls=0,
+            failed_tool_calls=0, model_turns=0, tool_loop_input_tokens=None,
+            tool_loop_output_tokens=None, events_missing_usage=0,
+        )
+
+    tool_calls = failed = turns = correct = missing = 0
+    in_tok = out_tok = 0
+    for sample in (getattr(log, "samples", None) or []):
+        for ev in (getattr(sample, "events", None) or []):
+            kind = getattr(ev, "event", None)
+            if kind == "tool":
+                tool_calls += 1
+                if getattr(ev, "failed", None) is True or getattr(ev, "error", None) is not None:
+                    failed += 1
+            elif kind == "model":
+                turns += 1
+                usage = getattr(getattr(ev, "output", None), "usage", None)
+                if usage is None:
+                    missing += 1
+                else:
+                    in_tok += int(getattr(usage, "input_tokens", 0) or 0)
+                    out_tok += int(getattr(usage, "output_tokens", 0) or 0)
+        correct += _sample_correct(sample)
+
+    return ToolUseStats(
+        model=log.eval.model, task=task, status="success",
+        samples=len(getattr(log, "samples", None) or []),
+        correct=correct, tool_calls=tool_calls, failed_tool_calls=failed,
+        model_turns=turns,
+        tool_loop_input_tokens=None if missing else in_tok,
+        tool_loop_output_tokens=None if missing else out_tok,
+        events_missing_usage=missing,
+    )
 
 
 def summarize_log(log: EvalLog) -> ModelResult:
