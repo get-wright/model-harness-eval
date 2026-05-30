@@ -141,11 +141,11 @@ This matters for an SCA triage pipeline. For high-volume single-shot classificat
 
 Each sample has a hard 600 s `time_limit`. If a run exceeds that limit, it is recorded as *cancelled* rather than scored as incorrect. No deployment was cancelled in this run. The slowest C2 task completed in 68 s.
 
-Figure 7 adds the pricing context from the OpenCode Go and Zen docs. The two panels use different units because the products are billed differently: Go is a subscription with estimated request capacity inside a monthly usage limit, while Zen is pay-as-you-go token pricing. The Go panel therefore reports estimated requests per month under the documented $60 monthly usage limit. The Zen panel reports input and output prices per 1M tokens for the Zen-routed deployments evaluated here.
+Figure 7 adds pricing context using the documented billing units as the calculation base. The two panels use different units because the products are billed differently: one uses subscription request capacity inside a monthly usage limit, and the other uses pay-as-you-go token pricing. The left panel reports estimated requests per month under the documented $60 monthly usage limit. The right panel reports input and output prices per 1M tokens for the evaluated pay-as-you-go deployments.
 
 ![Figure 7](fig_pricing.png)
 
-*Figure 7. Pricing comparison from OpenCode docs: Go monthly request capacity and Zen per-token rates.*
+*Figure 7. Pricing comparison using documented billing units: monthly request capacity and per-token rates.*
 
 ---
 

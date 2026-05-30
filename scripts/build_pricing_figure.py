@@ -1,9 +1,9 @@
 """Build the pricing comparison figure used by reports/main.md.
 
-The values are copied from the OpenCode Go and Zen docs on 2026-05-30.
-Go uses a subscription quota, so the figure reports estimated monthly requests
-inside the documented $60 monthly usage limit. Zen uses pay-as-you-go token
-pricing, so the figure reports input and output dollars per 1M tokens.
+The values are copied from the OpenCode pricing docs on 2026-05-30.
+The figure labels the billing units, not the product routes: one side uses
+estimated monthly requests inside the documented $60 subscription usage limit,
+and the other uses pay-as-you-go input/output dollars per 1M tokens.
 """
 
 from __future__ import annotations
@@ -18,7 +18,7 @@ import matplotlib.pyplot as plt  # noqa: E402
 ROOT = Path(__file__).resolve().parent.parent
 OUT = ROOT / "reports" / "fig_pricing.png"
 
-GO_MONTHLY_REQUESTS = {
+MONTHLY_REQUESTS = {
     "DeepSeek V4 Flash": 158_150,
     "DeepSeek V4 Pro": 17_150,
     "GLM-5.1": 4_300,
@@ -27,7 +27,7 @@ GO_MONTHLY_REQUESTS = {
     "Qwen3.7 Max": 4_770,
 }
 
-ZEN_TOKEN_PRICES = {
+TOKEN_PRICES = {
     "gpt-5.3-codex": (1.75, 14.00),
     "gpt-5.4": (2.50, 15.00),
     "gpt-5.5": (5.00, 30.00),
@@ -37,34 +37,34 @@ ZEN_TOKEN_PRICES = {
 
 
 def main() -> None:
-    fig, (ax_go, ax_zen) = plt.subplots(1, 2, figsize=(14, 6))
+    fig, (ax_requests, ax_tokens) = plt.subplots(1, 2, figsize=(14, 6))
 
-    go_items = sorted(GO_MONTHLY_REQUESTS.items(), key=lambda item: item[1])
-    go_names = [name for name, _ in go_items]
-    go_vals = [value for _, value in go_items]
-    ax_go.barh(go_names, go_vals, color="#4c72b0")
-    ax_go.set_xlabel("estimated requests per month")
-    ax_go.set_title("OpenCode Go subscription capacity")
-    ax_go.grid(axis="x", alpha=0.25)
-    for i, value in enumerate(go_vals):
-        ax_go.text(value, i, f" {value:,}", va="center", fontsize=8)
+    request_items = sorted(MONTHLY_REQUESTS.items(), key=lambda item: item[1])
+    request_names = [name for name, _ in request_items]
+    request_vals = [value for _, value in request_items]
+    ax_requests.barh(request_names, request_vals, color="#4c72b0")
+    ax_requests.set_xlabel("estimated requests per month")
+    ax_requests.set_title("Subscription request capacity")
+    ax_requests.grid(axis="x", alpha=0.25)
+    for i, value in enumerate(request_vals):
+        ax_requests.text(value, i, f" {value:,}", va="center", fontsize=8)
 
-    zen_items = sorted(ZEN_TOKEN_PRICES.items(), key=lambda item: item[1][1])
-    zen_names = [name for name, _ in zen_items]
-    zen_input = [value[0] for _, value in zen_items]
-    zen_output = [value[1] for _, value in zen_items]
-    x = range(len(zen_items))
+    token_items = sorted(TOKEN_PRICES.items(), key=lambda item: item[1][1])
+    token_names = [name for name, _ in token_items]
+    token_input = [value[0] for _, value in token_items]
+    token_output = [value[1] for _, value in token_items]
+    x = range(len(token_items))
     width = 0.38
-    ax_zen.bar([i - width / 2 for i in x], zen_input, width, label="input", color="#55a868")
-    ax_zen.bar([i + width / 2 for i in x], zen_output, width, label="output", color="#c44e52")
-    ax_zen.set_xticks(list(x))
-    ax_zen.set_xticklabels(zen_names, rotation=35, ha="right", fontsize=8)
-    ax_zen.set_ylabel("$ per 1M tokens")
-    ax_zen.set_title("OpenCode Zen pay-as-you-go rates")
-    ax_zen.grid(axis="y", alpha=0.25)
-    ax_zen.legend(frameon=False)
+    ax_tokens.bar([i - width / 2 for i in x], token_input, width, label="input", color="#55a868")
+    ax_tokens.bar([i + width / 2 for i in x], token_output, width, label="output", color="#c44e52")
+    ax_tokens.set_xticks(list(x))
+    ax_tokens.set_xticklabels(token_names, rotation=35, ha="right", fontsize=8)
+    ax_tokens.set_ylabel("$ per 1M tokens")
+    ax_tokens.set_title("Pay-as-you-go token rates")
+    ax_tokens.grid(axis="y", alpha=0.25)
+    ax_tokens.legend(frameon=False)
 
-    fig.suptitle("Pricing comparison from OpenCode docs", fontsize=14)
+    fig.suptitle("Pricing comparison using documented billing units", fontsize=14)
     fig.tight_layout()
     OUT.parent.mkdir(parents=True, exist_ok=True)
     fig.savefig(OUT, dpi=130)
