@@ -88,8 +88,8 @@ runner or scoring path. It adds (a) a file-seeding dataset loader, (b) a sandbox
   tuple sandbox form above. *deps:* Docker at runtime.
 - **Tool-use extraction** — *purpose:* derive utilization metrics from the log.
   *interface:* `tool_use_stats(log) -> ToolUseStats` reading `log.samples[].events`
-  (count `ToolEvent`, `ToolEvent` where `failed` is true, assistant `ModelEvent` turns,
-  and per-`ModelEvent` `output.usage` for tool-loop tokens — see §5).
+  (count `ToolEvent`, failed `ToolEvent`s — see §5 for the definition, assistant
+  `ModelEvent` turns, and per-`ModelEvent` `output.usage` for tool-loop tokens — see §5).
   **Import `ToolEvent` / `ModelEvent` from `inspect_ai.event`, not `inspect_ai.log`**
   (the latter is deprecated since 0.3.137 and removed in 0.4). *deps:* inspect-ai log
   schema (isolated in `extract.py`, like `summarize_log`).
@@ -103,17 +103,25 @@ Primary (into the accuracy matrix, parent §6):
 
 Tool-use table (new `out/tooluse.md`), per (model, task):
 - `tool_calls` — total `ToolEvent`s.
-- `failed_tool_calls` — `ToolEvent`s where `failed` is true (the `failed` bool field;
-  `error` carries the detail).
+- `failed_tool_calls` — count of `ToolEvent`s where **`failed is True` OR `error is not
+  None`**. Both fields are optional (`failed: bool | None`, `error: ToolCallError | None`),
+  and a failure can surface in either, so checking only `failed` undercounts. The
+  extraction test covers both forms (failed-only, error-only) plus the success case.
 - `model_turns` — assistant generations (`ModelEvent` count = tool-loop length).
 - `tool_loop_tokens` — **the "count tokens in tool use" metric, defined precisely:**
   the sum of per-`ModelEvent` `output.usage.input_tokens` and `output.usage.output_tokens`
-  across every `ModelEvent` in the sample. inspect-ai exposes no automatic "tool-loop
-  tokens" field, so this is event-derived. Because tools are enabled from the first
-  generation, this sum is the total token cost of the entire multi-turn tool loop; we
-  report it as `tool_loop_input_tokens` + `tool_loop_output_tokens`. It is derived
-  per-event (not from `log.stats.model_usage`) so it can be divided by `tool_calls` and
-  `model_turns` for per-call / per-turn cost.
+  across every `ModelEvent` in the sample, reported as `tool_loop_input_tokens` +
+  `tool_loop_output_tokens`. inspect-ai exposes no automatic "tool-loop tokens" field, so
+  this is event-derived per-`ModelEvent` (not from `log.stats.model_usage`) precisely so it
+  can be divided by `tool_calls` / `model_turns` for per-call / per-turn cost.
+  **Missing-usage rule (required — `ModelOutput.usage` is optional, `ModelUsage | None`):**
+  if *any* `ModelEvent` in a sample has `usage is None`, the per-event sum is incomplete,
+  so the sample's `tool_loop_tokens` renders **`—` (incomplete), never 0** — counting
+  missing usage as zero would silently underreport. The run also records
+  `events_missing_usage` (count). The authoritative *aggregate* token totals continue to
+  come from `log.stats.model_usage` (existing `ModelResult.input/output_tokens`), which is
+  reported regardless; `tool_loop_tokens` is the per-event breakdown, best-effort and
+  explicitly flagged when partial.
 - `duration_s`, `cost_usd` — existing.
 - Derived: `tokens_per_correct`, `tool_calls_per_correct`, `tokens_per_tool_call`
   (undefined / "—" when the denominator is zero, never a fake 0 — consistent with
@@ -168,17 +176,24 @@ Hermetic (no Docker, no API keys — runnable in CI / `uv run pytest`):
 - **Loader test:** every C2 sample has a target, a referenced payload file that exists,
   and a well-formed `files` mapping; bad records raise with file+line context.
 - **Tool-use extraction test:** build a synthetic `EvalLog` with known `ToolEvent` /
-  `ModelEvent` sequences (incl. an errored tool call) → assert exact `tool_calls`,
-  `failed_tool_calls`, `model_turns`.
+  `ModelEvent` sequences → assert exact `tool_calls`, `failed_tool_calls`, `model_turns`,
+  and `tool_loop_tokens`. Must cover: a `failed=True` call, an `error`-only call (failed
+  unset), a success call; a `ModelEvent` with `usage=None` → `tool_loop_tokens` renders
+  `—` and `events_missing_usage` increments (not silently zeroed).
 - **Table rendering test:** `format_tooluse_markdown` shape, ERR/"—" handling, zero-correct
   derived metrics.
 
 Docker-gated (skipped via `pytest.mark.skipif` when Docker is unavailable):
 - **Compose-active / no-egress assertion:** prove the tuple sandbox form actually applied
-  the compose file — execute a network attempt inside the sandbox (e.g.
-  `python3 -c "socket.create_connection(('192.0.2.1',80),timeout=3)"`) and assert it
-  fails with an unreachable/blocked error. A bare `sandbox="docker"` (no compose) would
-  let egress through and fail this test — that is the point of the assertion.
+  the compose file. A connection attempt to a TEST-NET address (`192.0.2.0/24`) is **not**
+  a valid probe — it fails under ordinary Docker bridge networking too, so a misconfigured
+  bare `sandbox="docker"` would pass it. Instead assert the *routing state* that
+  `network_mode: none` produces and bridge networking does not: inside the sandbox,
+  `/proc/net/route` has **no default route** (no entry with destination `00000000`) and
+  the only interface is loopback (no `eth0`). A bare-docker bridge container has a default
+  route via `eth0`, so this assertion discriminates the two configs. (Optional stronger
+  form: a positive/negative comparison running the same probe against a sandbox *without*
+  `network_mode: none` and asserting the routing differs.)
 - **Smoke test:** one sample end-to-end with a tiny model, asserting tool-use events are
   recorded and `tool_use_stats` returns non-zero `tool_calls`.
 
