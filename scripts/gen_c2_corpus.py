@@ -45,7 +45,7 @@ def split_js(s: str, parts: list[str]) -> str:
 
 
 def gzip_b64(s: str) -> str:
-    return base64.b64encode(gzip.compress(s.encode())).decode()
+    return base64.b64encode(gzip.compress(s.encode(), mtime=0)).decode()
 
 
 # (id, technique, target, filename, payload_text, prompt_hint)
