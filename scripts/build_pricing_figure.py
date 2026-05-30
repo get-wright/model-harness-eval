@@ -1,13 +1,18 @@
 """Build the pricing comparison figure used by reports/main.md.
 
-The values are copied from the OpenCode pricing docs on 2026-05-30.
-The figure labels the billing units, not the product routes: one side uses
-estimated monthly requests inside the documented $60 subscription usage limit,
-and the other uses pay-as-you-go input/output dollars per 1M tokens.
+Reports the total pay-as-you-go (PAYG) cost to run the entire benchmark
+(all 8 tasks, every sample) once per deployment, on one common per-token basis:
+each deployment's real input and output token counts (summed across all tasks,
+read from reports_data.json) multiplied by its published per-token rate.
+
+Rates confirmed on 2026-05-30. DeepSeek rates are the vendor's published PAYG
+(api-docs.deepseek.com; deepseek-v4-pro at its current promotional price); the
+other rates are the gateway's PAYG table.
 """
 
 from __future__ import annotations
 
+import json
 from pathlib import Path
 
 import matplotlib
@@ -16,59 +21,68 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt  # noqa: E402
 
 ROOT = Path(__file__).resolve().parent.parent
+DATA = ROOT / "reports_data.json"
 OUT = ROOT / "reports" / "fig_pricing.png"
+CANONICAL_DIRS = {"all-go", "all-zen5"}
 
-MONTHLY_REQUESTS = {
-    "DeepSeek V4 Flash": 158_150,
-    "DeepSeek V4 Pro": 17_150,
-    "GLM-5.1": 4_300,
-    "Kimi K2.6": 5_750,
-    "Qwen3.6 Plus": 16_300,
-    "Qwen3.7 Max": 4_770,
-}
+# Open-weight = publicly released weights. Qwen Max/Plus are proprietary API
+# models, so they count as closed-weight (matching the report's taxonomy).
+OPEN_WEIGHT = {"deepseek-v4-pro", "deepseek-v4-flash", "glm-5.1", "kimi-k2.6"}
 
-TOKEN_PRICES = {
-    "gpt-5.3-codex": (1.75, 14.00),
-    "gpt-5.4": (2.50, 15.00),
-    "gpt-5.5": (5.00, 30.00),
-    "claude-opus-4-7": (5.00, 25.00),
+# ($/1M input, $/1M output)
+PAYG_RATES = {
+    "gpt-5.3-codex": (1.75, 14.00), "gpt-5.4": (2.50, 15.00),
+    "gpt-5.5": (5.00, 30.00), "claude-opus-4-7": (5.00, 25.00),
     "claude-opus-4-8": (5.00, 25.00),
+    "glm-5.1": (1.40, 4.40), "kimi-k2.6": (0.95, 4.00),
+    "qwen3.7-max": (2.50, 7.50), "qwen3.6-plus": (0.50, 3.00),
+    "deepseek-v4-flash": (0.14, 0.28), "deepseek-v4-pro": (0.435, 0.87),
 }
+COLORS = {"open-weight": "#4c72b0", "closed-weight": "#dd8452"}
+
+
+def base(model_id: str) -> str:
+    return model_id.split("/")[-1]
 
 
 def main() -> None:
-    fig, (ax_requests, ax_tokens) = plt.subplots(1, 2, figsize=(14, 6))
+    rows = json.loads(DATA.read_text())["rows"]
+    tok: dict[str, list[int]] = {}
+    for r in rows:
+        if r["dir"] not in CANONICAL_DIRS:
+            continue
+        a = tok.setdefault(base(r["model"]), [0, 0])
+        a[0] += r["intok"]
+        a[1] += r["outtok"]
 
-    request_items = sorted(MONTHLY_REQUESTS.items(), key=lambda item: item[1])
-    request_names = [name for name, _ in request_items]
-    request_vals = [value for _, value in request_items]
-    ax_requests.barh(request_names, request_vals, color="#4c72b0")
-    ax_requests.set_xlabel("estimated requests per month")
-    ax_requests.set_title("Subscription request capacity")
-    ax_requests.grid(axis="x", alpha=0.25)
-    for i, value in enumerate(request_vals):
-        ax_requests.text(value, i, f" {value:,}", va="center", fontsize=8)
+    costs = {}
+    for m, (intok, outtok) in tok.items():
+        rate = PAYG_RATES.get(m)
+        if rate is None:
+            continue
+        costs[m] = rate[0] * intok / 1e6 + rate[1] * outtok / 1e6
 
-    token_items = sorted(TOKEN_PRICES.items(), key=lambda item: item[1][1])
-    token_names = [name for name, _ in token_items]
-    token_input = [value[0] for _, value in token_items]
-    token_output = [value[1] for _, value in token_items]
-    x = range(len(token_items))
-    width = 0.38
-    ax_tokens.bar([i - width / 2 for i in x], token_input, width, label="input", color="#55a868")
-    ax_tokens.bar([i + width / 2 for i in x], token_output, width, label="output", color="#c44e52")
-    ax_tokens.set_xticks(list(x))
-    ax_tokens.set_xticklabels(token_names, rotation=35, ha="right", fontsize=8)
-    ax_tokens.set_ylabel("$ per 1M tokens")
-    ax_tokens.set_title("Pay-as-you-go token rates")
-    ax_tokens.grid(axis="y", alpha=0.25)
-    ax_tokens.legend(frameon=False)
+    order = sorted(costs, key=lambda m: costs[m], reverse=True)
+    vals = [costs[m] for m in order]
+    bar_colors = [COLORS["open-weight" if m in OPEN_WEIGHT else "closed-weight"]
+                  for m in order]
 
-    fig.suptitle("Pricing comparison using documented billing units", fontsize=14)
+    fig, ax = plt.subplots(figsize=(11, 6))
+    ax.barh(order, vals, color=bar_colors)
+    ax.invert_yaxis()
+    ax.set_xlabel("total pay-as-you-go cost to run all 8 tasks (USD)")
+    ax.set_title("Cost to run the full benchmark — pay-as-you-go token pricing")
+    for i, v in enumerate(vals):
+        ax.text(v, i, f" ${v:.3f}", va="center", fontsize=8)
+    ax.tick_params(axis="y", labelsize=8)
+    handles = [plt.Line2D([0], [0], marker="s", linestyle="", color=c, label=p)
+               for p, c in COLORS.items()]
+    ax.legend(handles=handles, loc="lower right", frameon=False, fontsize=8)
     fig.tight_layout()
     OUT.parent.mkdir(parents=True, exist_ok=True)
     fig.savefig(OUT, dpi=130)
     plt.close(fig)
+    print(f"wrote {OUT}: {len(order)} deployments, ${min(vals):.3f}-${max(vals):.3f}")
 
 
 if __name__ == "__main__":
