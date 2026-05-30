@@ -81,7 +81,9 @@ def run_survey(
     out.write_text(format_markdown(matrix))
     (out.parent / "details.md").write_text(format_details_markdown(results))
 
-    failed = [r for r in results if r.status != "success"]
+    # Anything that renders ERR in the matrix (failed status OR a successful run
+    # that somehow produced no score) must also appear in FAILURES.md.
+    failed = [r for r in results if r.status != "success" or r.accuracy is None]
     if not success or failed:
         (out.parent / "FAILURES.md").write_text(_failures_report(failed))
         print(f"WARNING: eval_set success={success}, {len(failed)} failed run(s). "
