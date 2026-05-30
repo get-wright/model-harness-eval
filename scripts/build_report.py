@@ -42,11 +42,11 @@ EASY = TASKS[:3]
 HARD = TASKS[3:]
 C2_TASKS = {"tool_use_c2", "tool_use_c2_hard"}
 
-# Closed deployments served by Opencode Zen; everything else is Opencode Go.
-ZEN_BASES = {"gpt-5.3-codex", "gpt-5.4", "gpt-5.5",
-             "claude-opus-4-7", "claude-opus-4-8"}
+# Open-weight = publicly released weights (DeepSeek/GLM/Kimi). Qwen Max/Plus are
+# proprietary API models, so they are closed-weight alongside GPT and Opus.
+OPEN_WEIGHT = {"deepseek-v4-pro", "deepseek-v4-flash", "glm-5.1", "kimi-k2.6"}
 
-PROVIDER_COLORS = {"Opencode Go": "#4c72b0", "Opencode Zen": "#dd8452"}
+PROVIDER_COLORS = {"open-weight": "#4c72b0", "closed-weight": "#dd8452"}
 
 
 def base_name(model_id: str) -> str:
@@ -54,7 +54,7 @@ def base_name(model_id: str) -> str:
 
 
 def provider(model_id: str) -> str:
-    return "Opencode Zen" if base_name(model_id) in ZEN_BASES else "Opencode Go"
+    return "open-weight" if base_name(model_id) in OPEN_WEIGHT else "closed-weight"
 
 
 def disp(model_id: str) -> str:
