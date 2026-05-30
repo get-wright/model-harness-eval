@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+from collections.abc import Iterator
 from pathlib import Path
 
 from inspect_ai.dataset import Sample
@@ -27,7 +28,7 @@ C2_DATASETS = (
 SANDBOX_WORKDIR = "/work"
 
 
-def _iter_records(path: Path):
+def _iter_records(path: Path) -> Iterator[tuple[int, dict]]:
     """Yield (line_no, record) for each non-blank JSONL line; report file+line on bad JSON."""
     for line_no, raw in enumerate(path.read_text().splitlines(), start=1):
         line = raw.strip()
@@ -83,17 +84,28 @@ def load_c2_dataset(name: str) -> list[Sample]:
                 f"missing metadata.payload_file in {path} line {line_no}"
             ) from exc
         local = _PAYLOAD_DIR / payload_file
+        try:
+            local.resolve().relative_to(_PAYLOAD_DIR.resolve())
+        except ValueError:
+            raise ValueError(
+                f"payload_file {payload_file!r} escapes payloads dir in {path} line {line_no}"
+            )
         if not local.exists():
             raise ValueError(
                 f"payload file {local} referenced in {path} line {line_no} does not exist"
             )
-        samples.append(
-            Sample(
-                id=record["id"],
-                input=record["input"],
-                target=record["target"],
-                metadata=record.get("metadata", {}),
-                files={f"{SANDBOX_WORKDIR}/{payload_file}": str(local)},
+        try:
+            samples.append(
+                Sample(
+                    id=record["id"],
+                    input=record["input"],
+                    target=record["target"],
+                    metadata=record.get("metadata", {}),
+                    files={f"{SANDBOX_WORKDIR}/{payload_file}": str(local)},
+                )
             )
-        )
+        except KeyError as exc:
+            raise ValueError(
+                f"missing required key {exc} in {path} line {line_no}"
+            ) from exc
     return samples
