@@ -45,6 +45,32 @@ samples, duration, input/output tokens, cost), `out/FAILURES.md` (only if a run
 failed), and per-run logs in `logs/survey/`
 (view with `uv run inspect view --log-dir logs/survey`).
 
+## Tool-use C2-extraction benchmark (Docker required)
+
+`tool_use_c2` / `tool_use_c2_hard` measure the **tool-use** capability axis: the model
+is dropped in a network-isolated Docker sandbox holding an obfuscated payload and must
+recover the command-and-control (C2) indicator using the `bash` and `python` tools.
+
+```bash
+uv run python -m sca_eval.run \
+  --models anthropic/claude-opus-4-8 \
+  --tasks tool_use_c2 tool_use_c2_hard \
+  --out out/c2-matrix.md
+```
+
+Outputs add `out/tooluse.md`: per (model, task) tool-call count, failed calls, model
+turns, tool-loop input/output tokens, and derived tokens-per-call / -per-correct.
+Missing per-event usage renders `—` (never a fake 0); failed runs render `ERR`.
+
+**Corpus** is synthetic, modeled on documented incident techniques (layered base64, hex,
+char-code arrays, XOR, split-concat, gzip+base64, runtime-computed). Regenerate with
+`uv run python scripts/gen_c2_corpus.py`.
+
+**Safety:** the sandbox runs `network_mode: none` (see `src/sca_eval/sandbox/compose.yaml`)
+via the tuple sandbox form `("docker", compose.yaml)`; all C2 values are non-routable
+fakes (RFC 5737 TEST-NET, `.invalid`/`.example`). Nothing is ever contacted. The
+docker-gated test `tests/test_c2_sandbox.py` proves no egress.
+
 ## What this measures
 
 Accuracy per task per model, plus latency, input/output tokens, and cost per run.
