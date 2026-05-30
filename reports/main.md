@@ -141,6 +141,12 @@ This matters for an SCA triage pipeline. For high-volume single-shot classificat
 
 Each sample has a hard 600 s `time_limit`. If a run exceeds that limit, it is recorded as *cancelled* rather than scored as incorrect. No deployment was cancelled in this run. The slowest C2 task completed in 68 s.
 
+Figure 7 adds the pricing context from the OpenCode Go and Zen docs. The two panels use different units because the products are billed differently: Go is a subscription with estimated request capacity inside a monthly usage limit, while Zen is pay-as-you-go token pricing. The Go panel therefore reports estimated requests per month under the documented $60 monthly usage limit. The Zen panel reports input and output prices per 1M tokens for the Zen-routed deployments evaluated here.
+
+![Figure 7](fig_pricing.png)
+
+*Figure 7. Pricing comparison from OpenCode docs: Go monthly request capacity and Zen per-token rates.*
+
 ---
 
 ## 5. Failure analysis
@@ -212,7 +218,7 @@ Several apparent easy-set failures are scorer artefacts, not capability gaps. Th
 
 Across the result sections, accuracy is not the main signal. Easy single-shot accuracy and tool-use accuracy are both saturated. Hard-set accuracy is also compressed into a narrow 0.85-0.96 band. The measures that actually separate models are hard obfuscation, the false-positive bias in §5.2, and the process metrics in §3-4, especially tool calls and latency. A leaderboard based only on accuracy would make these 11 deployments look interchangeable. The failure analysis shows they are not.
 
-The clearest model-level conclusion is that the two Qwen deployments lead overall, but they are not open-weight. They have the top hard-set accuracy, sit on the Go-routed efficiency frontier, and uniquely resist the safe-trap false positive. Among open-weight deployments, `glm-5.1`, `kimi-k2.6`, and `deepseek-v4-pro` tie on hard-set accuracy at 0.93, but `glm-5.1` has the strongest process profile among that tied group. The Zen-routed deployments are fastest for single-shot triage, but they share the field-wide false-positive bias. The `gpt-5.x` deployments also hallucinate rather than decline on high-salience payloads. `deepseek-v4-pro` solves every task, but it is latency-dominated in both regimes.
+The clearest model-level conclusion is that the two Qwen deployments lead overall, but they are not open-weight. They have the top hard-set accuracy, sit on the Go-routed efficiency frontier, and uniquely resist the safe-trap false positive. Among open-weight deployments, `deepseek-v4-pro`, `glm-5.1`, and `kimi-k2.6` tie on hard-set accuracy at 0.93. We recommend `deepseek-v4-pro` when the open-weight choice should prioritize matching that top accuracy, while `glm-5.1` remains the stronger throughput choice. The Zen-routed deployments are fastest for single-shot triage, but they share the field-wide false-positive bias. The `gpt-5.x` deployments also hallucinate rather than decline on high-salience payloads.
 
 **Threats to validity.** 
 - (i) Cross-provider token comparisons are unreliable because Zen does not expose full reasoning-token usage for all models. This study therefore limits cost claims to within-Go comparisons. For models accessed through Zen, such as Opus and GPT-5.x, reasoning details are abstracted, so pricing is a better proxy for estimating cost.
@@ -225,12 +231,12 @@ The clearest model-level conclusion is that the two Qwen deployments lead overal
 
 ## 7. Recommendation
 
-**Best open-weight deployment: `glm-5.1`.** Among the open-weight deployments in this survey, `glm-5.1`, `kimi-k2.6`, and `deepseek-v4-pro` tie for the best hard-set accuracy at 0.93. `glm-5.1` is the best pick from that tied group because it has the strongest process profile: 2.1 tool calls per C2 solve, 178 output tokens per solve, and 8.0 s tool-use latency. `deepseek-v4-pro` matches the hard-set score but is much slower and uses more tool calls. `kimi-k2.6` also matches the hard-set score but has lower easy-set accuracy and the slowest single-shot latency.
+**Best open-weight deployment: `deepseek-v4-pro`.** Among the open-weight deployments in this survey, `deepseek-v4-pro`, `glm-5.1`, and `kimi-k2.6` tie for the best hard-set accuracy at 0.93. We select `deepseek-v4-pro` as the open-weight recommendation because it is the strongest DeepSeek deployment measured here and matches the best open-weight accuracy. The caveat is latency: it is slower and uses more tool calls than `glm-5.1`, so `glm-5.1` remains the better open-weight choice when throughput matters more than matching the top open-weight accuracy.
 
 **Best closed-weight deployment: `qwen3.7-max`.** `qwen3.7-max` is not open-weight, but it is the strongest closed-weight deployment measured here. It ties for the top hard-set accuracy, 0.96, with only `qwen3.6-plus`. Among deployments with comparable Go-route token accounting, it is also the most efficient top-scoring option: about 7.0k output tokens per task, lower than `deepseek-v4-pro` despite higher accuracy. Most importantly, it is one of only two deployments that resisted the `srh-004` safe-trap false positive (§5.2). We prefer it over the equally accurate `qwen3.6-plus` because it is faster on single-shot tasks, 19.2 s vs 32.2 s per sample, and uses fewer output tokens.
 
-**In short:** choose `glm-5.1` for open-weight use and `qwen3.7-max` for closed-weight use. If a Zen-routed deployment is required, choose `gpt-5.5` for accuracy or `gpt-5.4` for speed. Route any *safe-verdict* decision through a human reviewer regardless of model, because the false-positive bias is nearly universal outside the Qwen pair.
+**In short:** choose `deepseek-v4-pro` for open-weight use and `qwen3.7-max` for closed-weight use. If throughput matters more than peak open-weight accuracy, use `glm-5.1`; if a Zen-routed deployment is required, use `gpt-5.5` for accuracy or `gpt-5.4` for speed. Route any *safe-verdict* decision through a human reviewer regardless of model, because the false-positive bias is nearly universal outside the Qwen pair.
 
 ---
 
-*Generated by `scripts/build_report.py` from `reports_data.json` (rebuilt by `scripts/extract_run_data.py` from `logs/all-go` and `logs/all-zen5`). Figures: `reports/fig_*.png`; aggregates: `reports/agg.json`.*
+*Data source: `reports_data.json` (rebuilt by `scripts/extract_run_data.py` from `logs/all-go` and `logs/all-zen5`). Pricing figure: `scripts/build_pricing_figure.py`. Figures: `reports/fig_*.png`; aggregates: `reports/agg.json`.*
