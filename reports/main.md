@@ -1,10 +1,12 @@
 # Evaluating Language Models for Supply-Chain-Attack Analysis: A Capability and Tool-Use Survey
 
-**Phase 0–1 model survey — 2026-05-30**
-
 ## Abstract
 
-We evaluate 11 model deployments on a model-independent benchmark for supply-chain-attack (SCA) reasoning, comprising six single-shot capability tasks across three language-agnostic axes (code comprehension, obfuscation, security reasoning), each in an easy and a deliberately hard variant, together with a tool-use benchmark in which the model must recover a command-and-control (C2) indicator from an obfuscated payload using shell and Python tools inside a network-isolated container. All deployments are exercised through a single harness (inspect-ai with deterministic scorers) under identical prompts and decoding parameters, so that scores are comparable within each task family. Open-weight models are served via Opencode Go and closed models (GPT-5.x, Claude Opus) via Opencode Zen. We report accuracy, generation cost, tool-utilisation, and per-sample latency, and we separate input (context) from output (generation) tokens throughout, as the two diverge sharply in the multi-turn setting.
+We evaluate 11 model deployments on a model-independent benchmark for supply-chain-attack related reasoning, comprising six single-shot capability tasks across three language-agnostic axes (code comprehension, obfuscation, security reasoning), together with a tool-use benchmark in which the model must recover a command-and-control (C2) indicator from an obfuscated payload using shell and Python tools inside a network-isolated container. 
+
+All deployments are exercised through a single harness (inspect-ai with deterministic scorers) under identical prompts and decoding parameters, so that scores are comparable within each task family. Open-weight models are served via Opencode Go and closed models (GPT-5.x, Claude Opus) via Opencode Zen. 
+
+We report accuracy, generation cost, tool-utilisation, and per-sample latency, and we separate input (context) from output (generation) tokens throughout, as the two diverge sharply in the multi-turn setting.
 
 ---
 
@@ -23,9 +25,9 @@ Table 1 lists the evaluated deployments. Each is addressed through its provider 
 
 ### 1.2 Tasks and scoring
 
-The three capability axes are scored deterministically: substring containment for code comprehension, case-insensitive matching for obfuscation, and a line-anchored verdict parser for security reasoning. The hard security set deliberately includes *safe traps* — defended code that superficially resembles a vulnerability — to probe false-positive bias rather than recall alone.
+The three capability axes are scored deterministically: substring containment for code comprehension, case-insensitive matching for obfuscation, and a line-anchored verdict parser for security reasoning. The hard security set deliberately includes *safe traps*, which is defended code that superficially resembles a vulnerability — to probe false-positive bias rather than recall alone.
 
-The tool-use task places an obfuscated payload in a Docker sandbox (`network_mode: none`); the model must recover the embedded C2 indicator using the `bash` and `python` tools and is scored by case-insensitive matching against the ground-truth indicator. The corpus is synthetic and modelled on documented incident techniques (layered base64, hexadecimal, character-code arrays, XOR, gzip, and runtime-computed assembly); all indicators are non-routable (RFC 5737 ranges and `.invalid`/`.example` domains), and no network egress is possible, so the benchmark is safe to re-run.
+The tool-use task places an obfuscated payload in a Docker sandbox (with `network_mode: none`); the model must recover the embedded C2 indicator using the `bash` and `python` tools and is scored by case-insensitive matching against the ground-truth indicator. The testing set is synthetic and modelled on documented incident techniques (layered base64, hexadecimal, character-code arrays, XOR, gzip, and runtime-computed assembly); all indicators are non-routable (RFC 5737 ranges and `.invalid`/`.example` domains), and no network egress is possible.
 
 ---
 
@@ -210,7 +212,10 @@ Reading the four result sections together, the discriminating signal in this sur
 
 The clearest model-level conclusion is that the two Qwen deployments lead on the dimensions that matter: top hard-set accuracy, the open-weight efficiency front, and — uniquely — resistance to the safe-trap false positive. The closed deployments are fastest for single-shot triage but share the field-wide false-positive bias, and `gpt-5.x` additionally hallucinates rather than declines on high-salience payloads. `deepseek-v4-pro` solves everything but is latency-dominated in both regimes.
 
-**Threats to validity.** (i) Cross-provider token comparisons are unsound because the Zen gateways hide reasoning tokens; only within-Go cost claims are made. (ii) The deterministic scorers have a non-zero false-negative rate (§5.3), so easy-set accuracy is a lower bound. (iii) Per-axis sample counts are small (4 easy / 9 hard per capability axis; 18 C2 solves), so single-item differences move the means and the rankings within a 0.03 band should not be over-read. (iv) The corpus is synthetic; while modelled on documented incident techniques, it does not establish real-world malware performance. (v) A single run per (model, task) pair means run-to-run variance is unmeasured.
+**Threats to validity.** 
+- (i) Cross-provider token comparisons are unreliable because Zen does not expose the full reasoning-token usage of all models. Therefore, this study limits cost claims to within-Go comparisons. For closed-source models accessed through Zen, such as Opus and GPT-5.x, reasoning details are intentionally abstracted, so pricing is used as a more appropriate proxy for estimation.
+- (ii) The deterministic scorers have a non-zero false-negative rate (§5.3), so easy-set accuracy is a lower bound.
+- (iii) Per-axis sample counts are small (4 easy / 9 hard per capability axis; 18 C2 solves), so single-item differences move the means and the rankings within a 0.03 band should not be over-read. (iv) The corpus is synthetic; while modelled on documented incident techniques, it does not establish real-world malware performance. (v) A single run per (model, task) pair means run-to-run variance is unmeasured.
 
 ---
 
