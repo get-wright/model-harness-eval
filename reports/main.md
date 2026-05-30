@@ -1,7 +1,5 @@
 # AI-Augmented Supply-Chain-Attack Analysis — Model Evaluation Report
 
----
-
 ## 1. How the models were tested, and how they responded
 
 ### 1.1 Providers and routing
