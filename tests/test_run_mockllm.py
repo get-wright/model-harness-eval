@@ -146,6 +146,29 @@ def test_run_survey_writes_tooluse_for_c2(tmp_path, monkeypatch):
     assert "160" in text and "40" in text  # tool-loop tokens summed from ModelEvents
 
 
+def test_run_survey_rereads_header_only_log_for_tooluse(tmp_path, monkeypatch):
+    # eval_set returns HEADER-ONLY logs (samples=None); run.py must re-read the
+    # full log from disk via read_eval_log(log.location) so tool_use_stats sees
+    # events. Simulate: a header log (samples=None) with a location, and a patched
+    # read_eval_log that returns the full log.
+    full = _fake_c2_log()
+    header = SimpleNamespace(
+        status="success", samples=None, location="/tmp/fake.eval",
+        eval=full.eval, results=full.results, stats=full.stats,
+    )
+    monkeypatch.setattr(run_mod, "eval_set", lambda *a, **k: (True, [header]))
+    monkeypatch.setattr(run_mod, "read_eval_log",
+                        lambda location, *a, **k: full if location == "/tmp/fake.eval" else None)
+    out = tmp_path / "m.md"
+    run_mod.run_survey(
+        models=["mockllm/model"], task_names=["tool_use_c2"],
+        log_dir=str(tmp_path / "logs"), out_path=str(out),
+    )
+    text = (out.parent / "tooluse.md").read_text()
+    # tool_calls from the full log's events (1 tool event) -> not a zeroed row
+    assert "tool_use_c2" in text and "160" in text and "40" in text
+
+
 def test_run_survey_synthesizes_tooluse_err_for_missing_c2(tmp_path, monkeypatch):
     # eval_set returns no logs -> the expected C2 pair must still appear, as ERR.
     monkeypatch.setattr(run_mod, "eval_set", lambda *a, **k: (False, []))

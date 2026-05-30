@@ -18,6 +18,7 @@ from dataclasses import replace
 from pathlib import Path
 
 from inspect_ai import eval_set
+from inspect_ai.log import read_eval_log
 
 from sca_eval.extract import summarize_log, tool_use_stats
 from sca_eval.matrix import (
@@ -39,6 +40,19 @@ def _failures_report(failed: list[ModelResult]) -> str:
     for r in failed:
         lines.append(f"- {r.model} / {r.task}: status={r.status}")
     return "\n".join(lines) + "\n"
+
+
+def _full_log(log):
+    """Return a log whose per-sample events are loaded.
+
+    eval_set() returns header-only logs (samples=None); tool_use_stats needs the
+    sample events, so re-read the full log from disk. In-memory logs that already
+    carry samples (e.g. unit tests) are returned unchanged.
+    """
+    if getattr(log, "samples", None) is not None:
+        return log
+    location = getattr(log, "location", None)
+    return read_eval_log(location) if location else log
 
 
 def run_survey(
@@ -102,7 +116,7 @@ def run_survey(
     # Tool-use utilization table for any C2 (tool-use) task in this run.
     c2_task_names = [t for t in task_names if t in C2_TASKS]
     if c2_task_names:
-        tu_stats = [s for s in (tool_use_stats(log) for log in logs)
+        tu_stats = [s for s in (tool_use_stats(_full_log(log)) for log in logs)
                     if s.task in C2_TASKS]
         # Symmetric to the ERR ModelResult synthesis above: any expected C2
         # (model, task) that produced no log gets an ERR row so tooluse.md never
