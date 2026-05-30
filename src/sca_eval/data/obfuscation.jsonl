@@ -1,4 +1,4 @@
 {"id": "ob-001", "input": "This string is base64-encoded. Decode it and reply with ONLY the decoded text.\n\naGVsbG8gd29ybGQ=", "target": "hello world", "metadata": {"encoding": "base64"}}
-{"id": "ob-002", "input": "Decode this hex-encoded ASCII string and reply with ONLY the decoded text.\n\n6361742f6574632f706173737764", "target": "cat/etc/passwd", "metadata": {"encoding": "hex"}}
+{"id": "ob-002", "input": "Decode this hex-encoded ASCII string and reply with ONLY the decoded text.\n\n2f6574632f706173737764", "target": "/etc/passwd", "metadata": {"encoding": "hex"}}
 {"id": "ob-003", "input": "This is ROT13. Reply with ONLY the decoded text.\n\nriny", "target": "eval", "metadata": {"encoding": "rot13"}}
 {"id": "ob-004", "input": "What single JS function does this obfuscated call ultimately invoke? Reply with ONLY the function name.\n\nwindow[\"ev\"+\"al\"](payload)", "target": "eval", "metadata": {"encoding": "string-concat"}}

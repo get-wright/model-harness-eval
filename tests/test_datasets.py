@@ -21,3 +21,25 @@ def test_unknown_dataset_raises():
 
     with pytest.raises(KeyError):
         load_dataset("does_not_exist")
+
+
+def test_malformed_json_line_reports_file_and_line(tmp_path):
+    import pytest
+
+    from sca_eval.datasets import _load_jsonl
+
+    bad = tmp_path / "bad.jsonl"
+    bad.write_text('{"id": "ok", "input": "x", "target": "y"}\nnot json\n')
+    with pytest.raises(ValueError, match="line 2"):
+        _load_jsonl(bad)
+
+
+def test_missing_required_key_reports_context(tmp_path):
+    import pytest
+
+    from sca_eval.datasets import _load_jsonl
+
+    bad = tmp_path / "bad.jsonl"
+    bad.write_text('{"id": "ok", "input": "x"}\n')  # no target
+    with pytest.raises(ValueError, match="target"):
+        _load_jsonl(bad)
