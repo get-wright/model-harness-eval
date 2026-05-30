@@ -22,3 +22,44 @@ def test_run_survey_writes_matrix_and_details_for_mockllm(tmp_path):
 
     # mockllm succeeds -> no failure report written
     assert not (tmp_path / "FAILURES.md").exists()
+
+
+def test_run_survey_writes_failures_md_when_a_log_fails(tmp_path):
+    from unittest.mock import MagicMock, patch
+
+    fake_log = MagicMock()
+    fake_log.status = "error"
+    fake_log.eval.model = "openai/gpt-5.5"
+    fake_log.eval.task = "obfuscation"
+    fake_log.eval.dataset.samples = 0
+    fake_log.stats.started_at = None
+    fake_log.stats.completed_at = None
+
+    with patch("sca_eval.run.eval_set", return_value=(False, [fake_log])):
+        run_survey(
+            models=["openai/gpt-5.5"],
+            task_names=["obfuscation"],
+            log_dir=str(tmp_path / "logs"),
+            out_path=str(tmp_path / "matrix.md"),
+        )
+
+    failures = (tmp_path / "FAILURES.md").read_text()
+    assert "openai/gpt-5.5" in failures and "status=error" in failures
+    assert "ERR" in (tmp_path / "matrix.md").read_text()
+
+
+def test_run_survey_synthesizes_err_for_unstarted_pair(tmp_path):
+    from unittest.mock import patch
+
+    # eval_set returns NO logs for the requested pair.
+    with patch("sca_eval.run.eval_set", return_value=(False, [])):
+        matrix = run_survey(
+            models=["openai/gpt-5.5"],
+            task_names=["obfuscation"],
+            log_dir=str(tmp_path / "logs"),
+            out_path=str(tmp_path / "matrix.md"),
+        )
+
+    assert matrix["openai/gpt-5.5"]["obfuscation"] is None   # ERR, not "-"
+    assert "ERR" in (tmp_path / "matrix.md").read_text()
+    assert "obfuscation" in (tmp_path / "FAILURES.md").read_text()

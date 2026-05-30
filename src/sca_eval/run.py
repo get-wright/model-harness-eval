@@ -24,8 +24,7 @@ from sca_eval.pricing import price_usd
 from sca_eval.tasks import TASKS
 
 
-def _failures_report(results: list[ModelResult]) -> str:
-    failed = [r for r in results if r.status != "success"]
+def _failures_report(failed: list[ModelResult]) -> str:
     lines = ["# Run failures", "",
              "These (model, task) runs did NOT succeed and are shown as ERR in the",
              "matrix (never as a real 0.00 score).", ""]
@@ -40,6 +39,13 @@ def run_survey(
     log_dir: str = "logs/survey",
     out_path: str = "out/matrix.md",
 ) -> dict[str, dict[str, float | None]]:
+    """Run the survey and return the accuracy matrix.
+
+    Writes three files under Path(out_path).parent:
+      - <out_path>      : accuracy matrix (Markdown)
+      - details.md      : all axes (samples, duration, tokens, cost)
+      - FAILURES.md     : only when eval_set reports failure or any run failed
+    """
     tasks = [TASKS[name]() for name in task_names]
 
     success, logs = eval_set(
@@ -57,6 +63,18 @@ def run_survey(
             r = replace(r, cost_usd=price_usd(r.model, r.input_tokens, r.output_tokens))
         results.append(r)
 
+    # Any requested (model, task) that produced no log at all (e.g. provider
+    # rejected the model id before any run) is a failure, not a blank. Synthesize
+    # an ERR row so it shows in the matrix and FAILURES.md, never as "-".
+    expected = {(m, t) for m in models for t in task_names}
+    found = {(r.model, r.task) for r in results}
+    for model, task in sorted(expected - found):
+        results.append(ModelResult(
+            model=model, task=task, accuracy=None, samples=0,
+            input_tokens=0, output_tokens=0, duration_s=0.0,
+            cost_usd=0.0, status="error",
+        ))
+
     out = Path(out_path)
     out.parent.mkdir(parents=True, exist_ok=True)
     matrix = build_matrix(results)
@@ -65,7 +83,7 @@ def run_survey(
 
     failed = [r for r in results if r.status != "success"]
     if not success or failed:
-        (out.parent / "FAILURES.md").write_text(_failures_report(results))
+        (out.parent / "FAILURES.md").write_text(_failures_report(failed))
         print(f"WARNING: eval_set success={success}, {len(failed)} failed run(s). "
               f"See {out.parent / 'FAILURES.md'}. Failed cells render ERR, not 0.00.")
 
