@@ -3,6 +3,12 @@
 Honors eval_set()'s success boolean and each log's status: failed/cancelled
 runs are written to a FAILURES report and rendered 'ERR' in the matrix — never
 as a genuine 0.00 score.
+
+Output files written under Path(out_path).parent:
+  - <out_path>      : accuracy matrix (Markdown)
+  - details.md      : all axes (samples, duration, tokens, cost)
+  - tooluse.md      : tool-utilization table (only when a C2 task ran)
+  - FAILURES.md     : only when eval_set reports failure or any run failed
 """
 
 from __future__ import annotations
@@ -13,15 +19,17 @@ from pathlib import Path
 
 from inspect_ai import eval_set
 
-from sca_eval.extract import summarize_log
+from sca_eval.extract import summarize_log, tool_use_stats
 from sca_eval.matrix import (
     ModelResult,
+    ToolUseStats,
     build_matrix,
     format_details_markdown,
     format_markdown,
+    format_tooluse_markdown,
 )
 from sca_eval.pricing import price_usd
-from sca_eval.tasks import TASKS
+from sca_eval.tasks import C2_TASKS, TASKS
 
 
 def _failures_report(failed: list[ModelResult]) -> str:
@@ -43,9 +51,10 @@ def run_survey(
 ) -> dict[str, dict[str, float | None]]:
     """Run the survey and return the accuracy matrix.
 
-    Writes three files under Path(out_path).parent:
+    Writes files under Path(out_path).parent:
       - <out_path>      : accuracy matrix (Markdown)
       - details.md      : all axes (samples, duration, tokens, cost)
+      - tooluse.md      : tool-utilization table (only when a C2 task ran)
       - FAILURES.md     : only when eval_set reports failure or any run failed
 
     max_tokens / temperature are passed through to the model. Reasoning models
@@ -89,6 +98,26 @@ def run_survey(
     matrix = build_matrix(results)
     out.write_text(format_markdown(matrix))
     (out.parent / "details.md").write_text(format_details_markdown(results))
+
+    # Tool-use utilization table for any C2 (tool-use) task in this run.
+    c2_task_names = [t for t in task_names if t in C2_TASKS]
+    if c2_task_names:
+        tu_stats = [s for s in (tool_use_stats(log) for log in logs)
+                    if s.task in C2_TASKS]
+        # Symmetric to the ERR ModelResult synthesis above: any expected C2
+        # (model, task) that produced no log gets an ERR row so tooluse.md never
+        # silently drops a pair the accuracy matrix shows as ERR.
+        tu_found = {(s.model, s.task) for s in tu_stats}
+        for model, task_name in sorted(
+            {(m, t) for m in models for t in c2_task_names} - tu_found
+        ):
+            tu_stats.append(ToolUseStats(
+                model=model, task=task_name, status="error", samples=0, correct=0,
+                tool_calls=0, failed_tool_calls=0, model_turns=0,
+                tool_loop_input_tokens=None, tool_loop_output_tokens=None,
+                events_missing_usage=0,
+            ))
+        (out.parent / "tooluse.md").write_text(format_tooluse_markdown(tu_stats))
 
     # Anything that renders ERR in the matrix (failed status OR a successful run
     # that somehow produced no score) must also appear in FAILURES.md.

@@ -95,3 +95,64 @@ def test_success_log_without_scores_is_reported_as_failure(tmp_path):
     assert matrix["mockllm/model"]["obfuscation"] is None
     assert "ERR" in (tmp_path / "matrix.md").read_text()
     assert "obfuscation" in (tmp_path / "FAILURES.md").read_text()
+
+
+from types import SimpleNamespace
+
+import sca_eval.run as run_mod
+
+
+def _usage(i, o):
+    return SimpleNamespace(input_tokens=i, output_tokens=o)
+
+
+def _fake_c2_log():
+    sample = SimpleNamespace(
+        events=[
+            SimpleNamespace(event="model", output=SimpleNamespace(usage=_usage(120, 30))),
+            SimpleNamespace(event="tool", failed=None, error=None),
+            SimpleNamespace(event="model", output=SimpleNamespace(usage=_usage(40, 10))),
+        ],
+        scores={"s": SimpleNamespace(value="C")},
+    )
+    return SimpleNamespace(
+        status="success",
+        eval=SimpleNamespace(
+            model="mockllm/model", task="sca_eval/tool_use_c2",
+            dataset=SimpleNamespace(samples=1),
+        ),
+        results=SimpleNamespace(
+            scores=[SimpleNamespace(metrics={"accuracy": SimpleNamespace(value=1.0)})]
+        ),
+        stats=SimpleNamespace(
+            model_usage={"mockllm/model": _usage(160, 40)},
+            started_at="2026-05-30T00:00:00+00:00",
+            completed_at="2026-05-30T00:00:05+00:00",
+        ),
+        samples=[sample],
+    )
+
+
+def test_run_survey_writes_tooluse_for_c2(tmp_path, monkeypatch):
+    monkeypatch.setattr(run_mod, "eval_set", lambda *a, **k: (True, [_fake_c2_log()]))
+    out = tmp_path / "m.md"
+    run_mod.run_survey(
+        models=["mockllm/model"], task_names=["tool_use_c2"],
+        log_dir=str(tmp_path / "logs"), out_path=str(out),
+    )
+    text = (out.parent / "tooluse.md").read_text()
+    assert text.startswith("| model |")
+    assert "tool_use_c2" in text
+    assert "160" in text and "40" in text  # tool-loop tokens summed from ModelEvents
+
+
+def test_run_survey_synthesizes_tooluse_err_for_missing_c2(tmp_path, monkeypatch):
+    # eval_set returns no logs -> the expected C2 pair must still appear, as ERR.
+    monkeypatch.setattr(run_mod, "eval_set", lambda *a, **k: (False, []))
+    out = tmp_path / "m.md"
+    run_mod.run_survey(
+        models=["x/y"], task_names=["tool_use_c2"],
+        log_dir=str(tmp_path / "logs"), out_path=str(out),
+    )
+    text = (out.parent / "tooluse.md").read_text()
+    assert "tool_use_c2" in text and "ERR" in text
