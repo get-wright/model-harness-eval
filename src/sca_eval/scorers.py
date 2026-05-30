@@ -2,25 +2,42 @@
 
 from __future__ import annotations
 
-from inspect_ai.scorer import Score, accuracy, scorer, stderr
+from inspect_ai.scorer import (
+    CORRECT,
+    INCORRECT,
+    NOANSWER,
+    Score,
+    Target,
+    accuracy,
+    scorer,
+    stderr,
+)
+from inspect_ai.solver import TaskState
 
 from sca_eval.verdict import parse_verdict
 
 
+def verdict_score_value(predicted: str, expected: str) -> str:
+    """Map a parsed verdict to an inspect-ai score value.
+
+    'unknown' (model emitted no VERDICT line) is NOANSWER, not INCORRECT, so a
+    format failure is distinguishable from a wrong label in metric breakdowns
+    (both still count as 0.0 in accuracy).
+    """
+    if predicted == "unknown":
+        return NOANSWER
+    return CORRECT if predicted == expected else INCORRECT
+
+
 @scorer(metrics=[accuracy(), stderr()])
 def verdict_match():
-    """Score 'C' when the model's parsed verdict equals the target label.
+    """Score the model's security verdict against the target label."""
 
-    An 'unknown' verdict (no VERDICT line) scores 'I' and is surfaced in the
-    explanation/answer so unknowns are distinguishable from wrong labels.
-    """
-
-    async def score(state, target):
+    async def score(state: TaskState, target: Target) -> Score:
         predicted = parse_verdict(state.output.completion)
         expected = target.text.strip().lower()
-        correct = predicted == expected
         return Score(
-            value="C" if correct else "I",
+            value=verdict_score_value(predicted, expected),
             answer=predicted,
             explanation=f"predicted={predicted!r} expected={expected!r}",
         )
