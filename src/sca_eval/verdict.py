@@ -4,7 +4,10 @@ from __future__ import annotations
 
 import re
 
-_VERDICT_LINE = re.compile(r"verdict\s*:\s*(vulnerable|safe)", re.IGNORECASE)
+_VERDICT_LINE = re.compile(
+    r"^[ \t]*verdict[ \t]*:[ \t]*(vulnerable|safe)\b",
+    re.IGNORECASE | re.MULTILINE,
+)
 
 
 def parse_verdict(text: str) -> str:

@@ -22,3 +22,20 @@ def test_uses_last_verdict_line_when_several():
 
 def test_returns_unknown_when_no_verdict_line():
     assert parse_verdict("I am not sure about this code.") == "unknown"
+
+
+def test_mid_sentence_verdict_word_is_not_matched():
+    # Must start a line; inline prose mentioning "verdict:" does not count.
+    assert parse_verdict("The verdict: vulnerable code should be patched.") == "unknown"
+
+
+def test_handles_crlf_line_endings():
+    assert parse_verdict("Reasoning\r\nVERDICT: SAFE\r\n") == "safe"
+
+
+def test_empty_string_is_unknown():
+    assert parse_verdict("") == "unknown"
+
+
+def test_trailing_text_after_label_is_tolerated():
+    assert parse_verdict("VERDICT: VULNERABLE (SQL injection)") == "vulnerable"
