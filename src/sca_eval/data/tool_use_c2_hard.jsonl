@@ -1,0 +1,1 @@
+{"id": "tuch-001", "input": "The file /work/tuch-001.txt contains a base64-encoded C2 indicator. Use the tools to decode it. Reply with ONLY the decoded C2 indicator on the final line.", "target": "real-c2.invalid", "metadata": {"technique": "base64", "lang": "text", "payload_file": "tuch-001.txt"}}
