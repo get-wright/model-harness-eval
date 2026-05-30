@@ -21,3 +21,22 @@ def test_summarize_log_extracts_a_sane_successful_modelresult():
     assert result.input_tokens >= 0 and result.output_tokens >= 0
     assert result.duration_s >= 0.0
     assert result.cost_usd == 0.0   # priced later in run.py
+
+
+def test_summarize_log_failure_yields_none_accuracy_not_zero():
+    from types import SimpleNamespace
+
+    log = SimpleNamespace(
+        status="error",
+        eval=SimpleNamespace(
+            model="openai/gpt-5.5",
+            task="sca_eval/obfuscation",
+            dataset=SimpleNamespace(samples=10),
+        ),
+        stats=SimpleNamespace(started_at=None, completed_at=None),
+    )
+    result = summarize_log(log)
+    assert result.status == "error"
+    assert result.accuracy is None      # never a fake 0.0
+    assert result.task == "obfuscation"
+    assert result.input_tokens == 0 and result.output_tokens == 0

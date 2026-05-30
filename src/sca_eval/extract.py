@@ -21,13 +21,15 @@ def _task_name(log: EvalLog) -> str:
     return task.split("/")[-1] if "/" in task else task
 
 
-def _primary_accuracy(log: EvalLog) -> float:
+def _primary_accuracy(log: EvalLog) -> float | None:
     results = getattr(log, "results", None)
     if not results or not results.scores:
-        return 0.0
+        return None
     metrics = results.scores[0].metrics
-    metric = metrics.get("accuracy") or next(iter(metrics.values()), None)
-    return float(metric.value) if metric is not None else 0.0
+    metric = metrics.get("accuracy")
+    if metric is None:
+        metric = next(iter(metrics.values()), None)
+    return float(metric.value) if metric is not None else None
 
 
 def _tokens(log: EvalLog) -> tuple[int, int]:
@@ -37,12 +39,15 @@ def _tokens(log: EvalLog) -> tuple[int, int]:
     return inp, out
 
 
+def _parse_ts(s: str) -> datetime:
+    return datetime.fromisoformat(s.replace("Z", "+00:00"))
+
+
 def _duration_s(log: EvalLog) -> float:
     started, completed = log.stats.started_at, log.stats.completed_at
     if not started or not completed:
         return 0.0
-    fmt = lambda s: datetime.fromisoformat(s.replace("Z", "+00:00"))
-    return max(0.0, (fmt(completed) - fmt(started)).total_seconds())
+    return max(0.0, (_parse_ts(completed) - _parse_ts(started)).total_seconds())
 
 
 def _sample_count(log: EvalLog) -> int:
@@ -50,7 +55,7 @@ def _sample_count(log: EvalLog) -> int:
 
 
 def summarize_log(log: EvalLog) -> ModelResult:
-    status = getattr(log, "status", "success")
+    status = log.status
     if status != "success":
         return ModelResult(
             model=log.eval.model, task=_task_name(log), accuracy=None,
