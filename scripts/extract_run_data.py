@@ -109,11 +109,15 @@ def main() -> None:
                 "rtok": rtok, "duration_s": _duration_s(log),
             })
             for s in (log.samples or []):
+                secs = getattr(s, "total_time", None)
+                if secs is None:
+                    secs = getattr(s, "working_time", None)
                 samples.append({
                     "model": model, "task": task, "id": s.id,
                     "target": s.target,
                     "answer": (s.output.completion if s.output else "") or "",
                     "score": _score_value(s),
+                    "secs": round(secs, 2) if secs is not None else None,
                 })
             if task in C2_TASKS:
                 tl = _tool_loop(log.samples)

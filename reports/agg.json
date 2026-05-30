@@ -95,7 +95,6 @@
    "hard": 0.8518518518518517,
    "mean_out": 671,
    "mean_rsn": 0,
-   "cap_dur": 5.5,
    "provider": "Opencode Zen",
    "status": "ok"
   },
@@ -104,7 +103,6 @@
    "hard": 0.8888888888888888,
    "mean_out": 1178,
    "mean_rsn": 0,
-   "cap_dur": 5.5,
    "provider": "Opencode Zen",
    "status": "ok"
   },
@@ -113,7 +111,6 @@
    "hard": 0.8592592592592593,
    "mean_out": 7700,
    "mean_rsn": 7360,
-   "cap_dur": 36.8,
    "provider": "Opencode Go",
    "status": "ok"
   },
@@ -122,7 +119,6 @@
    "hard": 0.9296296296296296,
    "mean_out": 10255,
    "mean_rsn": 9932,
-   "cap_dur": 138.3,
    "provider": "Opencode Go",
    "status": "ok"
   },
@@ -131,7 +127,6 @@
    "hard": 0.9296296296296296,
    "mean_out": 4298,
    "mean_rsn": 0,
-   "cap_dur": 198.2,
    "provider": "Opencode Go",
    "status": "ok"
   },
@@ -140,7 +135,6 @@
    "hard": 0.8555555555555555,
    "mean_out": 388,
    "mean_rsn": 0,
-   "cap_dur": 3.8,
    "provider": "Opencode Zen",
    "status": "ok"
   },
@@ -149,7 +143,6 @@
    "hard": 0.8555555555555555,
    "mean_out": 443,
    "mean_rsn": 0,
-   "cap_dur": 3.7,
    "provider": "Opencode Zen",
    "status": "ok"
   },
@@ -158,7 +151,6 @@
    "hard": 0.9333333333333332,
    "mean_out": 1510,
    "mean_rsn": 1106,
-   "cap_dur": 17.8,
    "provider": "Opencode Zen",
    "status": "ok"
   },
@@ -167,7 +159,6 @@
    "hard": 0.9296296296296296,
    "mean_out": 7194,
    "mean_rsn": 1014,
-   "cap_dur": 266.3,
    "provider": "Opencode Go",
    "status": "ok"
   },
@@ -176,7 +167,6 @@
    "hard": 0.9629629629629629,
    "mean_out": 10762,
    "mean_rsn": 7345,
-   "cap_dur": 87.2,
    "provider": "Opencode Go",
    "status": "ok"
   },
@@ -185,7 +175,6 @@
    "hard": 0.9629629629629629,
    "mean_out": 6985,
    "mean_rsn": 4346,
-   "cap_dur": 56.3,
    "provider": "Opencode Go",
    "status": "ok"
   }
@@ -198,22 +187,14 @@
    "tool_calls": 38,
    "failed": 0,
    "turns": 56,
-   "loop_in": 6019,
-   "loop_out": 3201,
-   "dur": [
-    12.0,
-    17.0
-   ],
-   "tasks": {
-    "tool_use_c2_hard": 1.0,
-    "tool_use_c2": 1.0
-   },
+   "in_tok": 6019,
+   "out_tok": 3201,
    "missing_usage": false,
    "acc": 1.0,
-   "loop_total": 9220,
-   "tok_per_correct": 512,
-   "calls_per_correct": 2.1,
-   "mean_dur": 14.5
+   "calls_per_solve": 2.1,
+   "turns_per_solve": 3.1,
+   "out_per_solve": 178,
+   "in_per_solve": 334
   },
   "kimi-k2.6 (Opencode Go)": {
    "provider": "Opencode Go",
@@ -222,22 +203,14 @@
    "tool_calls": 35,
    "failed": 0,
    "turns": 53,
-   "loop_in": 7087,
-   "loop_out": 6746,
-   "dur": [
-    27.0,
-    21.0
-   ],
-   "tasks": {
-    "tool_use_c2_hard": 1.0,
-    "tool_use_c2": 1.0
-   },
+   "in_tok": 7087,
+   "out_tok": 6746,
    "missing_usage": false,
    "acc": 1.0,
-   "loop_total": 13833,
-   "tok_per_correct": 768,
-   "calls_per_correct": 1.9,
-   "mean_dur": 24.0
+   "calls_per_solve": 1.9,
+   "turns_per_solve": 2.9,
+   "out_per_solve": 375,
+   "in_per_solve": 394
   },
   "qwen3.7-max (Opencode Go)": {
    "provider": "Opencode Go",
@@ -246,22 +219,14 @@
    "tool_calls": 38,
    "failed": 0,
    "turns": 56,
-   "loop_in": 39216,
-   "loop_out": 5518,
-   "dur": [
-    15.0,
-    20.0
-   ],
-   "tasks": {
-    "tool_use_c2_hard": 1.0,
-    "tool_use_c2": 1.0
-   },
+   "in_tok": 39216,
+   "out_tok": 5518,
    "missing_usage": false,
    "acc": 1.0,
-   "loop_total": 44734,
-   "tok_per_correct": 2485,
-   "calls_per_correct": 2.1,
-   "mean_dur": 17.5
+   "calls_per_solve": 2.1,
+   "turns_per_solve": 3.1,
+   "out_per_solve": 307,
+   "in_per_solve": 2179
   },
   "deepseek-v4-pro (Opencode Go)": {
    "provider": "Opencode Go",
@@ -270,22 +235,14 @@
    "tool_calls": 65,
    "failed": 0,
    "turns": 82,
-   "loop_in": 14020,
-   "loop_out": 14249,
-   "dur": [
-    39.0,
-    68.0
-   ],
-   "tasks": {
-    "tool_use_c2_hard": 1.0,
-    "tool_use_c2": 1.0
-   },
+   "in_tok": 14020,
+   "out_tok": 14249,
    "missing_usage": false,
    "acc": 1.0,
-   "loop_total": 28269,
-   "tok_per_correct": 1570,
-   "calls_per_correct": 3.6,
-   "mean_dur": 53.5
+   "calls_per_solve": 3.6,
+   "turns_per_solve": 4.6,
+   "out_per_solve": 792,
+   "in_per_solve": 779
   },
   "qwen3.6-plus (Opencode Go)": {
    "provider": "Opencode Go",
@@ -294,22 +251,14 @@
    "tool_calls": 45,
    "failed": 0,
    "turns": 63,
-   "loop_in": 46240,
-   "loop_out": 6495,
-   "dur": [
-    26.0,
-    19.0
-   ],
-   "tasks": {
-    "tool_use_c2_hard": 1.0,
-    "tool_use_c2": 1.0
-   },
+   "in_tok": 46240,
+   "out_tok": 6495,
    "missing_usage": false,
    "acc": 1.0,
-   "loop_total": 52735,
-   "tok_per_correct": 2930,
-   "calls_per_correct": 2.5,
-   "mean_dur": 22.5
+   "calls_per_solve": 2.5,
+   "turns_per_solve": 3.5,
+   "out_per_solve": 361,
+   "in_per_solve": 2569
   },
   "deepseek-v4-flash (Opencode Go)": {
    "provider": "Opencode Go",
@@ -318,22 +267,14 @@
    "tool_calls": 53,
    "failed": 0,
    "turns": 68,
-   "loop_in": 10442,
-   "loop_out": 6914,
-   "dur": [
-    22.0,
-    11.0
-   ],
-   "tasks": {
-    "tool_use_c2_hard": 1.0,
-    "tool_use_c2": 1.0
-   },
+   "in_tok": 10442,
+   "out_tok": 6914,
    "missing_usage": false,
    "acc": 1.0,
-   "loop_total": 17356,
-   "tok_per_correct": 964,
-   "calls_per_correct": 2.9,
-   "mean_dur": 16.5
+   "calls_per_solve": 2.9,
+   "turns_per_solve": 3.8,
+   "out_per_solve": 384,
+   "in_per_solve": 580
   },
   "gpt-5.3-codex (Opencode Zen)": {
    "provider": "Opencode Zen",
@@ -342,22 +283,14 @@
    "tool_calls": 24,
    "failed": 0,
    "turns": 42,
-   "loop_in": 15841,
-   "loop_out": 1239,
-   "dur": [
-    22.0,
-    15.0
-   ],
-   "tasks": {
-    "tool_use_c2_hard": 1.0,
-    "tool_use_c2": 1.0
-   },
+   "in_tok": 15841,
+   "out_tok": 1239,
    "missing_usage": false,
    "acc": 1.0,
-   "loop_total": 17080,
-   "tok_per_correct": 949,
-   "calls_per_correct": 1.3,
-   "mean_dur": 18.5
+   "calls_per_solve": 1.3,
+   "turns_per_solve": 2.3,
+   "out_per_solve": 69,
+   "in_per_solve": 880
   },
   "claude-opus-4-7 (Opencode Zen)": {
    "provider": "Opencode Zen",
@@ -366,22 +299,14 @@
    "tool_calls": 30,
    "failed": 0,
    "turns": 48,
-   "loop_in": 63837,
-   "loop_out": 3140,
-   "dur": [
-    30.0,
-    31.0
-   ],
-   "tasks": {
-    "tool_use_c2_hard": 1.0,
-    "tool_use_c2": 1.0
-   },
+   "in_tok": 63837,
+   "out_tok": 3140,
    "missing_usage": false,
    "acc": 1.0,
-   "loop_total": 66977,
-   "tok_per_correct": 3721,
-   "calls_per_correct": 1.7,
-   "mean_dur": 30.5
+   "calls_per_solve": 1.7,
+   "turns_per_solve": 2.7,
+   "out_per_solve": 174,
+   "in_per_solve": 3546
   },
   "gpt-5.4 (Opencode Zen)": {
    "provider": "Opencode Zen",
@@ -390,22 +315,14 @@
    "tool_calls": 29,
    "failed": 0,
    "turns": 45,
-   "loop_in": 18074,
-   "loop_out": 1919,
-   "dur": [
-    20.0,
-    13.0
-   ],
-   "tasks": {
-    "tool_use_c2_hard": 1.0,
-    "tool_use_c2": 1.0
-   },
+   "in_tok": 18074,
+   "out_tok": 1919,
    "missing_usage": false,
    "acc": 1.0,
-   "loop_total": 19993,
-   "tok_per_correct": 1111,
-   "calls_per_correct": 1.6,
-   "mean_dur": 16.5
+   "calls_per_solve": 1.6,
+   "turns_per_solve": 2.5,
+   "out_per_solve": 107,
+   "in_per_solve": 1004
   },
   "claude-opus-4-8 (Opencode Zen)": {
    "provider": "Opencode Zen",
@@ -414,22 +331,14 @@
    "tool_calls": 35,
    "failed": 0,
    "turns": 53,
-   "loop_in": 36201,
-   "loop_out": 2900,
-   "dur": [
-    34.0,
-    30.0
-   ],
-   "tasks": {
-    "tool_use_c2_hard": 1.0,
-    "tool_use_c2": 1.0
-   },
+   "in_tok": 36201,
+   "out_tok": 2900,
    "missing_usage": false,
    "acc": 1.0,
-   "loop_total": 39101,
-   "tok_per_correct": 2172,
-   "calls_per_correct": 1.9,
-   "mean_dur": 32.0
+   "calls_per_solve": 1.9,
+   "turns_per_solve": 2.9,
+   "out_per_solve": 161,
+   "in_per_solve": 2011
   },
   "gpt-5.5 (Opencode Zen)": {
    "provider": "Opencode Zen",
@@ -438,22 +347,71 @@
    "tool_calls": 37,
    "failed": 0,
    "turns": 55,
-   "loop_in": 25009,
-   "loop_out": 3012,
-   "dur": [
-    44.0,
-    36.0
-   ],
-   "tasks": {
-    "tool_use_c2_hard": 1.0,
-    "tool_use_c2": 1.0
-   },
+   "in_tok": 25009,
+   "out_tok": 3012,
    "missing_usage": false,
    "acc": 1.0,
-   "loop_total": 28021,
-   "tok_per_correct": 1557,
-   "calls_per_correct": 2.1,
-   "mean_dur": 40.0
+   "calls_per_solve": 2.1,
+   "turns_per_solve": 3.1,
+   "out_per_solve": 167,
+   "in_per_solve": 1389
+  }
+ },
+ "duration": {
+  "glm-5.1 (Opencode Go)": {
+   "cap": 37.9,
+   "c2": 8.0,
+   "provider": "Opencode Go"
+  },
+  "kimi-k2.6 (Opencode Go)": {
+   "cap": 57.7,
+   "c2": 12.3,
+   "provider": "Opencode Go"
+  },
+  "qwen3.7-max (Opencode Go)": {
+   "cap": 19.2,
+   "c2": 11.5,
+   "provider": "Opencode Go"
+  },
+  "qwen3.6-plus (Opencode Go)": {
+   "cap": 32.2,
+   "c2": 13.8,
+   "provider": "Opencode Go"
+  },
+  "deepseek-v4-flash (Opencode Go)": {
+   "cap": 10.7,
+   "c2": 7.9,
+   "provider": "Opencode Go"
+  },
+  "deepseek-v4-pro (Opencode Go)": {
+   "cap": 33.8,
+   "c2": 22.7,
+   "provider": "Opencode Go"
+  },
+  "gpt-5.3-codex (Opencode Zen)": {
+   "cap": 3.0,
+   "c2": 5.1,
+   "provider": "Opencode Zen"
+  },
+  "gpt-5.4 (Opencode Zen)": {
+   "cap": 2.7,
+   "c2": 5.8,
+   "provider": "Opencode Zen"
+  },
+  "claude-opus-4-8 (Opencode Zen)": {
+   "cap": 4.2,
+   "c2": 9.5,
+   "provider": "Opencode Zen"
+  },
+  "claude-opus-4-7 (Opencode Zen)": {
+   "cap": 3.4,
+   "c2": 8.9,
+   "provider": "Opencode Zen"
+  },
+  "gpt-5.5 (Opencode Zen)": {
+   "cap": 7.6,
+   "c2": 9.7,
+   "provider": "Opencode Zen"
   }
  },
  "fails": [
