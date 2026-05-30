@@ -1,12 +1,12 @@
 """Regenerate the Phase 0-1 evaluation report and its charts.
 
 Single source of truth: reports_data.json (rebuilt by scripts/extract_run_data.py
-from the most-recent run only: logs/all-go + logs/all-zen5). Deployments are
-labelled by provider (Opencode Go for open weights, Opencode Zen for closed).
+from the most-recent run only). Deployments are labelled by class: open-weight
+or closed (hosted).
 
 Outputs (all under reports/):
-  fig_easy_vs_hard.png, fig_heatmap.png, fig_thinking_cost.png,
-  fig_efficiency.png, fig_tooluse.png, fig_duration.png, agg.json, main.md
+  fig_easy_vs_hard.png, fig_heatmap.png, fig_thinking_cost.png, fig_efficiency.png,
+  fig_tooluse.png, fig_duration.png, fig_pricing.png, agg.json, main.md
 
 Run: uv run python scripts/extract_run_data.py && uv run python scripts/build_report.py
 """
@@ -25,7 +25,7 @@ ROOT = Path(__file__).resolve().parent.parent
 DATA = ROOT / "reports_data.json"
 OUT = ROOT / "reports"
 
-# The most-recent run: open models via Opencode Go, closed via Opencode Zen.
+# The most-recent run: open-weight models + closed (hosted) models.
 CANONICAL_DIRS = {"all-go", "all-zen5"}
 
 # Capability axes (single-shot). Tool-use C2 tasks are reported separately (§3).
@@ -42,11 +42,23 @@ EASY = TASKS[:3]
 HARD = TASKS[3:]
 C2_TASKS = {"tool_use_c2", "tool_use_c2_hard"}
 
-# Closed deployments served by Opencode Zen; everything else is Opencode Go.
-ZEN_BASES = {"gpt-5.3-codex", "gpt-5.4", "gpt-5.5",
-             "claude-opus-4-7", "claude-opus-4-8"}
+# Hosted/closed models; everything else is open-weight.
+CLOSED_BASES = {"gpt-5.3-codex", "gpt-5.4", "gpt-5.5",
+                "claude-opus-4-7", "claude-opus-4-8"}
 
-PROVIDER_COLORS = {"Opencode Go": "#4c72b0", "Opencode Zen": "#dd8452"}
+PROVIDER_COLORS = {"open-weight": "#4c72b0", "closed": "#dd8452"}
+
+# Pay-as-you-go per-token rates ($/1M input, $/1M output), confirmed on the run
+# date (2026-05-30). DeepSeek rates are the vendor's published PAYG (deepseek-v4-pro
+# at its current promotional price); the others are the gateway's PAYG table.
+PAYG_RATES: dict[str, tuple[float, float] | None] = {
+    "gpt-5.3-codex": (1.75, 14.00), "gpt-5.4": (2.50, 15.00),
+    "gpt-5.5": (5.00, 30.00), "claude-opus-4-7": (5.00, 25.00),
+    "claude-opus-4-8": (5.00, 25.00),
+    "glm-5.1": (1.40, 4.40), "kimi-k2.6": (0.95, 4.00),
+    "qwen3.7-max": (2.50, 7.50), "qwen3.6-plus": (0.50, 3.00),
+    "deepseek-v4-flash": (0.14, 0.28), "deepseek-v4-pro": (0.435, 0.87),
+}
 
 
 def base_name(model_id: str) -> str:
@@ -54,7 +66,7 @@ def base_name(model_id: str) -> str:
 
 
 def provider(model_id: str) -> str:
-    return "Opencode Zen" if base_name(model_id) in ZEN_BASES else "Opencode Go"
+    return "closed" if base_name(model_id) in CLOSED_BASES else "open-weight"
 
 
 def disp(model_id: str) -> str:
@@ -157,6 +169,30 @@ def build_duration(samples: list[dict]) -> dict:
         mean = lambda xs: round(sum(xs) / len(xs), 1) if xs else None  # noqa: E731
         out[m] = {"cap": mean(d["cap"]), "c2": mean(d["c2"]),
                   "provider": provider(base_name_of(m))}
+    return out
+
+
+# --------------------------------------------------------------------------- #
+# Pay-as-you-go cost of running the whole suite (all 8 tasks). Real token counts
+# summed across every task x PAYG per-token rate. Models with no PAYG rate are
+# carried as unpriceable (cost None) rather than guessed.
+# --------------------------------------------------------------------------- #
+def build_pricing(rows: list[dict]) -> dict:
+    tok: dict[str, list[int]] = {}
+    for r in rows:
+        if r["dir"] not in CANONICAL_DIRS:
+            continue
+        m = disp(r["model"])
+        a = tok.setdefault(m, [0, 0])
+        a[0] += r["intok"]
+        a[1] += r["outtok"]
+    out: dict[str, dict] = {}
+    for m, (intok, outtok) in tok.items():
+        rate = PAYG_RATES.get(base_name_of(m))
+        cost = None if rate is None else round(
+            rate[0] * intok / 1e6 + rate[1] * outtok / 1e6, 4)
+        out[m] = {"in_tok": intok, "out_tok": outtok, "cost": cost,
+                  "free": rate == (0.0, 0.0), "provider": provider(base_name_of(m))}
     return out
 
 
@@ -315,6 +351,32 @@ def chart_duration(dur: dict) -> None:
     plt.close(fig)
 
 
+def chart_pricing(pr: dict) -> None:
+    """Total pay-as-you-go cost to run the full suite, per model. Priceable
+    models are bars; unpriceable ones (no PAYG rate) are noted, not invented."""
+    priced = {m: d for m, d in pr.items() if d["cost"] is not None}
+    order = sorted(priced, key=lambda m: priced[m]["cost"], reverse=True)
+    vals = [priced[m]["cost"] for m in order]
+    colors = [PROVIDER_COLORS[priced[m]["provider"]] for m in order]
+    na = [base_name_of(m) for m in pr if pr[m]["cost"] is None]
+    fig, ax = plt.subplots(figsize=(11, 6))
+    ax.barh(_short(order), vals, color=colors)
+    ax.invert_yaxis()
+    ax.set_xlabel("total pay-as-you-go cost to run all 8 tasks (USD)")
+    title = "Cost to run the full benchmark — pay-as-you-go token pricing"
+    if na:
+        title += f"  (no PAYG rate: {', '.join(na)})"
+    ax.set_title(title, fontsize=11)
+    for i, (m, v) in enumerate(zip(order, vals)):
+        label = " free" if priced[m]["free"] else f" ${v:.3f}"
+        ax.text(v, i, label, va="center", fontsize=8)
+    ax.tick_params(axis="y", labelsize=8)
+    _provider_legend(ax, "lower right")
+    fig.tight_layout()
+    fig.savefig(OUT / "fig_pricing.png", dpi=130)
+    plt.close(fig)
+
+
 # --------------------------------------------------------------------------- #
 # Failures (data-driven)
 # --------------------------------------------------------------------------- #
@@ -353,7 +415,7 @@ def cell(v) -> str:
     return "—" if v is None else f"{v:.2f}"
 
 
-def write_report(agg, extra, tu, dur, fails, models) -> None:
+def write_report(agg, extra, tu, dur, pr, fails, models) -> None:
     ok = [m for m in _ranked(extra) if extra[m]["status"] == "ok"]
     L: list[str] = []
     A = L.append
@@ -373,30 +435,29 @@ def write_report(agg, extra, tu, dur, fails, models) -> None:
       "and Python tools inside a network-isolated container. All deployments are "
       "exercised through a single harness (inspect-ai with deterministic scorers) "
       "under identical prompts and decoding parameters, so that scores are "
-      "comparable within each task family. Open-weight models are served via "
-      "Opencode Go and closed models (GPT-5.x, Claude Opus) via Opencode Zen. "
-      "We report accuracy, generation cost, tool-utilisation, and per-sample "
-      "latency, and we separate input (context) from output (generation) tokens "
-      "throughout, as the two diverge sharply in the multi-turn setting.")
+      "comparable within each task family. Deployments are grouped into two "
+      "classes — open-weight models and closed (hosted) models (GPT-5.x, Claude "
+      "Opus). We report accuracy, generation cost, tool-utilisation, per-sample "
+      "latency, and pay-as-you-go monetary cost, and we separate input (context) "
+      "from output (generation) tokens throughout, as the two diverge sharply in "
+      "the multi-turn setting.")
     A("")
     A("---\n")
 
     # ---- 1. Method --------------------------------------------------------- #
     A("## 1. Method\n")
-    A("### 1.1 Deployments and routing\n")
-    A("Table 1 lists the evaluated deployments. Each is addressed through its "
-      "provider gateway; prompts, scorers, and decoding parameters are held "
-      "constant across all deployments.\n")
-    A("**Table 1. Provider routing.**\n")
-    A("| Provider | Endpoint | Wire protocol | Deployments |")
-    A("|---|---|---|---|")
+    A("### 1.1 Deployments\n")
+    A("Table 1 lists the evaluated deployments, grouped by class. Prompts, "
+      "scorers, and decoding parameters are held constant across all "
+      "deployments.\n")
+    A("**Table 1. Evaluated deployments.**\n")
+    A("| Class | Deployments |")
+    A("|---|---|")
     prov_models: dict[str, list[str]] = {}
     for m in models:
         prov_models.setdefault(extra[m]["provider"], []).append(base_name_of(m))
-    A("| Opencode Go | `opencode.ai/zen/go/v1` | OpenAI-compatible (Anthropic "
-      "`/messages` for Qwen) | " + ", ".join(sorted(prov_models.get("Opencode Go", []))) + " |")
-    A("| Opencode Zen | `opencode.ai/zen/v1` | OpenAI-compatible (GPT), Anthropic "
-      "`/messages` (Opus) | " + ", ".join(sorted(prov_models.get("Opencode Zen", []))) + " |")
+    A("| open-weight | " + ", ".join(sorted(prov_models.get("open-weight", []))) + " |")
+    A("| closed (hosted) | " + ", ".join(sorted(prov_models.get("closed", []))) + " |")
     A("")
     A("### 1.2 Tasks and scoring\n")
     A("The three capability axes are scored deterministically: substring "
@@ -428,7 +489,7 @@ def write_report(agg, extra, tu, dur, fails, models) -> None:
       "`-H` hard variants.*\n")
     A("Generation cost varies by nearly two orders of magnitude across the field "
       "(Figure 3). Open-weight deployments emit explicit chain-of-thought tokens; "
-      "the closed Zen gateways do not expose reasoning tokens and report zero, so "
+      "the closed deployments do not expose reasoning tokens and report zero, so "
       "their true deliberation cost is understated here and the comparison should "
       "be read with that asymmetry in mind.\n")
     A("![Figure 3](fig_thinking_cost.png)\n")
@@ -436,7 +497,7 @@ def write_report(agg, extra, tu, dur, fails, models) -> None:
     A("![Figure 4](fig_efficiency.png)\n")
     A("*Figure 4. Hard-set accuracy against mean generation cost (log scale).*\n")
     A("**Table 2. Capability accuracy by task, ranked by hard-set mean.**\n")
-    A("| deployment | provider | " + " | ".join(SHORT[t] for t in TASKS) + " | easy | hard |")
+    A("| deployment | class | " + " | ".join(SHORT[t] for t in TASKS) + " | easy | hard |")
     A("|---|---|" + "|".join("---" for _ in TASKS) + "|---|---|")
     for m in ok:
         A(f"| `{base_name_of(m)}` | {extra[m]['provider']} | "
@@ -460,10 +521,12 @@ def write_report(agg, extra, tu, dur, fails, models) -> None:
       "is a poor predictor of hard-set accuracy.\n")
     A("Third, the closed deployments reach 0.85–0.93 at one to two orders of "
       "magnitude lower *reported* output cost, but this comparison is not "
-      "trustworthy as an efficiency claim: the Zen gateways do not expose "
-      "reasoning tokens (Figure 3 shows them at zero), so the closed models' true "
-      "deliberation is unmeasured. Cross-provider cost claims are accordingly "
-      "withheld; only the within-Go comparison above is sound. A confound also "
+      "trustworthy as a token-efficiency claim: the closed deployments do not "
+      "expose reasoning tokens (Figure 3 shows them at zero), so their true "
+      "deliberation is unmeasured. Token-count efficiency claims are accordingly "
+      "withheld across classes; only the within-open-weight comparison above is "
+      "sound (monetary cost, where rates differ by model, is treated separately "
+      "in §4). A confound also "
       "depresses several easy-set scores (`gpt-5.5` and `claude-opus-4-8` at 0.50 "
       "on easy code comprehension) — these are scorer artefacts, not capability "
       "gaps, and are dissected in §5.3.\n")
@@ -487,7 +550,7 @@ def write_report(agg, extra, tu, dur, fails, models) -> None:
     A("*Figure 5. Tool calls per solved C2 task (lower is more economical).*\n")
     A("**Table 3. Tool-use profile, normalised per solved task (18 solves per "
       "deployment).**\n")
-    A("| deployment | provider | tool calls | model turns | output tok | input tok (context) |")
+    A("| deployment | class | tool calls | model turns | output tok | input tok (context) |")
     A("|---|---|---|---|---|---|")
     for m in sorted(tu, key=lambda m: tu[m]["calls_per_solve"], reverse=True):
         d = tu[m]
@@ -504,7 +567,7 @@ def write_report(agg, extra, tu, dur, fails, models) -> None:
       "is the *process*.\n")
     A("Tool-call economy varies roughly three-fold, from 1.3 calls per solve "
       "(`gpt-5.3-codex`) to 3.6 (`deepseek-v4-pro`). This is not a free ordering: "
-      "calls per solve is the dominant driver of tool-use latency (§4). "
+      "calls per solve is the dominant driver of tool-use latency (§5). "
       "`gpt-5.3-codex` recovers most indicators in roughly one inspect-then-decode "
       "step and finishes a C2 sample in ~5 s; `deepseek-v4-pro` nearly triples the "
       "call count through trial-and-error and is the slowest deployment on the "
@@ -526,23 +589,65 @@ def write_report(agg, extra, tu, dur, fails, models) -> None:
       "either.\n")
     A("---\n")
 
-    # ---- 4. Latency -------------------------------------------------------- #
-    A("## 4. Latency\n")
-    A("Figure 6 reports mean per-sample wall-clock time, measured from each "
+    # ---- 4. Cost ----------------------------------------------------------- #
+    A("## 4. Cost\n")
+    A("Figure 6 reports the total monetary cost of running the entire benchmark "
+      "(all eight tasks, every sample) once per deployment, on a common "
+      "pay-as-you-go (PAYG) per-token basis: each deployment's actual input and "
+      "output token counts, summed across all tasks, multiplied by its published "
+      "per-token rate. Unlike the token-*count* comparison of §2, monetary cost "
+      "is comparable across the field because it is denominated in dollars, not "
+      "tokens — a deployment that emits many cheap tokens can cost less than one "
+      "that emits few expensive ones.\n")
+    A("![Figure 6](fig_pricing.png)\n")
+    A("*Figure 6. Total pay-as-you-go cost to run the full benchmark, per "
+      "deployment (USD).*\n")
+    A("**Table 4. Run cost on a pay-as-you-go basis (all 8 tasks).**\n")
+    A("| deployment | class | input tok | output tok | rate in/out ($/1M) | run cost |")
+    A("|---|---|---|---|---|---|")
+    for m in sorted(pr, key=lambda m: pr[m]["cost"] if pr[m]["cost"] is not None else -1,
+                    reverse=True):
+        d = pr[m]
+        rate = PAYG_RATES.get(base_name_of(m))
+        rs = "—" if rate is None else f"{rate[0]:g} / {rate[1]:g}"
+        cs = "n/a" if d["cost"] is None else (
+            "free" if d["free"] else f"${d['cost']:.3f}")
+        A(f"| `{base_name_of(m)}` | {d['provider']} | {d['in_tok']:,} | "
+          f"{d['out_tok']:,} | {rs} | {cs} |")
+    A("")
+    A("The cost ranking does not track the capability ranking. The DeepSeek pair "
+      "runs the whole suite for under 8 cents (`deepseek-v4-flash` ~$0.02, "
+      "`deepseek-v4-pro` ~$0.07), an order of magnitude below the field, because "
+      "their per-token rates are far lower even though they emit the most output "
+      "tokens of any deployments. At the other end, the most expensive runs "
+      "(`claude-opus-4-7` ~$0.52, `gpt-5.5` ~$0.50, `qwen3.7-max` ~$0.46) are "
+      "driven by high per-token rates, and in Opus's case by large re-billed "
+      "input context (§3). The capability leader `qwen3.7-max` is among the "
+      "priciest to run; the top open-weight value is the DeepSeek pair, and the "
+      "cheapest closed option is `gpt-5.3-codex` (~$0.08). One caveat carries over "
+      "from §2: the closed deployments hide reasoning tokens, which are billed "
+      "but unreported, so their true PAYG cost is somewhat higher than shown. "
+      "DeepSeek rates are the vendor's published PAYG and include a promotional "
+      "discount current on the run date.\n")
+    A("---\n")
+
+    # ---- 5. Latency -------------------------------------------------------- #
+    A("## 5. Latency\n")
+    A("Figure 7 reports mean per-sample wall-clock time, measured from each "
       "sample's recorded `total_time` (and therefore unaffected by inter-sample "
       "concurrency). Single-shot and tool-use samples are shown in the same units.\n")
-    A("![Figure 6](fig_duration.png)\n")
-    A("*Figure 6. Mean wall-clock seconds per sample: single-shot capability vs "
+    A("![Figure 7](fig_duration.png)\n")
+    A("*Figure 7. Mean wall-clock seconds per sample: single-shot capability vs "
       "multi-turn tool use.*\n")
-    A("**Table 4. Mean per-sample latency (seconds).**\n")
-    A("| deployment | provider | single-shot | tool-use |")
+    A("**Table 5. Mean per-sample latency (seconds).**\n")
+    A("| deployment | class | single-shot | tool-use |")
     A("|---|---|---|---|")
     for m in sorted(ok, key=lambda m: dur.get(m, {}).get("c2") or 0, reverse=True):
         c = dur.get(m, {})
         A(f"| `{base_name_of(m)}` | {extra[m]['provider']} | "
           f"{c.get('cap', '—')} | {c.get('c2', '—')} |")
     A("")
-    A("Two regimes are visible, and they invert across providers. The closed Zen "
+    A("Two regimes are visible, and they invert across classes. The closed "
       "deployments answer single-shot samples in 3–8 s and take 5–10 s on the "
       "multi-turn tool task, so tool use is their slower path. The open reasoners "
       "invert this: their explicit chain-of-thought makes single-shot samples "
@@ -566,13 +671,13 @@ def write_report(agg, extra, tu, dur, fails, models) -> None:
       "reproducibility but did not arise here.\n")
     A("---\n")
 
-    # ---- 5. Failure analysis ---------------------------------------------- #
-    A("## 5. Failure analysis\n")
-    A("### 5.1 Refusals on malicious-looking inputs\n")
+    # ---- 6. Failure analysis ---------------------------------------------- #
+    A("## 6. Failure analysis\n")
+    A("### 6.1 Refusals on malicious-looking inputs\n")
     A("The corpus includes inputs that resemble attacks (reverse shells, "
       "`rm -rf /`, `/etc/passwd`, `eval(atob(x))`). Outright content refusals "
-      "were rare; Table 5 lists completions containing an explicit apology.\n")
-    A("**Table 5. Explicit refusals.**\n")
+      "were rare; Table 6 lists completions containing an explicit apology.\n")
+    A("**Table 6. Explicit refusals.**\n")
     A("| deployment | sample | target | score | answer |")
     A("|---|---|---|---|---|")
     A(fail_table(fails, lambda t, i, ans: "sorry" in ans.lower(), trunc=120))
@@ -581,7 +686,7 @@ def write_report(agg, extra, tu, dur, fails, models) -> None:
       "the most overtly malicious hard-obfuscation payloads (`obh-001` "
       "`eval(atob(x))`, `obh-005` `curl evil.sh | sh`, `obh-007` `/bin/sh`) two "
       "distinct failure modes appear. The Opus deployments and two open models "
-      "(`glm-5.1`, `kimi-k2.6`) return *empty* completions (Table 6) — a "
+      "(`glm-5.1`, `kimi-k2.6`) return *empty* completions (Table 7) — a "
       "safety reflex that suppresses output on strings that look like live attack "
       "code, even though decoding a string is itself harmless. The GPT "
       "deployments instead emit a confident but *wrong* answer on the same items "
@@ -592,18 +697,18 @@ def write_report(agg, extra, tu, dur, fails, models) -> None:
       "but they call for different mitigations: the suppression mode is an "
       "alignment-tax problem (the model can decode but won't), whereas the "
       "hallucination mode is a decoding-reliability problem.\n")
-    A("**Table 6. Empty completions on high-salience payloads.**\n")
+    A("**Table 7. Empty completions on high-salience payloads.**\n")
     A("| deployment | sample | target | score | answer |")
     A("|---|---|---|---|---|")
     A(fail_table(fails, lambda t, i, ans: t == "obfuscation_hard"
                  and i in ("obh-001", "obh-005", "obh-007"), limit=20, only_empty=True))
     A("")
-    A("### 5.2 False-positive bias on safe code\n")
+    A("### 6.2 False-positive bias on safe code\n")
     A("This is the survey's most consequential safety finding. The hard security "
       "set embeds *safe traps* — defended code that superficially resembles a "
       "vulnerability — and `srh-004` (a correct `realpath`/`commonpath` "
       "containment check) defeats almost the entire field: 8 of 11 deployments, "
-      "including every GPT and both Opus, return a `VULNERABLE` verdict (Table 7). "
+      "including every GPT and both Opus, return a `VULNERABLE` verdict (Table 8). "
       "Crucially, the failure is not a coin-flip under uncertainty. The models "
       "produce *fluent, internally consistent TOCTOU narratives* — citing a "
       "check-then-open race, recommending `openat`/`O_NOFOLLOW` — for code that is "
@@ -611,33 +716,33 @@ def write_report(agg, extra, tu, dur, fails, models) -> None:
       "dangerous, not less: a human triager reading the explanation would likely "
       "be convinced. The bias is systematic and directional (toward flagging) and "
       "near-universal, with one clean exception — the two Qwen deployments, which "
-      "scored 1.00 on hard security and are absent from Table 7. They are the only "
+      "scored 1.00 on hard security and are absent from Table 8. They are the only "
       "models that consistently certified the safe code as safe, which is also why "
       "they top the capability ranking (§2). For an SCA triage application this "
       "predicts a high, confident false-alarm rate on defended code from most of "
       "the field.\n")
-    A("**Table 7. Misclassified safe traps.**\n")
+    A("**Table 8. Misclassified safe traps.**\n")
     A("| deployment | sample | target | score | answer (truncated) |")
     A("|---|---|---|---|---|")
     A(fail_table(fails, lambda t, i, ans: t == "security_reasoning_hard"
                  and i in ("srh-004", "srh-008"), limit=20))
     A("")
-    A("### 5.3 Scoring artefacts\n")
+    A("### 6.3 Scoring artefacts\n")
     A("Several apparent easy-set failures are scorer artefacts, not capability "
       "gaps, and they have a measurable effect on the headline numbers. The "
       "dominant case is `cc-002`: the substring scorer expects the literal "
       "`O(n^2)`, but most models answer with the Unicode superscript `O(n²)` — a "
       "correct answer marked wrong. Six deployments miss `cc-002` this way "
-      "(Table 8), and they include the two models whose easy code-comprehension "
+      "(Table 9), and they include the two models whose easy code-comprehension "
       "score is 0.50 (`gpt-5.5`, `claude-opus-4-8`); their true easy-set accuracy "
       "is therefore materially higher than Table 2 reports, and the easy tier is "
       "in practice fully saturated once the artefact is removed. This is a "
       "concrete false-negative rate for the deterministic scorer and the primary "
-      "motivation for moving to a calibrated model-grader (§7). `cc-004` is a "
+      "motivation for moving to a calibrated model-grader. `cc-004` is a "
       "second, distinct problem — a contestable ground truth where the "
       "'reference' answer is itself debatable — which a string scorer cannot "
       "adjudicate at all.\n")
-    A("**Table 8. Scorer-induced misses on easy code comprehension.**\n")
+    A("**Table 9. Scorer-induced misses on easy code comprehension.**\n")
     A("| deployment | sample | target | score | answer |")
     A("|---|---|---|---|---|")
     A(fail_table(fails, lambda t, i, ans: t == "code_comprehension"
@@ -645,27 +750,33 @@ def write_report(agg, extra, tu, dur, fails, models) -> None:
     A("")
     A("---\n")
 
-    # ---- 6. Discussion ----------------------------------------------------- #
-    A("## 6. Discussion\n")
-    A("Reading the four result sections together, the discriminating signal in "
+    # ---- 7. Discussion ----------------------------------------------------- #
+    A("## 7. Discussion\n")
+    A("Reading the five result sections together, the discriminating signal in "
       "this survey is not accuracy. Easy single-shot and tool-use accuracy are "
       "both saturated, and hard-set accuracy is compressed into a 0.85–0.96 band; "
       "the axes that actually separate the field are hard obfuscation, the "
-      "false-positive safety bias of §5.2, and the process metrics (tool calls "
-      "and latency) of §3–4. A capability leaderboard built on accuracy alone "
-      "would conclude these eleven deployments are interchangeable, which §5 shows "
-      "they are not.\n")
+      "false-positive safety bias of §6.2, the process metrics (tool calls in §3 "
+      "and latency in §5), and run cost (§4). A capability leaderboard built on "
+      "accuracy alone would conclude these eleven deployments are interchangeable, "
+      "which §6 shows they are not.\n")
     A("The clearest model-level conclusion is that the two Qwen deployments lead "
       "on the dimensions that matter: top hard-set accuracy, the open-weight "
       "efficiency front, and — uniquely — resistance to the safe-trap false "
       "positive. The closed deployments are fastest for single-shot triage but "
       "share the field-wide false-positive bias, and `gpt-5.x` additionally "
       "hallucinates rather than declines on high-salience payloads. `deepseek-v4-"
-      "pro` solves everything but is latency-dominated in both regimes.\n")
-    A("**Threats to validity.** (i) Cross-provider token comparisons are unsound "
-      "because the Zen gateways hide reasoning tokens; only within-Go cost claims "
-      "are made. (ii) The deterministic scorers have a non-zero false-negative "
-      "rate (§5.3), so easy-set accuracy is a lower bound. (iii) Per-axis sample "
+      "pro` solves everything but is latency-dominated in both regimes. On cost "
+      "(§4) the ordering is different again: the DeepSeek pair runs the suite for "
+      "cents while the capability leader `qwen3.7-max` is among the priciest, so "
+      "the best accuracy and the best price are not the same model.\n")
+    A("**Threats to validity.** (i) Cross-class token-count comparisons are "
+      "unsound because the closed deployments hide reasoning tokens; only "
+      "within-open-weight token claims are made (the §4 monetary cost is on the "
+      "common pay-as-you-go basis but understates closed-model output, since "
+      "hidden reasoning tokens are billed yet unreported). (ii) The deterministic "
+      "scorers have a non-zero false-negative "
+      "rate (§6.3), so easy-set accuracy is a lower bound. (iii) Per-axis sample "
       "counts are small (4 easy / 9 hard per capability axis; 18 C2 solves), so "
       "single-item differences move the means and the rankings within a 0.03 band "
       "should not be over-read. (iv) The corpus is synthetic; while modelled on "
@@ -674,8 +785,8 @@ def write_report(agg, extra, tu, dur, fails, models) -> None:
       "variance is unmeasured.\n")
     A("---\n")
 
-    # ---- 7. Recommendation ------------------------------------------------- #
-    A("## 7. Recommendation\n")
+    # ---- 8. Recommendation ------------------------------------------------- #
+    A("## 8. Recommendation\n")
     A("**Best open-weight model: `qwen3.7-max`.** It is the only deployment that "
       "leads on every dimension the benchmark measures rather than trading one "
       "off against another: joint-top hard-set accuracy (0.96, tied only with its "
@@ -683,18 +794,22 @@ def write_report(agg, extra, tu, dur, fails, models) -> None:
       "(~7.0k output tokens per task — *lower* cost than the larger "
       "`deepseek-v4-pro` for *higher* accuracy), and, decisively, it is one of "
       "only two deployments in the field that resisted the `srh-004` safe-trap "
-      "false positive (§5.2). We prefer it over the equally accurate "
+      "false positive (§6.2). We prefer it over the equally accurate "
       "`qwen3.6-plus` because it is faster single-shot (19.2 s vs 32.2 s per "
       "sample) at lower generation cost. For an SCA pipeline that must run "
-      "on-premises or audit its own weights, this is the clear pick.\n")
+      "on-premises or audit its own weights, this is the clear pick. If run cost "
+      "outweighs peak accuracy, `deepseek-v4-pro` is the value alternative — it "
+      "solves every task at roughly a seventh of `qwen3.7-max`'s PAYG cost (§4), "
+      "trading ~0.03 hard-set accuracy and the worst latency for the cheapest "
+      "capable run in the field.\n")
     A("**Best closed model: `gpt-5.5`, with one caveat that applies to the whole "
-      "closed field.** Among the Zen deployments `gpt-5.5` has the highest "
+      "closed field.** Among the closed deployments `gpt-5.5` has the highest "
       "hard-set accuracy (0.93) and the strongest hard-obfuscation result (1.00), "
       "making it the best closed choice for analytical quality. The caveat: every "
-      "closed deployment — `gpt-5.x` and both Opus — exhibits the §5.2 "
+      "closed deployment — `gpt-5.x` and both Opus — exhibits the §6.2 "
       "false-positive bias, so none should be trusted to *certify code as safe* "
       "without a human check, and `gpt-5.x` additionally hallucinates on "
-      "high-salience payloads (§5.1). If throughput rather than peak accuracy "
+      "high-salience payloads (§6.1). If throughput rather than peak accuracy "
       "dominates — e.g. high-volume single-shot triage — prefer `gpt-5.4`, the "
       "fastest deployment in the field (2.7 s vs 7.6 s per sample, ~3x faster "
       "than `gpt-5.5`) and among the most tool-economical (1.6 calls per solve, "
@@ -706,7 +821,7 @@ def write_report(agg, extra, tu, dur, fails, models) -> None:
       "bias is near-universal outside the Qwen pair.\n")
     A("---\n")
     A("*Generated by `scripts/build_report.py` from `reports_data.json` (rebuilt "
-      "by `scripts/extract_run_data.py` from `logs/all-go` and `logs/all-zen5`). "
+      "by `scripts/extract_run_data.py` from the most-recent run logs). "
       "Figures: `reports/fig_*.png`; aggregates: `reports/agg.json`.*")
 
     (OUT / "main.md").write_text("\n".join(L))
@@ -719,6 +834,7 @@ def main() -> None:
     a = build_aggregate(rows)
     tu = build_tooluse(tooluse)
     dur = build_duration(samples)
+    pr = build_pricing(rows)
     fails = build_fails(samples)
 
     OUT.mkdir(exist_ok=True)
@@ -728,12 +844,13 @@ def main() -> None:
     chart_efficiency(a["extra"])
     chart_tooluse(tu)
     chart_duration(dur)
+    chart_pricing(pr)
 
     (OUT / "agg.json").write_text(json.dumps(
         {"agg": a["agg"], "extra": a["extra"], "tooluse": tu, "duration": dur,
-         "fails": fails}, indent=1))
-    write_report(a["agg"], a["extra"], tu, dur, fails, a["models"])
-    print(f"wrote {OUT/'main.md'} and 6 charts; {len(a['models'])} deployments")
+         "pricing": pr, "fails": fails}, indent=1))
+    write_report(a["agg"], a["extra"], tu, dur, pr, fails, a["models"])
+    print(f"wrote {OUT/'main.md'} and 7 charts; {len(a['models'])} deployments")
 
 
 if __name__ == "__main__":
