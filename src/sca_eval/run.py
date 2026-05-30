@@ -38,6 +38,8 @@ def run_survey(
     task_names: list[str],
     log_dir: str = "logs/survey",
     out_path: str = "out/matrix.md",
+    max_tokens: int | None = None,
+    temperature: float | None = None,
 ) -> dict[str, dict[str, float | None]]:
     """Run the survey and return the accuracy matrix.
 
@@ -45,6 +47,11 @@ def run_survey(
       - <out_path>      : accuracy matrix (Markdown)
       - details.md      : all axes (samples, duration, tokens, cost)
       - FAILURES.md     : only when eval_set reports failure or any run failed
+
+    max_tokens / temperature are passed through to the model. Reasoning models
+    (e.g. GLM, Qwen) spend tokens on hidden reasoning before emitting the answer
+    that scorers read, so set max_tokens generously or answers truncate to empty
+    (a false NOANSWER/ERR). None leaves the provider default.
     """
     tasks = [TASKS[name]() for name in task_names]
 
@@ -54,6 +61,8 @@ def run_survey(
         log_dir=log_dir,
         retry_attempts=3,
         retry_wait=30,
+        max_tokens=max_tokens,
+        temperature=temperature,
     )
 
     results: list[ModelResult] = []
@@ -99,9 +108,13 @@ def main() -> None:
     parser.add_argument("--tasks", nargs="+", default=list(TASKS), choices=list(TASKS))
     parser.add_argument("--log-dir", default="logs/survey")
     parser.add_argument("--out", default="out/matrix.md")
+    parser.add_argument("--max-tokens", type=int, default=None,
+                        help="max generation tokens; set high for reasoning models")
+    parser.add_argument("--temperature", type=float, default=None)
     args = parser.parse_args()
 
-    matrix = run_survey(args.models, args.tasks, args.log_dir, args.out)
+    matrix = run_survey(args.models, args.tasks, args.log_dir, args.out,
+                        max_tokens=args.max_tokens, temperature=args.temperature)
     print(format_markdown(matrix))
 
 
