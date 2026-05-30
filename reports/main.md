@@ -1,10 +1,5 @@
 # AI-Augmented Supply-Chain-Attack Analysis — Model Evaluation Report
 
-**Phase 0–1 capability survey · 2026-05-30**  
-**13 model deployments evaluated** across **6 capability tasks** (3 axes × easy/hard), run through the model-independent `sca-eval` harness (inspect-ai + deterministic scorers).
-
-The same model can be served by different gateways, so deployments are labelled by **provider** — e.g. `GLM-5.1 (FPT AI)` and `GLM-5.1 (Opencode Go)` are scored as distinct entries throughout this report.
-
 ---
 
 ## 1. How the models were tested, and how they responded
