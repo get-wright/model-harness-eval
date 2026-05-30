@@ -195,22 +195,40 @@ def chart_thinking_cost(extra: dict) -> None:
 
 
 def chart_efficiency(extra: dict) -> None:
+    colors = {"FPT AI": "#e8694c", "Opencode Go": "#4c9be8",
+              "Opencode Zen": "#3aa86b"}
     ok = [m for m in extra if extra[m]["status"] == "ok" and extra[m]["hard"]]
-    fig, ax = plt.subplots(figsize=(10, 7))
-    for m in ok:
-        x = extra[m]["mean_out"]
-        y = extra[m]["hard"]
-        color = {"FPT AI": "#e8694c", "Opencode Go": "#4c9be8",
-                 "Opencode Zen": "#3aa86b"}[extra[m]["provider"]]
-        ax.scatter(x, y, s=70, color=color, edgecolor="black", linewidth=0.5, zorder=3)
-        ax.annotate(m, (x, y), fontsize=7, xytext=(5, 4),
-                    textcoords="offset points")
+    pts = [(extra[m]["mean_out"], extra[m]["hard"], m) for m in ok]
+    xmin = min(p[0] for p in pts)
+    xmax = max(p[0] for p in pts)
+    mid = (xmin * xmax) ** 0.5  # geometric midpoint on the log axis
+
+    fig, ax = plt.subplots(figsize=(12, 7))
+    for x, y, m in pts:
+        ax.scatter(x, y, s=70, color=colors[extra[m]["provider"]],
+                   edgecolor="black", linewidth=0.5, zorder=3)
+
+    # Label = base name only (colour already encodes provider). Stagger labels
+    # that share an accuracy so they don't overprint, and anchor right-side
+    # points' text leftward so nothing overflows the axes.
+    by_y: dict[float, list] = {}
+    for x, y, m in sorted(pts, key=lambda p: p[0]):
+        by_y.setdefault(round(y, 3), []).append((x, y, m))
+    for group in by_y.values():
+        for k, (x, y, m) in enumerate(group):
+            right = x >= mid
+            ha = "right" if right else "left"
+            dx = -8 if right else 8
+            dy = 10 if (k % 2 == 0) else -14  # alternate above/below
+            ax.annotate(base_name_of(m), (x, y), fontsize=8, ha=ha,
+                        xytext=(dx, dy), textcoords="offset points")
+
     handles = [plt.Line2D([0], [0], marker="o", linestyle="", color=c, label=p)
-               for p, c in (("FPT AI", "#e8694c"), ("Opencode Go", "#4c9be8"),
-                            ("Opencode Zen", "#3aa86b"))]
-    ax.legend(handles=handles, title="provider")
-    ax.set_xlabel("mean generated tokens per task (log)")
+               for p, c in colors.items()]
+    ax.legend(handles=handles, title="provider", loc="lower center", ncol=3)
+    ax.set_xlabel("mean generated tokens per task (log scale)")
     ax.set_xscale("log")
+    ax.set_xlim(xmin / 1.6, xmax * 1.7)
     ax.set_ylabel("hard-set accuracy")
     ax.set_title("Efficiency — hard accuracy vs token spend")
     ax.grid(True, alpha=0.3)
