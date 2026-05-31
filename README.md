@@ -1,12 +1,9 @@
-# sca-eval — Capability Eval Spine (Phase 0–1)
+# sca-eval
 
 Model-independent capability matrix for the AI-Augmented SCA Analysis capstone.
 Runs language-agnostic tasks (code comprehension, security reasoning, obfuscation)
 across any inspect-ai-supported model and emits a comparable Markdown matrix plus
 a details table (accuracy, latency, token split, cost).
-
-Design: `docs/superpowers/specs/2026-05-30-ai-augmented-sca-analysis-design.md`.
-The npm corpus is quarantined (spec §6b) and is NOT used by this package.
 
 ## Setup
 
@@ -68,7 +65,7 @@ char-code arrays, XOR, split-concat, gzip+base64, runtime-computed). Regenerate 
 
 **Safety:** the sandbox runs `network_mode: none` (see `src/sca_eval/sandbox/compose.yaml`)
 via the tuple sandbox form `("docker", compose.yaml)`; all C2 values are non-routable
-fakes (RFC 5737 TEST-NET, `.invalid`/`.example`). Nothing is ever contacted. The
+fakes. Nothing is ever contacted. The
 docker-gated test `tests/test_c2_sandbox.py` proves no egress.
 
 ## What this measures
